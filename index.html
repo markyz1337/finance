@@ -263,6 +263,7 @@ background:linear-gradient(135deg,#fff,var(--cyan));-webkit-background-clip:text
 .info-box{
 background:rgba(34,211,238,0.055);border:1px solid rgba(34,211,238,0.14);
 border-radius:14px;padding:13px 15px;margin-top:12px;
+font-family:'Space Mono', monospace; /* ← Adaugă această linie */
 font-size:12px;color:var(--cyan);line-height:1.7;
 }
 .info-box.red{background:rgba(252,99,99,0.055);border-color:rgba(252,99,99,0.14);color:var(--red)}
@@ -687,7 +688,7 @@ function toEUR(amount, currency) {
 }
 function fmt(n) {
   if (isNaN(n) || n === null) return '0';
-  return new Intl.NumberFormat('ro-RO', { minimumFractionDigits: 0, maximumFractionDigits: 2 }).format(n);
+  return new Intl.NumberFormat('ro-RO', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(Math.round(n));
 }
 function symCur(c) { return { EUR: '€', MDL: 'lei', USD: '$', RON: 'lei' }[c] || '€'; }
 function fmtC(n, c) { return `${fmt(n)} ${symCur(c)}`; }
@@ -790,6 +791,8 @@ async function saveWallet() {
   } catch (e) { toast('Eroare: ' + e.message, 'err'); }
 }
 async function deleteWallet(id) {
+  if (!confirm("Sigur vrei să ștergi această sursă de portofel?")) return;
+
   try {
     await sb.delete('fd_wallet', id);
     state.wallet = state.wallet.filter(w => w.id !== id);
@@ -857,6 +860,8 @@ async function saveCat() {
   } catch (e) { toast('Eroare: ' + e.message, 'err'); }
 }
 async function deleteCat(id) {
+  if (!confirm("Sigur vrei să ștergi această categorie? Toate datele asociate vor fi pierdute.")) return;
+  
   try {
     await sb.delete('fd_category', id);
     state.categories = state.categories.filter(c => c.id !== id);
@@ -905,6 +910,8 @@ async function saveSubcat() {
   } catch (e) { toast('Eroare: ' + e.message, 'err'); }
 }
 async function deleteSubcat(catId, subId) {
+  if (!confirm("Sigur vrei să ștergi această subcategorie?")) return;
+
   const cat = state.categories.find(c => c.id === catId); if (!cat) return;
   try {
     await sb.delete('fd_subcategory', subId);
@@ -914,8 +921,10 @@ async function deleteSubcat(catId, subId) {
   } catch (e) { toast('Eroare: ' + e.message, 'err'); }
 }
 function openEditSubcat(catId, subId) {
-  const cat = state.categories.find(c => c.id === catId); if (!c) return;
-  const sub = cat.subcats.find(s => s.id === subId); if (!sub) return;
+  // Căutăm fără să forțăm tipul strict de date
+  const cat = state.categories.find(c => c.id == catId); if (!cat) return;
+  const sub = cat.subcats.find(s => s.id == subId); if (!sub) return;
+  
   document.getElementById('es-id').value = subId;
   document.getElementById('es-parent-id').value = catId;
   document.getElementById('es-label').value = sub.label;
@@ -1065,8 +1074,12 @@ function recalcGoal() {
     </div>
   `;
 
+  // AICI ESTE MODIFICAREA SOLICITATĂ:
   if (tfr > 0) {
-    const monthsTFR = Math.ceil(needed / tfr);
+    // Calculăm timpul adunând salariul net normal + tfr-ul lunar
+    const savingsCombined = net + tfr;
+    const monthsCombined = savingsCombined > 0 ? Math.ceil(needed / savingsCombined) : 0;
+
     html += `
       <div class="tfr-wrap">
         <div class="tfr-title">📊 TFR acumulat</div>
@@ -1074,8 +1087,8 @@ function recalcGoal() {
           <div class="tfr-block"><div class="tfr-lbl">TFR / lună</div><div class="tfr-val">${fmt(tfr)} €</div></div>
           <div class="tfr-block"><div class="tfr-lbl">TFR / an</div><div class="tfr-val">${fmt(tfr * 12)} €</div></div>
           <div class="tfr-block" style="grid-column:span 2">
-            <div class="tfr-lbl">Timp atingere obiectiv doar din TFR</div>
-            <div class="tfr-val" style="font-size:14px">${timeStr(monthsTFR)}</div>
+            <div class="tfr-lbl">Timp atingere obiectiv din salariu + TFR adunat</div>
+            <div class="tfr-val" style="font-size:14px; color:var(--cyan); font-weight:800;">${timeStr(monthsCombined)}</div>
           </div>
         </div>
       </div>`;
