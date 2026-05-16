@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ro">
 <head>
 <meta charset="UTF-8">
@@ -339,13 +338,11 @@ body.app-unlocked .sensitive-action { display: inline-flex !important; }
 .pin-overlay.open { display: flex; }
 .pin-container { width: 100%; max-width: 280px; text-align: center; padding: 20px; }
 .pin-display { font-family: 'Space Mono', monospace; font-size: 32px; font-weight: 700; color: var(--gold); letter-spacing: 10px; margin-bottom: 30px; height: 42px; display: flex; align-items: center; justify-content: center; border-bottom: 2px solid var(--border); padding-bottom: 5px; }
+.pin-display::before { content: ''; }
 .pin-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
 .pin-key { background: var(--glass); border: 1px solid var(--border); border-radius: 50%; width: 64px; height: 64px; font-size: 22px; font-weight: 600; color: var(--text); display: flex; align-items: center; justify-content: center; cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; margin: 0 auto; transition: background 0.1s; }
 .pin-key:active { background: var(--border); color: #fff; }
 .pin-key.clear { font-size: 14px; color: var(--red); background: rgba(252,99,99,0.05); border-color: rgba(252,99,99,0.15); border-radius: 16px; width: 100%; height: 50px; grid-column: span 3; margin-top: 10px; }
-
-
-
 </style>
 </head>
 <body>
@@ -425,6 +422,20 @@ body.app-unlocked .sensitive-action { display: inline-flex !important; }
       <div class="card-title"><span class="dot dot-gold"></span>Cheltuieli</div>
       <button class="btn btn-blue btn-sm sensitive-action" onclick="openModal('mo-cat')">+ Categorie</button>
     </div>
+    
+    <!-- GESTIUNE DINAMICĂ PROFILE -->
+    <div style="padding: 12px 18px; background: var(--glass2); border-bottom: 1px solid var(--border2); display: flex; flex-direction: column; gap: 8px;">
+      <div class="field-label" style="margin-bottom: 0;">Profil Cheltuieli activ</div>
+      <div style="display: flex; gap: 6px; align-items: center;">
+        <select id="profile-selector" onchange="switchProfile(this.value)" style="padding: 8px 12px; font-size: 13px; border-radius: var(--r-sm); flex: 1;"></select>
+        <div class="sensitive-action" style="display: flex; gap: 4px;">
+          <button class="btn btn-ghost btn-icon btn-sm" onclick="openProfileModal('create')" title="Profil nou">➕</button>
+          <button class="btn btn-ghost btn-icon btn-sm" id="btn-edit-prof" onclick="openProfileModal('edit')" title="Redenumire">✏️</button>
+          <button class="btn btn-danger btn-icon btn-sm" id="btn-del-prof" onclick="deleteCurrentProfile()" title="Șterge profil curent">🗑</button>
+        </div>
+      </div>
+    </div>
+
     <div class="card-body">
       <div class="loader" id="loader-cats"><span class="spinner"></span>Se încarcă...</div>
 
@@ -520,6 +531,25 @@ body.app-unlocked .sensitive-action { display: inline-flex !important; }
 </div>
 
 <!-- ══ MODALS ══ -->
+
+<!-- Modal Management Profil -->
+<div class="overlay" id="mo-profile">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="profile-modal-title">🎭 Profil Cheltuieli</div>
+    <input type="hidden" id="profile-action-mode">
+    <div class="modal-fields">
+      <div>
+        <div class="field-label">Nume Stil de Viață / Profil</div>
+        <input type="text" id="profile-name-input" placeholder="ex: Stil actual sau Stil Economic">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('mo-profile')">Anulează</button>
+      <button class="btn btn-blue" onclick="saveProfileSubmit()">Salvează</button>
+    </div>
+  </div>
+</div>
 
 <!-- Portofel Adaugă -->
 <div class="overlay" id="mo-wallet">
@@ -710,7 +740,8 @@ const sb = {
 // ══════════════════════════════════════════
 //  STATE & SECURITY SYSTEM
 // ══════════════════════════════════════════
-let state = { wallet: [], categories: [] };
+let state = { wallet: [], categories: [], profiles: [] };
+let currentProfileId = localStorage.getItem('fd_active_profile_id') || null;
 let _salaryEUR = 0, _netMonthly = 0, _walletTotalEUR = 0, _tfrMonthly = 0;
 
 let isUnlocked = false;
@@ -719,7 +750,6 @@ const TARGET_PIN = "4579";
 
 function handleLockClick() {
   if (isUnlocked) {
-    // Lock app directly
     isUnlocked = false;
     currentPinInput = "";
     document.body.classList.remove('app-unlocked');
@@ -731,7 +761,6 @@ function handleLockClick() {
     renderExpenses();
     toast("🔒 Aplicația a fost blocată");
   } else {
-    // Open Pin Pad Screen
     currentPinInput = "";
     document.getElementById('pin-dots').textContent = "";
     document.getElementById('pin-screen').classList.add('open');
@@ -743,7 +772,6 @@ function pressPin(num) {
   currentPinInput += num;
   document.getElementById('pin-dots').textContent = "• ".repeat(currentPinInput.length);
   
-  // AUTOENTER CHECK
   if (currentPinInput === TARGET_PIN) {
     isUnlocked = true;
     document.body.classList.add('app-unlocked');
@@ -828,20 +856,120 @@ function setLoader(id, show) {
 }
 
 // ══════════════════════════════════════════
-//  LOAD ALL
+//  PROFILE ACTIONS
+// ══════════════════════════════════════════
+function renderProfileSelector() {
+  const sel = document.getElementById('profile-selector');
+  sel.innerHTML = state.profiles.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
+  sel.value = currentProfileId;
+
+  const isOnlyOne = state.profiles.length <= 1;
+  document.getElementById('btn-del-prof').disabled = isOnlyOne;
+  document.getElementById('btn-del-prof').style.opacity = isOnlyOne ? "0.4" : "1";
+}
+
+async function switchProfile(id) {
+  currentProfileId = id;
+  localStorage.setItem('fd_active_profile_id', id);
+  await loadAll();
+  toast("🔄 Profil cheltuieli schimbat");
+}
+
+function openProfileModal(mode) {
+  document.getElementById('profile-action-mode').value = mode;
+  if (mode === 'create') {
+    document.getElementById('profile-modal-title').textContent = "➕ Profil nou de cheltuieli";
+    document.getElementById('profile-name-input').value = "";
+  } else {
+    document.getElementById('profile-modal-title').textContent = "✏️ Redenumește profilul";
+    const curP = state.profiles.find(p => p.id == currentProfileId);
+    document.getElementById('profile-name-input').value = curP ? curP.name : "";
+  }
+  openModal('mo-profile');
+}
+
+async function saveProfileSubmit() {
+  const name = document.getElementById('profile-name-input').value.trim();
+  const mode = document.getElementById('profile-action-mode').value;
+  if (!name) return;
+
+  try {
+    if (mode === 'create') {
+      const [newProf] = await sb.post('fd_profiles', { name });
+      state.profiles.push(newProf);
+      currentProfileId = newProf.id;
+      localStorage.setItem('fd_active_profile_id', currentProfileId);
+      toast("✅ Profil creat cu succes");
+    } else {
+      await sb.patch('fd_profiles', currentProfileId, { name });
+      const curP = state.profiles.find(p => p.id == currentProfileId);
+      if (curP) curP.name = name;
+      toast("✅ Nume profil modificat");
+    }
+    closeModal('mo-profile');
+    await loadAll();
+  } catch (e) {
+    toast("Eroare la configurare profil: " + e.message, "err");
+  }
+}
+
+async function deleteCurrentProfile() {
+  const curP = state.profiles.find(p => p.id == currentProfileId);
+  if (!curP) return;
+  if (!confirm(`Sigur vrei să ștergi definitiv profilul "${curP.name}"? Toate categoriile și sumele din el vor fi eliminate!`)) return;
+
+  try {
+    await sb.delete('fd_profiles', currentProfileId);
+    state.profiles = state.profiles.filter(p => p.id != currentProfileId);
+    currentProfileId = state.profiles[0].id;
+    localStorage.setItem('fd_active_profile_id', currentProfileId);
+    toast("🗑 Profil eliminat");
+    await loadAll();
+  } catch (e) {
+    toast("Eroare la ștergerea profilului: " + e.message, "err");
+  }
+}
+
+// ══════════════════════════════════════════
+//  LOAD ALL DATA
 // ══════════════════════════════════════════
 async function loadAll() {
   setLoader('loader-wallet', true);
   setLoader('loader-cats', true);
   try {
-    const [wallets, cats, subcats, settings] = await Promise.all([
-      sb.get('fd_wallet', 'order=created_at.asc'),
-      sb.get('fd_category', 'order=created_at.asc'),
-      sb.get('fd_subcategory', 'order=created_at.asc'),
-      sb.get('fd_settings', 'key=in.(salary,salary_currency,tfr,eur_rate,goal)')
+    const [profiles, settings, wallets] = await Promise.all([
+      sb.get('fd_profiles', 'order=created_at.asc').catch(() => []),
+      sb.get('fd_settings', 'key=in.(salary,salary_currency,tfr,eur_rate,goal)'),
+      sb.get('fd_wallet', 'order=created_at.asc')
     ]);
 
+    state.profiles = profiles || [];
     state.wallet = wallets || [];
+
+    if (state.profiles.length === 0) {
+      try {
+        const [defaultProf] = await sb.post('fd_profiles', { name: 'Profil Principal' });
+        state.profiles.push(defaultProf);
+        currentProfileId = defaultProf.id;
+      } catch (err) {
+        state.profiles = [{ id: 'default', name: 'Profil Principal' }];
+        currentProfileId = 'default';
+      }
+    }
+
+    if (!currentProfileId || !state.profiles.some(p => p.id == currentProfileId)) {
+      currentProfileId = state.profiles[0].id;
+    }
+    localStorage.setItem('fd_active_profile_id', currentProfileId);
+
+    renderProfileSelector();
+
+    const profileFilter = `profile_id=eq.${currentProfileId}`;
+    const [cats, subcats] = await Promise.all([
+      sb.get('fd_category', `${profileFilter}&order=created_at.asc`),
+      sb.get('fd_subcategory', 'order=created_at.asc')
+    ]);
+
     const subsMap = {};
     (subcats || []).forEach(s => {
       if (!subsMap[s.category_id]) subsMap[s.category_id] = [];
@@ -849,7 +977,6 @@ async function loadAll() {
     });
     state.categories = (cats || []).map(c => ({ ...c, subcats: subsMap[c.id] || [] }));
 
-    // Apply settings
     const sm = {};
     (settings || []).forEach(s => sm[s.key] = s.value);
     if (sm.salary) document.getElementById('salary-input').value = sm.salary;
@@ -915,7 +1042,6 @@ async function saveWallet() {
 }
 async function deleteWallet(id) {
   if (!confirm("Sigur vrei să ștergi această sursă de portofel?")) return;
-
   try {
     await sb.delete('fd_wallet', id);
     state.wallet = state.wallet.filter(w => w.id !== id);
@@ -976,7 +1102,7 @@ async function saveCat() {
   const type = document.getElementById('cat-type').value;
   if (!label) return;
   try {
-    const [row] = await sb.post('fd_category', { label, amount, type });
+    const [row] = await sb.post('fd_category', { label, amount, type, profile_id: currentProfileId });
     state.categories.push({ ...row, subcats: [] });
     renderExpenses(); recalcAll(); closeModal('mo-cat');
     toast('✅ Categorie adăugată');
@@ -984,7 +1110,6 @@ async function saveCat() {
 }
 async function deleteCat(id) {
   if (!confirm("Sigur vrei să ștergi această categorie? Toate datele automate vor fi pierdute.")) return;
-  
   try {
     await sb.delete('fd_category', id);
     state.categories = state.categories.filter(c => c.id !== id);
@@ -1034,7 +1159,6 @@ async function saveSubcat() {
 }
 async function deleteSubcat(catId, subId) {
   if (!confirm("Sigur vrei să ștergi această subcategorie?")) return;
-
   const cat = state.categories.find(c => c.id === catId); if (!cat) return;
   try {
     await sb.delete('fd_subcategory', subId);
@@ -1046,7 +1170,6 @@ async function deleteSubcat(catId, subId) {
 function openEditSubcat(catId, subId) {
   const cat = state.categories.find(c => c.id == catId); if (!cat) return;
   const sub = cat.subcats.find(s => s.id == subId); if (!sub) return;
-  
   document.getElementById('es-id').value = subId;
   document.getElementById('es-parent-id').value = catId;
   document.getElementById('es-label').value = sub.label;
@@ -1068,7 +1191,6 @@ async function updateSubcat() {
   } catch (e) { toast('Eroare: ' + e.message, 'err'); }
 }
 
-// ── UTILS CATEGORIES ──
 function getCatTotal(cat) {
   if (cat.subcats && cat.subcats.length > 0)
     return cat.subcats.reduce((s, sub) => s + (sub.amount || 0), 0);
