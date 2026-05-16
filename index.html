@@ -725,7 +725,7 @@ function handleLockClick() {
     document.body.classList.remove('app-unlocked');
     const lockBtn = document.getElementById('global-lock-btn');
     lockBtn.className = "btn btn-lock";
-    lockBtn.innerHTML = "🔒 Blocat";
+    lockBtn.innerHTML = Blocat";
     toggleFormInputs(true);
     renderWallet();
     renderExpenses();
@@ -749,7 +749,7 @@ function pressPin(num) {
     document.body.classList.add('app-unlocked');
     const lockBtn = document.getElementById('global-lock-btn');
     lockBtn.className = "btn btn-lock unlocked";
-    lockBtn.innerHTML = "🔓 Deblocat";
+    lockBtn.innerHTML = "Deblocat";
     toggleFormInputs(false);
     document.getElementById('pin-screen').classList.remove('open');
     renderWallet();
