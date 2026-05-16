@@ -263,7 +263,7 @@ background:linear-gradient(135deg,#fff,var(--cyan));-webkit-background-clip:text
 .info-box{
 background:rgba(34,211,238,0.055);border:1px solid rgba(34,211,238,0.14);
 border-radius:14px;padding:13px 15px;margin-top:12px;
-font-family:'Space Mono', monospace; /* ← Adaugă această linie */
+font-family:'Space Mono', monospace;
 font-size:12px;color:var(--cyan);line-height:1.7;
 }
 .info-box.red{background:rgba(252,99,99,0.055);border-color:rgba(252,99,99,0.14);color:var(--red)}
@@ -316,63 +316,37 @@ opacity:0;pointer-events:none;white-space:nowrap;
 .toast.ok{border-color:rgba(62,207,142,0.3);color:var(--green)}
 .toast.err{border-color:rgba(252,99,99,0.3);color:var(--red)}
 
-
 /* ── TOP COSTURI / OPTIMIZARE ── */
-.opt-bar-container {
-  margin-top: 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.opt-item {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-.opt-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 12px;
-}
-.opt-name {
-  font-weight: 600;
-  color: var(--text);
-}
-.opt-amount {
-  font-family: 'Space Mono', monospace;
-  font-weight: 700;
-  color: var(--red);
-}
-.opt-progress-bg {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--border2);
-  border-radius: 50px;
-  height: 8px;
-  width: 100%;
-  overflow: hidden;
-}
-.opt-progress-fill {
-  height: 100%;
-  border-radius: 50px;
-  background: linear-gradient(90deg, var(--orange, #fc6363), var(--pink));
-  transition: width 0.5s ease;
-  min-width: 2px;
-}
-.opt-badge-type {
-  font-size: 8px;
-  text-transform: uppercase;
-  padding: 2px 6px;
-  border-radius: 4px;
-  background: rgba(255,255,255,0.05);
-  color: var(--muted);
-  margin-left: 6px;
-  vertical-align: middle;
-}
+.opt-bar-container { margin-top: 14px; display: flex; flex-direction: column; gap: 12px; }
+.opt-item { display: flex; flex-direction: column; gap: 5px; }
+.opt-info { display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
+.opt-name { font-weight: 600; color: var(--text); }
+.opt-amount { font-family: 'Space Mono', monospace; font-weight: 700; color: var(--red); }
+.opt-progress-bg { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border2); border-radius: 50px; height: 8px; width: 100%; overflow: hidden; }
+.opt-progress-fill { height: 100%; border-radius: 50px; background: linear-gradient(90deg, var(--orange, #fc6363), var(--pink)); transition: width 0.5s ease; min-width: 2px; }
+.opt-badge-type { font-size: 8px; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; background: rgba(255,255,255,0.05); color: var(--muted); margin-left: 6px; vertical-align: middle; }
+
+/* ── LOCK SYSTEM STYLE ── */
+.btn-lock { background: rgba(252, 99, 99, 0.1); color: var(--red); border: 1px solid rgba(252, 99, 99, 0.25); border-radius: 12px; font-size: 11px; padding: 4px 12px; gap: 6px; }
+.btn-lock.unlocked { background: rgba(62, 207, 142, 0.1); color: var(--green); border-color: rgba(62, 207, 142, 0.25); }
+
+/* Control vizibilitate acțiuni sensibile */
+.sensitive-action { display: none !important; }
+body.app-unlocked .sensitive-action { display: inline-flex !important; }
+
+/* Tastatură Numerică Pin */
+.pin-overlay { display: none; position: fixed; inset: 0; z-index: 999; background: rgba(4, 6, 14, 0.95); backdrop-filter: blur(20px); align-items: center; justify-content: center; }
+.pin-overlay.open { display: flex; }
+.pin-container { width: 100%; max-width: 280px; text-align: center; padding: 20px; }
+.pin-display { font-family: 'Space Mono', monospace; font-size: 32px; font-weight: 700; color: var(--gold); letter-spacing: 10px; margin-bottom: 30px; height: 42px; display: flex; align-items: center; justify-content: center; border-bottom: 2px solid var(--border); padding-bottom: 5px; }
+.pin-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.pin-key { background: var(--glass); border: 1px solid var(--border); border-radius: 50%; width: 64px; height: 64px; font-size: 22px; font-weight: 600; color: var(--text); display: flex; align-items: center; justify-content: center; cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; margin: 0 auto; transition: background 0.1s; }
+.pin-key:active { background: var(--border); color: #fff; }
+.pin-key.clear { font-size: 14px; color: var(--red); background: rgba(252,99,99,0.05); border-color: rgba(252,99,99,0.15); border-radius: 16px; width: 100%; height: 50px; grid-column: span 3; margin-top: 10px; }
+
 
 
 </style>
-
 </head>
 <body>
 
@@ -382,18 +356,20 @@ opacity:0;pointer-events:none;white-space:nowrap;
       <h1>💎 Finance</h1>
       <div class="hdr-sub">Simulator Personal</div>
     </div>
-    <div class="live-badge"><span class="live-dot"></span>LIVE</div>
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <button id="global-lock-btn" class="btn btn-lock" onclick="handleLockClick()" style="margin: 0;">Blocat</button>
+      <div class="live-badge"><span class="live-dot"></span>LIVE</div>
+    </div>
   </div>
 </div>
 
 <div class="main">
 
   <!-- ① PORTOFEL -->
-
   <div class="card">
     <div class="card-hdr">
       <div class="card-title"><span class="dot dot-blue"></span>Portofelul Personal</div>
-      <button class="btn btn-blue btn-sm" onclick="openModal('mo-wallet')">+ Adaugă</button>
+      <button class="btn btn-blue btn-sm sensitive-action" onclick="openModal('mo-wallet')">+ Adaugă</button>
     </div>
     <div class="card-body">
       <div class="loader" id="loader-wallet"><span class="spinner"></span>Se încarcă...</div>
@@ -406,7 +382,6 @@ opacity:0;pointer-events:none;white-space:nowrap;
   </div>
 
   <!-- ② CÂȘTIGURI -->
-
   <div class="card">
     <div class="card-hdr">
       <div class="card-title"><span class="dot dot-green"></span>Media Câștigurilor</div>
@@ -416,8 +391,8 @@ opacity:0;pointer-events:none;white-space:nowrap;
         <div>
           <div class="field-label">Media salariului lunar (12 luni)</div>
           <div class="input-row">
-            <input type="number" id="salary-input" placeholder="ex: 1200" inputmode="decimal" min="0" step="0.01" oninput="saveSalaryDebounced()">
-            <select id="salary-currency" onchange="saveSalaryDebounced()" style="width:auto">
+            <input type="number" id="salary-input" placeholder="ex: 1200" inputmode="decimal" min="0" step="0.01" oninput="saveSalaryDebounced()" disabled>
+            <select id="salary-currency" onchange="saveSalaryDebounced()" style="width:auto" disabled>
               <option value="EUR">EUR €</option>
               <option value="MDL">MDL lei</option>
               <option value="USD">USD $</option>
@@ -427,12 +402,12 @@ opacity:0;pointer-events:none;white-space:nowrap;
         </div>
         <div>
           <div class="field-label">TFR lunar (opțional, EUR)</div>
-          <input type="number" id="tfr-input" placeholder="ex: 80" inputmode="decimal" min="0" step="0.01" oninput="saveSalaryDebounced()">
+          <input type="number" id="tfr-input" placeholder="ex: 80" inputmode="decimal" min="0" step="0.01" oninput="saveSalaryDebounced()" disabled>
         </div>
         <div>
           <div class="field-label">Curs EUR → MDL</div>
           <div class="input-row">
-            <input type="number" id="eur-rate" placeholder="ex: 19.5" inputmode="decimal" min="0" step="0.01" value="19.5" oninput="saveSalaryDebounced()">
+            <input type="number" id="eur-rate" placeholder="ex: 19.5" inputmode="decimal" min="0" step="0.01" value="19.5" oninput="saveSalaryDebounced()" disabled>
             <span class="badge">MDL/EUR</span>
           </div>
         </div>
@@ -445,11 +420,10 @@ opacity:0;pointer-events:none;white-space:nowrap;
   </div>
 
   <!-- ③ CHELTUIELI -->
-
   <div class="card">
     <div class="card-hdr">
       <div class="card-title"><span class="dot dot-gold"></span>Cheltuieli</div>
-      <button class="btn btn-blue btn-sm" onclick="openModal('mo-cat')">+ Categorie</button>
+      <button class="btn btn-blue btn-sm sensitive-action" onclick="openModal('mo-cat')">+ Categorie</button>
     </div>
     <div class="card-body">
       <div class="loader" id="loader-cats"><span class="spinner"></span>Se încarcă...</div>
@@ -484,7 +458,6 @@ opacity:0;pointer-events:none;white-space:nowrap;
   </div>
 
   <!-- ④ TOP COSTURI ȘI OPTIMIZARE -->
-
   <div class="card">
     <div class="card-hdr">
       <div class="card-title"><span class="dot" style="background:var(--red); box-shadow:0 0 10px var(--red)"></span>Top Costuri (Optimizare)</div>
@@ -500,9 +473,7 @@ opacity:0;pointer-events:none;white-space:nowrap;
     </div>
   </div>
 
-
   <!-- ④ SOLD NET -->
-
   <div class="card net-banner">
     <div class="net-lbl">🧾 Sold lunar net simulat</div>
     <div class="net-val net-pos" id="net-val">0 €</div>
@@ -510,7 +481,6 @@ opacity:0;pointer-events:none;white-space:nowrap;
   </div>
 
   <!-- ⑤ OBIECTIV -->
-
   <div class="card">
     <div class="card-hdr">
       <div class="card-title"><span class="dot dot-cyan"></span>Obiectiv Financiar</div>
@@ -518,7 +488,7 @@ opacity:0;pointer-events:none;white-space:nowrap;
     <div class="card-body">
       <div>
         <div class="field-label">Suma dorită (EUR)</div>
-        <input type="number" id="goal-input" placeholder="ex: 10000" inputmode="decimal" min="0" step="0.01" oninput="saveGoalDebounced()">
+        <input type="number" id="goal-input" placeholder="ex: 10000" inputmode="decimal" min="0" step="0.01" oninput="saveGoalDebounced()" disabled>
       </div>
       <div id="goal-result" style="margin-top:14px"></div>
     </div>
@@ -526,10 +496,32 @@ opacity:0;pointer-events:none;white-space:nowrap;
 
 </div>
 
+<!-- ══ PIN KEYPAD OVERLAY ══ -->
+<div class="pin-overlay" id="pin-screen">
+  <div class="pin-container">
+    <div style="font-size:12px; color:var(--muted); margin-bottom:10px; text-transform:uppercase; letter-spacing:1px;">Introdu PIN Securitate</div>
+    <div class="pin-display" id="pin-dots"></div>
+    <div class="pin-grid">
+      <div class="pin-key" onclick="pressPin('1')">1</div>
+      <div class="pin-key" onclick="pressPin('2')">2</div>
+      <div class="pin-key" onclick="pressPin('3')">3</div>
+      <div class="pin-key" onclick="pressPin('4')">4</div>
+      <div class="pin-key" onclick="pressPin('5')">5</div>
+      <div class="pin-key" onclick="pressPin('6')">6</div>
+      <div class="pin-key" onclick="pressPin('7')">7</div>
+      <div class="pin-key" onclick="pressPin('8')">8</div>
+      <div class="pin-key" onclick="pressPin('9')">9</div>
+      <div></div>
+      <div class="pin-key" onclick="pressPin('0')">0</div>
+      <div></div>
+      <button class="pin-key clear" onclick="clearPin()">Șterge / Închide</button>
+    </div>
+  </div>
+</div>
+
 <!-- ══ MODALS ══ -->
 
 <!-- Portofel Adaugă -->
-
 <div class="overlay" id="mo-wallet">
   <div class="modal">
     <div class="modal-handle"></div>
@@ -554,7 +546,6 @@ opacity:0;pointer-events:none;white-space:nowrap;
 </div>
 
 <!-- Portofel Edit -->
-
 <div class="overlay" id="mo-edit-wallet">
   <div class="modal">
     <div class="modal-handle"></div>
@@ -580,7 +571,6 @@ opacity:0;pointer-events:none;white-space:nowrap;
 </div>
 
 <!-- Categorie Adaugă -->
-
 <div class="overlay" id="mo-cat">
   <div class="modal">
     <div class="modal-handle"></div>
@@ -605,7 +595,6 @@ opacity:0;pointer-events:none;white-space:nowrap;
 </div>
 
 <!-- Categorie Edit -->
-
 <div class="overlay" id="mo-edit-cat">
   <div class="modal">
     <div class="modal-handle"></div>
@@ -631,7 +620,6 @@ opacity:0;pointer-events:none;white-space:nowrap;
 </div>
 
 <!-- Subcategorie Adaugă -->
-
 <div class="overlay" id="mo-subcat">
   <div class="modal">
     <div class="modal-handle"></div>
@@ -649,7 +637,6 @@ opacity:0;pointer-events:none;white-space:nowrap;
 </div>
 
 <!-- Subcategorie Edit -->
-
 <div class="overlay" id="mo-edit-subcat">
   <div class="modal">
     <div class="modal-handle"></div>
@@ -721,10 +708,72 @@ const sb = {
 };
 
 // ══════════════════════════════════════════
-//  STATE
+//  STATE & SECURITY SYSTEM
 // ══════════════════════════════════════════
 let state = { wallet: [], categories: [] };
 let _salaryEUR = 0, _netMonthly = 0, _walletTotalEUR = 0, _tfrMonthly = 0;
+
+let isUnlocked = false;
+let currentPinInput = "";
+const TARGET_PIN = "4579";
+
+function handleLockClick() {
+  if (isUnlocked) {
+    // Lock app directly
+    isUnlocked = false;
+    currentPinInput = "";
+    document.body.classList.remove('app-unlocked');
+    const lockBtn = document.getElementById('global-lock-btn');
+    lockBtn.className = "btn btn-lock";
+    lockBtn.innerHTML = "🔒 Blocat";
+    toggleFormInputs(true);
+    renderWallet();
+    renderExpenses();
+    toast("🔒 Aplicația a fost blocată");
+  } else {
+    // Open Pin Pad Screen
+    currentPinInput = "";
+    document.getElementById('pin-dots').textContent = "";
+    document.getElementById('pin-screen').classList.add('open');
+  }
+}
+
+function pressPin(num) {
+  if (currentPinInput.length >= 4) return;
+  currentPinInput += num;
+  document.getElementById('pin-dots').textContent = "• ".repeat(currentPinInput.length);
+  
+  // AUTOENTER CHECK
+  if (currentPinInput === TARGET_PIN) {
+    isUnlocked = true;
+    document.body.classList.add('app-unlocked');
+    const lockBtn = document.getElementById('global-lock-btn');
+    lockBtn.className = "btn btn-lock unlocked";
+    lockBtn.innerHTML = "🔓 Deblocat";
+    toggleFormInputs(false);
+    document.getElementById('pin-screen').classList.remove('open');
+    renderWallet();
+    renderExpenses();
+    toast("🔓 Acces deblocat cu succes");
+  } else if (currentPinInput.length === 4) {
+    toast("❌ PIN incorect!", "err");
+    clearPin();
+  }
+}
+
+function clearPin() {
+  currentPinInput = "";
+  document.getElementById('pin-dots').textContent = "";
+  document.getElementById('pin-screen').classList.remove('open');
+}
+
+function toggleFormInputs(shouldDisable) {
+  document.getElementById('salary-input').disabled = shouldDisable;
+  document.getElementById('salary-currency').disabled = shouldDisable;
+  document.getElementById('tfr-input').disabled = shouldDisable;
+  document.getElementById('eur-rate').disabled = shouldDisable;
+  document.getElementById('goal-input').disabled = shouldDisable;
+}
 
 // ══════════════════════════════════════════
 //  TOAST
@@ -910,7 +959,7 @@ function renderWallet() {
           ${showEUR}
         </div>
         <span class="row-val">${fmtC(w.amount, w.currency)}</span>
-        <div class="row-actions">
+        <div class="row-actions sensitive-action">
           <button class="btn btn-ghost btn-icon btn-sm" onclick="openEditWallet(${w.id})">✏️</button>
           <button class="btn btn-danger btn-icon btn-sm" onclick="deleteWallet(${w.id})">🗑</button>
         </div>
@@ -934,7 +983,7 @@ async function saveCat() {
   } catch (e) { toast('Eroare: ' + e.message, 'err'); }
 }
 async function deleteCat(id) {
-  if (!confirm("Sigur vrei să ștergi această categorie? Toate datele asociate vor fi pierdute.")) return;
+  if (!confirm("Sigur vrei să ștergi această categorie? Toate datele automate vor fi pierdute.")) return;
   
   try {
     await sb.delete('fd_category', id);
@@ -995,7 +1044,6 @@ async function deleteSubcat(catId, subId) {
   } catch (e) { toast('Eroare: ' + e.message, 'err'); }
 }
 function openEditSubcat(catId, subId) {
-  // Căutăm fără să forțăm tipul strict de date
   const cat = state.categories.find(c => c.id == catId); if (!cat) return;
   const sub = cat.subcats.find(s => s.id == subId); if (!sub) return;
   
@@ -1037,7 +1085,7 @@ function renderCatList(elId, cats) {
       <div class="sub-row">
         <span class="sub-lbl">${sub.label}</span>
         <span class="sub-val">${fmt(sub.amount)} €</span>
-        <div class="row-actions">
+        <div class="row-actions sensitive-action">
           <button class="btn btn-ghost btn-icon btn-sm" onclick="openEditSubcat(${cat.id},${sub.id})">✏️</button>
           <button class="btn btn-danger btn-icon btn-sm" onclick="deleteSubcat(${cat.id},${sub.id})">🗑</button>
         </div>
@@ -1050,7 +1098,7 @@ function renderCatList(elId, cats) {
         : `<span style="width:20px;display:inline-block"></span>`}
           <span class="cat-lbl">${cat.label}</span>
           <span class="cat-val">${fmt(total)} €</span>
-          <div class="row-actions">
+          <div class="row-actions sensitive-action">
             <button class="btn btn-ghost btn-icon btn-sm" title="+ Subcategorie" onclick="openAddSubcat(${cat.id})">＋</button>
             <button class="btn btn-ghost btn-icon btn-sm" onclick="openEditCat(${cat.id})">✏️</button>
             <button class="btn btn-danger btn-icon btn-sm" onclick="deleteCat(${cat.id})">🗑</button>
@@ -1148,9 +1196,7 @@ function recalcGoal() {
     </div>
   `;
 
-  // AICI ESTE MODIFICAREA SOLICITATĂ:
   if (tfr > 0) {
-    // Calculăm timpul adunând salariul net normal + tfr-ul lunar
     const savingsCombined = net + tfr;
     const monthsCombined = savingsCombined > 0 ? Math.ceil(needed / savingsCombined) : 0;
 
@@ -1221,11 +1267,8 @@ function recalcGoal() {
     </div>`;
 
   resultEl.innerHTML = html;
-    // Pune asta pe ultimul rând în interiorul funcției recalcAll()
   renderOptimizationDashboard();
-  
 }
-
 
 // ══════════════════════════════════════════
 //  OPTIMIZATION / TOP EXPENSES RENDER
@@ -1240,7 +1283,6 @@ function renderOptimizationDashboard() {
     return;
   }
 
-  // 1. Calculăm și sortăm categoriile (pe bază de impact lunar real)
   let processedCats = state.categories.map(c => {
     const rawTotal = getCatTotal(c);
     const monthlyValue = c.type === 'annual' ? (rawTotal / 12) : rawTotal;
@@ -1253,7 +1295,6 @@ function renderOptimizationDashboard() {
 
   processedCats.sort((a, b) => b.value - a.value);
 
-  // 2. Extragem și sortăm subcategoriile individual
   let processedSubs = [];
   state.categories.forEach(c => {
     if (c.subcats && c.subcats.length > 0) {
@@ -1272,7 +1313,6 @@ function renderOptimizationDashboard() {
 
   processedSubs.sort((a, b) => b.value - a.value);
 
-  // Randare Categorii
   if (processedCats.length === 0) {
     catListEl.innerHTML = '<div class="empty-msg">Nicio cheltuială înregistrată.</div>';
   } else {
@@ -1300,7 +1340,6 @@ function renderOptimizationDashboard() {
     }).join('');
   }
 
-  // Randare Subcategorii
   if (processedSubs.length === 0) {
     subcatListEl.innerHTML = '<div class="empty-msg">Nu există subcategorii definite.</div>';
   } else {
@@ -1328,7 +1367,6 @@ function renderOptimizationDashboard() {
     }).join('');
   }
 }
-
 
 // ══════════════════════════════════════════
 //  INIT
