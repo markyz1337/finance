@@ -315,6 +315,62 @@ opacity:0;pointer-events:none;white-space:nowrap;
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 .toast.ok{border-color:rgba(62,207,142,0.3);color:var(--green)}
 .toast.err{border-color:rgba(252,99,99,0.3);color:var(--red)}
+
+
+/* ── TOP COSTURI / OPTIMIZARE ── */
+.opt-bar-container {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.opt-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.opt-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+}
+.opt-name {
+  font-weight: 600;
+  color: var(--text);
+}
+.opt-amount {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  color: var(--red);
+}
+.opt-progress-bg {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border2);
+  border-radius: 50px;
+  height: 8px;
+  width: 100%;
+  overflow: hidden;
+}
+.opt-progress-fill {
+  height: 100%;
+  border-radius: 50px;
+  background: linear-gradient(90deg, var(--orange, #fc6363), var(--pink));
+  transition: width 0.5s ease;
+  min-width: 2px;
+}
+.opt-badge-type {
+  font-size: 8px;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.05);
+  color: var(--muted);
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+
 </style>
 
 </head>
@@ -426,6 +482,24 @@ opacity:0;pointer-events:none;white-space:nowrap;
       </div>
     </div>
   </div>
+
+  <!-- ④ TOP COSTURI ȘI OPTIMIZARE -->
+
+  <div class="card">
+    <div class="card-hdr">
+      <div class="card-title"><span class="dot" style="background:var(--red); box-shadow:0 0 10px var(--red)"></span>Top Costuri (Optimizare)</div>
+    </div>
+    <div class="card-body">
+      <div class="section-sep" style="margin-top:0">📂 Categorii cele mai scumpe</div>
+      <div id="top-categories-list" class="opt-bar-container"></div>
+      
+      <div class="divider" style="margin:20px 0 14px"></div>
+      
+      <div class="section-sep">🎯 Subcategorii / Poziții critice</div>
+      <div id="top-subcategories-list" class="opt-bar-container"></div>
+    </div>
+  </div>
+
 
   <!-- ④ SOLD NET -->
 
@@ -1147,7 +1221,114 @@ function recalcGoal() {
     </div>`;
 
   resultEl.innerHTML = html;
+    // Pune asta pe ultimul rând în interiorul funcției recalcAll()
+  renderOptimizationDashboard();
+  
 }
+
+
+// ══════════════════════════════════════════
+//  OPTIMIZATION / TOP EXPENSES RENDER
+// ══════════════════════════════════════════
+function renderOptimizationDashboard() {
+  const catListEl = document.getElementById('top-categories-list');
+  const subcatListEl = document.getElementById('top-subcategories-list');
+  
+  if (!state.categories || state.categories.length === 0) {
+    catListEl.innerHTML = '<div class="empty-msg">Nu există date pentru analiză.</div>';
+    subcatListEl.innerHTML = '<div class="empty-msg">Nu există date pentru analiză.</div>';
+    return;
+  }
+
+  // 1. Calculăm și sortăm categoriile (pe bază de impact lunar real)
+  let processedCats = state.categories.map(c => {
+    const rawTotal = getCatTotal(c);
+    const monthlyValue = c.type === 'annual' ? (rawTotal / 12) : rawTotal;
+    return {
+      label: c.label,
+      value: monthlyValue,
+      typeLabel: c.type === 'annual' ? 'TIP: ANUALĂ (Plătită o singură dată pe an)' : 'TIP: LUNARĂ (Recurentă lună de lună)'
+    };
+  }).filter(c => c.value > 0);
+
+  processedCats.sort((a, b) => b.value - a.value);
+
+  // 2. Extragem și sortăm subcategoriile individual
+  let processedSubs = [];
+  state.categories.forEach(c => {
+    if (c.subcats && c.subcats.length > 0) {
+      c.subcats.forEach(s => {
+        const monthlyValue = c.type === 'annual' ? ((s.amount || 0) / 12) : (s.amount || 0);
+        processedSubs.push({
+          id: `opt-sub-${c.id}-${s.id}`,
+          label: s.label,
+          parentLabel: `DIN CATEGORIA: ${c.label.toUpperCase()}`,
+          value: monthlyValue,
+          typeLabel: c.type === 'annual' ? 'TIP: ANUALĂ (Plătită o singură dată pe an)' : 'TIP: LUNARĂ (Recurentă lună de lună)'
+        });
+      });
+    }
+  });
+
+  processedSubs.sort((a, b) => b.value - a.value);
+
+  // Randare Categorii
+  if (processedCats.length === 0) {
+    catListEl.innerHTML = '<div class="empty-msg">Nicio cheltuială înregistrată.</div>';
+  } else {
+    const maxCat = processedCats[0].value;
+    catListEl.innerHTML = processedCats.map((c, index) => {
+      const pct = maxCat > 0 ? (c.value / maxCat) * 100 : 0;
+      const uniqueId = `opt-cat-${index}`;
+      return `
+        <div class="opt-item" style="margin-bottom: 6px; cursor: pointer; -webkit-tap-highlight-color:transparent;" onclick="document.getElementById('${uniqueId}').style.display = document.getElementById('${uniqueId}').style.display === 'flex' ? 'none' : 'flex'">
+          <div class="opt-info" style="align-items: center;">
+            <div>
+              <div class="opt-name" style="font-size: 13px; display: flex; align-items: center; gap: 5px;">
+                <span style="font-size: 9px; color: var(--dim);">▶</span> ${c.label}
+              </div>
+              <div id="${uniqueId}" style="margin-top: 5px; display: none; gap: 4px; flex-wrap: wrap; transition: all 0.2s;">
+                <span class="opt-badge-type" style="margin-left: 0; padding: 2px 5px; font-size: 8px; background: rgba(255,255,255,0.06); color: var(--muted); border: 1px solid var(--border2); border-radius: 4px;">${c.typeLabel}</span>
+              </div>
+            </div>
+            <span class="opt-amount">${fmt(c.value)} €/lună</span>
+          </div>
+          <div class="opt-progress-bg" style="margin-top: 6px;">
+            <div class="opt-progress-fill" style="width: ${pct}%;"></div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  // Randare Subcategorii
+  if (processedSubs.length === 0) {
+    subcatListEl.innerHTML = '<div class="empty-msg">Nu există subcategorii definite.</div>';
+  } else {
+    const maxSub = processedSubs[0].value;
+    subcatListEl.innerHTML = processedSubs.map(s => {
+      const pct = maxSub > 0 ? (s.value / maxSub) * 100 : 0;
+      return `
+        <div class="opt-item" style="margin-bottom: 6px; cursor: pointer; -webkit-tap-highlight-color:transparent;" onclick="document.getElementById('${s.id}').style.display = document.getElementById('${s.id}').style.display === 'flex' ? 'none' : 'flex'">
+          <div class="opt-info" style="align-items: center;">
+            <div>
+              <div class="opt-name" style="font-size: 13px; display: flex; align-items: center; gap: 5px;">
+                <span style="font-size: 9px; color: var(--dim);">▶</span> ${s.label}
+              </div>
+              <div id="${s.id}" style="margin-top: 5px; display: none; gap: 4px; flex-direction: column; transition: all 0.2s;">
+                <span class="opt-badge-type" style="margin-left: 0; color: var(--blue2); background: rgba(79,142,247,0.08); border: 1px solid rgba(79,142,247,0.15); padding: 2px 5px; font-size: 8px; font-weight: 700; width: max-content; border-radius: 4px;">${s.parentLabel}</span>
+                <span class="opt-badge-type" style="margin-left: 0; padding: 2px 5px; font-size: 8px; background: rgba(255,255,255,0.06); color: var(--muted); border: 1px solid var(--border2); width: max-content; border-radius: 4px;">${s.typeLabel}</span>
+              </div>
+            </div>
+            <span class="opt-amount" style="color: var(--cyan);">${fmt(s.value)} €/lună</span>
+          </div>
+          <div class="opt-progress-bg" style="margin-top: 6px;">
+            <div class="opt-progress-fill" style="width: ${pct}%; --orange: var(--cyan); background: linear-gradient(90deg, var(--cyan), var(--blue));"></div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+}
+
 
 // ══════════════════════════════════════════
 //  INIT
