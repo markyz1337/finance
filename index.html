@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ro">
 <head>
 <meta charset="UTF-8">
@@ -90,9 +89,6 @@ animation:fadeUp .55s cubic-bezier(.16,1,.3,1) both;
 .card:nth-child(1){animation-delay:.04s}
 .card:nth-child(2){animation-delay:.1s}
 .card:nth-child(3){animation-delay:.16s}
-.card:nth-child(4){animation-delay:.22s}
-.card:nth-child(5){animation-delay:.28s}
-.card:nth-child(6){animation-delay:.34s}
 
 @keyframes fadeUp{
 from{opacity:0;transform:translateY(26px) scale(0.988)}
@@ -103,8 +99,9 @@ to{opacity:1;transform:translateY(0) scale(1)}
 padding:15px 18px 13px;
 display:flex;align-items:center;justify-content:space-between;
 border-bottom:1px solid var(--border2);
+gap: 8px;
 }
-.card-title{display:flex;align-items:center;gap:9px;font-size:10px;font-weight:700;letter-spacing:1.8px;color:var(--muted);text-transform:uppercase}
+.card-title{display:flex;align-items:center;gap:9px;font-size:10px;font-weight:700;letter-spacing:1.8px;color:var(--muted);text-transform:uppercase;flex-shrink:0}
 .dot{width:7px;height:7px;border-radius:50%}
 .dot-blue{background:var(--blue);box-shadow:0 0 10px var(--blue);animation:pulse 2.5s infinite}
 .dot-green{background:var(--green);box-shadow:0 0 10px var(--green);animation:pulse 2.5s infinite 0.3s}
@@ -133,6 +130,18 @@ transition:all .2s cubic-bezier(.16,1,.3,1);white-space:nowrap;
 .btn-icon{padding:6px 9px;border-radius:10px}
 
 /* ── INPUTS ── */
+.input-wrap{position:relative}
+.input-eur-hint{
+  font-family:'Space Mono',monospace;
+  font-size:9px;
+  color:var(--dim);
+  margin-top:5px;
+  padding-left:2px;
+  transition:color .2s;
+  min-height:13px;
+}
+.input-eur-hint.has-val{color:rgba(134,180,255,0.55)}
+
 input[type="text"],input[type="number"],select{
 background:rgba(255,255,255,0.035);
 border:1px solid var(--border);
@@ -152,6 +161,32 @@ background:rgba(79,142,247,0.035);
 select option{background:#0d1530}
 .field-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px}
 
+/* ── NET BANNER ── */
+.net-banner{padding:24px 20px 20px;position:relative;overflow:hidden}
+.net-banner::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 100% at 50% 100%, rgba(245,200,66,0.04) 0%, transparent 70%);pointer-events:none}
+
+.net-center{text-align:center;position:relative}
+.net-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--muted);font-family:'Space Mono',monospace;margin-bottom:8px}
+.net-val{font-size:44px;font-weight:800;letter-spacing:-2.5px;font-family:'Space Mono',monospace;transition:color .3s}
+.net-pos{color:var(--gold);text-shadow:0 0 60px rgba(245,200,66,0.25)}
+.net-eur-sub{font-size:11px;color:var(--dim);font-family:'Space Mono',monospace;margin-top:6px}
+
+/* Eur rate pill inside net banner */
+.rate-pill{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  margin-top:18px;
+  background:rgba(255,255,255,0.018);border:1px solid var(--border2);
+  border-radius:50px;padding:6px 14px;
+}
+.rate-pill label{font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:1.5px;font-family:'Space Mono',monospace;white-space:nowrap}
+.rate-pill input{
+  background:none;border:none;padding:0;font-size:11px;font-weight:700;
+  color:var(--blue2);font-family:'Space Mono',monospace;width:52px;
+  box-shadow:none;border-radius:0;text-align:center;
+}
+.rate-pill input:focus{box-shadow:none;background:none;border:none}
+.rate-pill span{font-size:9px;color:var(--dim);font-family:'Space Mono',monospace}
+
 /* ── WALLET TOTAL ── */
 .wallet-total{text-align:center;padding:20px 0 8px}
 .total-lbl{font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;font-family:'Space Mono',monospace}
@@ -160,6 +195,7 @@ font-size:38px;font-weight:800;letter-spacing:-2px;font-family:'Space Mono',mono
 background:linear-gradient(135deg,#fff 0%,var(--blue2) 60%,var(--cyan) 100%);
 -webkit-background-clip:text;-webkit-text-fill-color:transparent;
 }
+.total-eur-sub{font-size:11px;color:var(--dim);font-family:'Space Mono',monospace;margin-top:4px}
 
 /* ── ROW ITEMS ── */
 .row-item{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--border2)}
@@ -167,6 +203,7 @@ background:linear-gradient(135deg,#fff 0%,var(--blue2) 60%,var(--cyan) 100%);
 .row-label{flex:1;font-size:13px;font-weight:600;color:var(--text);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .row-sub{font-size:10px;color:var(--dim);font-family:'Space Mono',monospace;margin-top:2px}
 .row-val{font-family:'Space Mono',monospace;font-size:12px;font-weight:700;color:var(--text);white-space:nowrap}
+.row-val-eur{font-family:'Space Mono',monospace;font-size:9px;color:var(--dim);display:block;text-align:right;margin-top:2px}
 .row-actions{display:flex;gap:4px;flex-shrink:0}
 .empty-msg{color:var(--dim);font-size:12px;padding:12px 0;font-style:italic;text-align:center}
 
@@ -180,14 +217,6 @@ font-size:11px;font-weight:700;color:var(--blue2);font-family:'Space Mono',monos
 .badge-gold{background:rgba(245,200,66,0.1);border-color:rgba(245,200,66,0.25);color:var(--gold)}
 .badge-purple{background:rgba(177,151,252,0.1);border-color:rgba(177,151,252,0.25);color:var(--purple)}
 .badge-red{background:rgba(252,99,99,0.1);border-color:rgba(252,99,99,0.25);color:var(--red)}
-
-/* ── SALARY ── */
-.salary-grid{display:flex;flex-direction:column;gap:14px}
-.input-row{display:flex;align-items:center;gap:8px}
-.input-row input{flex:1}
-.info-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border2)}
-.info-row:last-child{border-bottom:none}
-.info-lbl{font-size:12px;color:var(--muted)}
 
 /* ── DIVIDER ── */
 .divider{height:1px;background:var(--border2);margin:12px 0}
@@ -207,16 +236,21 @@ display:flex;align-items:center;gap:8px;
 padding:10px 0;border-bottom:1px solid var(--border2);
 }
 .cat-row:last-child{border-bottom:none}
-.cat-toggle{cursor:pointer;background:none;border:none;color:var(--dim);font-size:9px;padding:2px 4px;transition:transform .22s cubic-bezier(.16,1,.3,1);line-height:1}
+.cat-clickable-zone { display:flex; align-items:center; gap:8px; flex:1; min-width:0; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+.cat-toggle{background:none;border:none;color:var(--dim);font-size:9px;padding:2px 4px;transition:transform .22s cubic-bezier(.16,1,.3,1);line-height:1;pointer-events:none}
 .cat-toggle.open{transform:rotate(90deg)}
 .cat-lbl{flex:1;font-size:13px;font-weight:700;color:var(--text);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.cat-val{font-family:'Space Mono',monospace;font-size:12px;font-weight:700;color:var(--gold);white-space:nowrap}
+.cat-val-wrap{text-align:right;flex-shrink:0}
+.cat-val{font-family:'Space Mono',monospace;font-size:12px;font-weight:700;color:var(--gold);white-space:nowrap;display:block}
+.cat-val-eur{font-family:'Space Mono',monospace;font-size:9px;color:var(--dim);white-space:nowrap;display:block}
 .subcats{padding-left:22px;display:none}
 .subcats.open{display:block}
 .sub-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.025)}
 .sub-row:last-child{border-bottom:none}
 .sub-lbl{flex:1;font-size:12px;color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.sub-val{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap}
+.sub-val-wrap{text-align:right}
+.sub-val{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap;display:block}
+.sub-val-eur{font-family:'Space Mono',monospace;font-size:9px;color:var(--dim);white-space:nowrap;display:block}
 .total-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0 0;margin-top:4px}
 
 /* ── SUM GRID ── */
@@ -225,59 +259,7 @@ padding:10px 0;border-bottom:1px solid var(--border2);
 .s-lbl{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--dim);margin-bottom:8px}
 .s-val{font-size:16px;font-weight:800;font-family:'Space Mono',monospace;background:linear-gradient(135deg,#fff,var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .s-val.blue{background:linear-gradient(135deg,#fff,var(--blue2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-
-/* ── NET BANNER ── */
-.net-banner{padding:26px 20px;text-align:center;position:relative;overflow:hidden}
-.net-banner::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 100% at 50% 100%, rgba(62,207,142,0.06) 0%, transparent 70%);pointer-events:none}
-.net-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:10px;font-family:'Space Mono',monospace}
-.net-val{font-size:44px;font-weight:800;letter-spacing:-2.5px;font-family:'Space Mono',monospace;transition:color .3s}
-.net-pos{color:var(--green);text-shadow:0 0 60px rgba(62,207,142,0.35)}
-.net-neg{color:var(--red);text-shadow:0 0 60px rgba(252,99,99,0.35)}
-.net-sub{font-size:10px;color:var(--dim);margin-top:9px;font-family:'Space Mono',monospace;line-height:1.7}
-
-/* ── GOAL ── */
-.goal-time-display{text-align:center;padding:16px 0 8px}
-.goal-time-num{
-font-size:26px;font-weight:800;letter-spacing:-1px;font-family:'Space Mono',monospace;
-background:linear-gradient(135deg,#fff,var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;
-}
-.goal-time-sub{font-size:10px;color:var(--dim);margin-top:5px;font-family:'Space Mono',monospace}
-.progress-bar-wrap{background:rgba(255,255,255,0.06);border-radius:50px;height:7px;margin:14px 0 6px;overflow:hidden}
-.progress-bar{height:100%;border-radius:50px;background:linear-gradient(90deg,var(--cyan),var(--blue2));transition:width 0.7s cubic-bezier(.16,1,.3,1);min-width:3px}
-
-/* ── GOAL TABLE ── */
-.goal-table-wrap{max-height:320px;overflow-y:auto;border-radius:var(--r-sm);border:1px solid var(--border2);margin-top:10px}
-.goal-table-wrap::-webkit-scrollbar{width:3px}
-.goal-table-wrap::-webkit-scrollbar-track{background:transparent}
-.goal-table-wrap::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
-.goal-table{width:100%;border-collapse:collapse;font-size:11px}
-.goal-table th{color:var(--dim);font-weight:700;text-align:left;padding:8px 9px;border-bottom:1px solid var(--border2);font-size:9px;text-transform:uppercase;letter-spacing:1px;font-family:'Space Mono',monospace;position:sticky;top:0;background:#080e22}
-.goal-table td{padding:7px 9px;border-bottom:1px solid var(--border2);color:var(--muted);font-family:'Space Mono',monospace;font-size:10px}
-.goal-table td:first-child{color:var(--text);font-family:'Syne',sans-serif;font-weight:600;font-size:11px}
-.goal-table td.col-green{color:var(--green)}
-.goal-table td.col-cyan{color:var(--cyan)}
-.goal-table td.col-purple{color:var(--purple)}
-.goal-table tr:last-child td{border-bottom:none}
-.goal-table tr.done td{opacity:.4}
-
-/* ── INFO BOX ── */
-.info-box{
-background:rgba(34,211,238,0.055);border:1px solid rgba(34,211,238,0.14);
-border-radius:14px;padding:13px 15px;margin-top:12px;
-font-family:'Space Mono', monospace;
-font-size:12px;color:var(--cyan);line-height:1.7;
-}
-.info-box.red{background:rgba(252,99,99,0.055);border-color:rgba(252,99,99,0.14);color:var(--red)}
-.info-box.green{background:rgba(62,207,142,0.055);border-color:rgba(62,207,142,0.14);color:var(--green)}
-.info-box strong{font-weight:800}
-
-/* ── TFR ── */
-.tfr-wrap{background:rgba(177,151,252,0.06);border:1px solid rgba(177,151,252,0.15);border-radius:14px;padding:14px;margin-top:12px}
-.tfr-title{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--purple);margin-bottom:10px}
-.tfr-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.tfr-block{background:rgba(255,255,255,0.03);border-radius:10px;padding:10px;text-align:center}
-.tfr-lbl{font-size:8px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px}
-.tfr-val{font-size:13px;font-weight:700;font-family:'Space Mono',monospace;color:var(--purple)}
+.s-val-eur{font-size:9px;color:var(--dim);font-family:'Space Mono',monospace;margin-top:4px}
 
 /* ── MODAL ── */
 .overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.7);backdrop-filter:blur(14px);align-items:flex-end;justify-content:center}
@@ -317,25 +299,14 @@ opacity:0;pointer-events:none;white-space:nowrap;
 .toast.ok{border-color:rgba(62,207,142,0.3);color:var(--green)}
 .toast.err{border-color:rgba(252,99,99,0.3);color:var(--red)}
 
-/* ── TOP COSTURI / OPTIMIZARE ── */
-.opt-bar-container { margin-top: 14px; display: flex; flex-direction: column; gap: 12px; }
-.opt-item { display: flex; flex-direction: column; gap: 5px; }
-.opt-info { display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
-.opt-name { font-weight: 600; color: var(--text); }
-.opt-amount { font-family: 'Space Mono', monospace; font-weight: 700; color: var(--red); }
-.opt-progress-bg { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border2); border-radius: 50px; height: 8px; width: 100%; overflow: hidden; }
-.opt-progress-fill { height: 100%; border-radius: 50px; background: linear-gradient(90deg, var(--orange, #fc6363), var(--pink)); transition: width 0.5s ease; min-width: 2px; }
-.opt-badge-type { font-size: 8px; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; background: rgba(255,255,255,0.05); color: var(--muted); margin-left: 6px; vertical-align: middle; }
-
 /* ── LOCK SYSTEM STYLE ── */
 .btn-lock { background: rgba(252, 99, 99, 0.1); color: var(--red); border: 1px solid rgba(252, 99, 99, 0.25); border-radius: 12px; font-size: 11px; padding: 4px 12px; gap: 6px; }
 .btn-lock.unlocked { background: rgba(62, 207, 142, 0.1); color: var(--green); border-color: rgba(62, 207, 142, 0.25); }
 
-/* Control vizibilitate acțiuni sensibile */
 .sensitive-action { display: none !important; }
 body.app-unlocked .sensitive-action { display: inline-flex !important; }
 
-/* Tastatură Numerică Pin */
+/* PIN */
 .pin-overlay { display: none; position: fixed; inset: 0; z-index: 999; background: rgba(4, 6, 14, 0.95); backdrop-filter: blur(20px); align-items: center; justify-content: center; }
 .pin-overlay.open { display: flex; }
 .pin-container { width: 100%; max-width: 280px; text-align: center; padding: 20px; }
@@ -345,85 +316,10 @@ body.app-unlocked .sensitive-action { display: inline-flex !important; }
 .pin-key:active { background: var(--border); color: #fff; }
 .pin-key.clear { font-size: 14px; color: var(--red); background: rgba(252,99,99,0.05); border-color: rgba(252,99,99,0.15); border-radius: 16px; width: 100%; height: 50px; grid-column: span 3; margin-top: 10px; }
 
-/* ══ PROFILE SYSTEM ══ */
-.profile-bar {
-display: flex;
-align-items: center;
-gap: 8px;
-padding: 12px 18px;
-background: rgba(177,151,252,0.04);
-border-bottom: 1px solid rgba(177,151,252,0.1);
-overflow-x: auto;
-scrollbar-width: none;
--webkit-overflow-scrolling: touch;
-}
-.profile-bar::-webkit-scrollbar { display: none; }
-
-.profile-chip {
-display: inline-flex;
-align-items: center;
-gap: 6px;
-padding: 6px 13px;
-border-radius: 50px;
-border: 1px solid var(--border);
-background: var(--glass2);
-font-size: 11px;
-font-weight: 700;
-color: var(--muted);
-cursor: pointer;
-white-space: nowrap;
-transition: all .2s;
-flex-shrink: 0;
--webkit-tap-highlight-color: transparent;
-}
-.profile-chip:active { transform: scale(0.95); }
-.profile-chip.active {
-background: rgba(177,151,252,0.15);
-border-color: rgba(177,151,252,0.4);
-color: var(--purple);
-box-shadow: 0 0 14px rgba(177,151,252,0.12);
-}
-.profile-chip-add {
-display: inline-flex;
-align-items: center;
-justify-content: center;
-width: 30px;
-height: 30px;
-border-radius: 50%;
-border: 1px dashed var(--border);
-background: transparent;
-color: var(--dim);
-font-size: 16px;
-cursor: pointer;
-flex-shrink: 0;
-transition: all .2s;
--webkit-tap-highlight-color: transparent;
-}
-.profile-chip-add:active { background: var(--glass); color: var(--purple); border-color: var(--purple); }
-.profile-chip-add.sensitive-action { display: none !important; }
-body.app-unlocked .profile-chip-add { display: inline-flex !important; }
-
-.profile-active-label {
-font-size: 9px;
-font-weight: 700;
-text-transform: uppercase;
-letter-spacing: 1.5px;
-color: var(--purple);
-padding: 4px 10px;
-background: rgba(177,151,252,0.08);
-border: 1px solid rgba(177,151,252,0.18);
-border-radius: 6px;
-font-family: 'Space Mono', monospace;
-white-space: nowrap;
-}
-
-.profile-actions-inline {
-display: flex;
-gap: 4px;
-flex-shrink: 0;
-margin-left: auto;
-}
-
+/* ── INFO ROW ── */
+.info-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border2)}
+.info-row:last-child{border-bottom:none}
+.info-lbl{font-size:12px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -441,18 +337,26 @@ margin-left: auto;
   </div>
 </div>
 
-<!-- ══ PROFILE BAR ══ -->
-
-<div class="profile-bar" id="profile-bar">
-  <!-- chips injected by JS -->
-  <button class="profile-chip-add sensitive-action" title="Adaugă profil nou" onclick="openAddProfile()">＋</button>
-</div>
-
 <div class="main">
 
-  <!-- ① PORTOFEL -->
+  <!-- ① TOTAL CHELTUIELI LUNARE -->
+  <div class="card net-banner" id="card-net-banner">
+    <div class="net-center">
+      <div class="net-lbl">🧾 Media lunară a cheltuielilor</div>
+      <div class="net-val net-pos" id="net-val">0 lei</div>
+      <div class="net-eur-sub" id="net-val-eur">≈ 0 €</div>
+    </div>
 
-  <div class="card">
+    <!-- EUR rate pill -->
+    <div class="rate-pill">
+      <label for="eur-rate">1 EUR =</label>
+      <input type="number" id="eur-rate" value="4.97" inputmode="decimal" min="0" step="0.01" oninput="saveSalaryDebounced()">
+      <span>RON</span>
+    </div>
+  </div>
+
+  <!-- ② PORTOFEL -->
+  <div class="card" id="card-wallet">
     <div class="card-hdr">
       <div class="card-title"><span class="dot dot-blue"></span>Portofelul Personal</div>
       <button class="btn btn-blue btn-sm sensitive-action" onclick="openModal('mo-wallet')">+ Adaugă</button>
@@ -461,56 +365,17 @@ margin-left: auto;
       <div class="loader" id="loader-wallet"><span class="spinner"></span>Se încarcă...</div>
       <div id="wallet-list"></div>
       <div class="wallet-total">
-        <div class="total-lbl">Total active (în EUR)</div>
-        <div class="total-num" id="wallet-total">0 €</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ② CÂȘTIGURI -->
-
-  <div class="card">
-    <div class="card-hdr">
-      <div class="card-title"><span class="dot dot-green"></span>Media Câștigurilor</div>
-    </div>
-    <div class="card-body">
-      <div class="salary-grid">
-        <div>
-          <div class="field-label">Media salariului lunar (12 luni)</div>
-          <div class="input-row">
-            <input type="number" id="salary-input" placeholder="ex: 1200" inputmode="decimal" min="0" step="0.01" oninput="saveSalaryDebounced()" disabled>
-            <select id="salary-currency" onchange="saveSalaryDebounced()" style="width:auto" disabled>
-              <option value="EUR">EUR €</option>
-              <option value="MDL">MDL lei</option>
-              <option value="USD">USD $</option>
-              <option value="RON">RON lei</option>
-            </select>
-          </div>
-        </div>
-        <div>
-          <div class="field-label">TFR lunar (opțional, EUR)</div>
-          <input type="number" id="tfr-input" placeholder="ex: 80" inputmode="decimal" min="0" step="0.01" oninput="saveSalaryDebounced()" disabled>
-        </div>
-        <div>
-          <div class="field-label">Curs EUR → MDL</div>
-          <div class="input-row">
-            <input type="number" id="eur-rate" placeholder="ex: 19.5" inputmode="decimal" min="0" step="0.01" value="19.5" oninput="saveSalaryDebounced()" disabled>
-            <span class="badge">MDL/EUR</span>
-          </div>
-        </div>
-        <div class="divider" style="margin:4px 0"></div>
-        <div class="info-row"><span class="info-lbl">Venit lunar în EUR</span><span class="badge badge-green" id="salary-eur">0 €</span></div>
-        <div class="info-row"><span class="info-lbl">TFR lunar</span><span class="badge badge-purple" id="tfr-badge">0 €</span></div>
-        <div class="info-row"><span class="info-lbl">Venit anual estimat</span><span class="badge badge-gold" id="salary-annual">0 €</span></div>
+        <div class="total-lbl">Total active (în RON)</div>
+        <div class="total-num" id="wallet-total">0 lei</div>
+        <div class="total-eur-sub" id="wallet-total-eur">≈ 0 €</div>
       </div>
     </div>
   </div>
 
   <!-- ③ CHELTUIELI -->
-
-  <div class="card">
+  <div class="card" id="card-expenses">
     <div class="card-hdr">
-      <div class="card-title"><span class="dot dot-gold"></span>Cheltuieli |<span id="expenses-profile-label" style="color:var(--purple);font-size:9px;letter-spacing:1px;margin-left:0px"></span></div>
+      <div class="card-title"><span class="dot dot-gold"></span>Cheltuieli</div>
       <button class="btn btn-blue btn-sm sensitive-action" onclick="openModal('mo-cat')">+ Categorie</button>
     </div>
     <div class="card-body">
@@ -520,7 +385,10 @@ margin-left: auto;
       <div id="annual-list"></div>
       <div class="total-row">
         <span class="info-lbl" style="font-size:11px">Total anual direct</span>
-        <span class="badge badge-gold" id="annual-total">0 €</span>
+        <div style="text-align:right">
+          <span class="badge badge-gold" id="annual-total">0 lei</span>
+          <div style="font-size:9px;color:var(--dim);font-family:'Space Mono',monospace;margin-top:3px" id="annual-total-eur">≈ 0 €</div>
+        </div>
       </div>
 
       <div class="divider"></div>
@@ -529,66 +397,30 @@ margin-left: auto;
       <div id="monthly-list"></div>
       <div class="total-row">
         <span class="info-lbl" style="font-size:11px">Total lunar direct</span>
-        <span class="badge badge-gold" id="monthly-total">0 €</span>
+        <div style="text-align:right">
+          <span class="badge badge-gold" id="monthly-total">0 lei</span>
+          <div style="font-size:9px;color:var(--dim);font-family:'Space Mono',monospace;margin-top:3px" id="monthly-total-eur">≈ 0 €</div>
+        </div>
       </div>
 
       <div class="sum-grid">
         <div class="sum-block">
           <div class="s-lbl">Media lunară totală</div>
-          <div class="s-val" id="sum-monthly-avg">0 €</div>
+          <div class="s-val" id="sum-monthly-avg">0 lei</div>
+          <div class="s-val-eur" id="sum-monthly-avg-eur">≈ 0 €</div>
         </div>
         <div class="sum-block">
           <div class="s-lbl">Total anual complet</div>
-          <div class="s-val" id="sum-annual">0 €</div>
+          <div class="s-val" id="sum-annual">0 lei</div>
+          <div class="s-val-eur" id="sum-annual-eur">≈ 0 €</div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- ④ TOP COSTURI ȘI OPTIMIZARE -->
-
-  <div class="card">
-    <div class="card-hdr">
-      <div class="card-title"><span class="dot" style="background:var(--red); box-shadow:0 0 10px var(--red)"></span>Top Costuri (Optimizare)</div>
-    </div>
-    <div class="card-body">
-      <div class="section-sep" style="margin-top:0">📂 Categorii cele mai scumpe</div>
-      <div id="top-categories-list" class="opt-bar-container"></div>
-
-      <div class="divider" style="margin:20px 0 14px"></div>
-      
-      <div class="section-sep">🎯 Subcategorii / Poziții critice</div>
-      <div id="top-subcategories-list" class="opt-bar-container"></div>
-    </div>
-  </div>
-
-  <!-- ④ SOLD NET -->
-
-  <div class="card net-banner">
-    <div class="net-lbl">🧾 Sold lunar net simulat</div>
-    <div class="net-val net-pos" id="net-val">0 €</div>
-    <div class="net-sub" id="net-formula">salariu − media cheltuielilor</div>
-  </div>
-
-  <!-- ⑤ OBIECTIV -->
-
-  <div class="card">
-    <div class="card-hdr">
-      <div class="card-title"><span class="dot dot-cyan"></span>Obiectiv Financiar</div>
-    </div>
-    <div class="card-body">
-      <div>
-        <div class="field-label">Suma dorită (EUR)</div>
-        <input type="number" id="goal-input" placeholder="ex: 10000" inputmode="decimal" min="0" step="0.01" oninput="saveGoalDebounced()" disabled>
-      </div>
-      <div id="goal-result" style="margin-top:14px"></div>
     </div>
   </div>
 
 </div>
 
 <!-- ══ PIN KEYPAD OVERLAY ══ -->
-
 <div class="pin-overlay" id="pin-screen">
   <div class="pin-container">
     <div style="font-size:12px; color:var(--muted); margin-bottom:10px; text-transform:uppercase; letter-spacing:1px;">Introdu PIN Securitate</div>
@@ -614,21 +446,18 @@ margin-left: auto;
 <!-- ══ MODALS ══ -->
 
 <!-- Portofel Adaugă -->
-
 <div class="overlay" id="mo-wallet">
   <div class="modal">
     <div class="modal-handle"></div>
     <div class="modal-title">💰 Sursă / Cont</div>
     <div class="modal-fields">
       <div><div class="field-label">Etichetă</div><input type="text" id="w-label" placeholder="ex: 👝 Revolut"></div>
-      <div><div class="field-label">Sumă</div><input type="number" id="w-amount" placeholder="ex: 500" inputmode="decimal" step="0.01"></div>
-      <div><div class="field-label">Monedă</div>
-        <select id="w-currency">
-          <option value="EUR">EUR €</option>
-          <option value="MDL">MDL lei</option>
-          <option value="USD">USD $</option>
-          <option value="RON">RON lei</option>
-        </select>
+      <div>
+        <div class="field-label">Sumă (RON)</div>
+        <div class="input-wrap">
+          <input type="number" id="w-amount" placeholder="ex: 2500" inputmode="decimal" step="0.01" oninput="updateHint('w-amount','w-amount-eur')">
+          <div class="input-eur-hint" id="w-amount-eur"></div>
+        </div>
       </div>
     </div>
     <div class="modal-actions">
@@ -639,7 +468,6 @@ margin-left: auto;
 </div>
 
 <!-- Portofel Edit -->
-
 <div class="overlay" id="mo-edit-wallet">
   <div class="modal">
     <div class="modal-handle"></div>
@@ -647,14 +475,12 @@ margin-left: auto;
     <input type="hidden" id="ew-id">
     <div class="modal-fields">
       <div><div class="field-label">Etichetă</div><input type="text" id="ew-label"></div>
-      <div><div class="field-label">Sumă</div><input type="number" id="ew-amount" inputmode="decimal" step="0.01"></div>
-      <div><div class="field-label">Monedă</div>
-        <select id="ew-currency">
-          <option value="EUR">EUR €</option>
-          <option value="MDL">MDL lei</option>
-          <option value="USD">USD $</option>
-          <option value="RON">RON lei</option>
-        </select>
+      <div>
+        <div class="field-label">Sumă (RON)</div>
+        <div class="input-wrap">
+          <input type="number" id="ew-amount" inputmode="decimal" step="0.01" oninput="updateHint('ew-amount','ew-amount-eur')">
+          <div class="input-eur-hint" id="ew-amount-eur"></div>
+        </div>
       </div>
     </div>
     <div class="modal-actions">
@@ -665,7 +491,6 @@ margin-left: auto;
 </div>
 
 <!-- Categorie Adaugă -->
-
 <div class="overlay" id="mo-cat">
   <div class="modal">
     <div class="modal-handle"></div>
@@ -673,7 +498,13 @@ margin-left: auto;
     <div class="modal-fields">
       <div><div class="field-label">Nume categorie</div><input type="text" id="cat-label" placeholder="ex: 🏠 Chirie"></div>
       <div class="flex-row">
-        <div><div class="field-label">Sumă (€)</div><input type="number" id="cat-amount" placeholder="ex: 300" inputmode="decimal" step="0.01"></div>
+        <div>
+          <div class="field-label">Sumă (RON)</div>
+          <div class="input-wrap">
+            <input type="number" id="cat-amount" placeholder="ex: 1500" inputmode="decimal" step="0.01" oninput="updateHint('cat-amount','cat-amount-eur')">
+            <div class="input-eur-hint" id="cat-amount-eur"></div>
+          </div>
+        </div>
         <div><div class="field-label">Tip</div>
           <select id="cat-type">
             <option value="monthly">Lunară 🗓</option>
@@ -690,7 +521,6 @@ margin-left: auto;
 </div>
 
 <!-- Categorie Edit -->
-
 <div class="overlay" id="mo-edit-cat">
   <div class="modal">
     <div class="modal-handle"></div>
@@ -699,7 +529,13 @@ margin-left: auto;
     <div class="modal-fields">
       <div><div class="field-label">Nume</div><input type="text" id="ec-label"></div>
       <div class="flex-row">
-        <div><div class="field-label">Sumă (€)</div><input type="number" id="ec-amount" inputmode="decimal" step="0.01"></div>
+        <div>
+          <div class="field-label">Sumă (RON)</div>
+          <div class="input-wrap">
+            <input type="number" id="ec-amount" inputmode="decimal" step="0.01" oninput="updateHint('ec-amount','ec-amount-eur')">
+            <div class="input-eur-hint" id="ec-amount-eur"></div>
+          </div>
+        </div>
         <div><div class="field-label">Tip</div>
           <select id="ec-type">
             <option value="monthly">Lunară 🗓</option>
@@ -716,7 +552,6 @@ margin-left: auto;
 </div>
 
 <!-- Subcategorie Adaugă -->
-
 <div class="overlay" id="mo-subcat">
   <div class="modal">
     <div class="modal-handle"></div>
@@ -724,7 +559,13 @@ margin-left: auto;
     <input type="hidden" id="sub-parent-id">
     <div class="modal-fields">
       <div><div class="field-label">Nume</div><input type="text" id="sub-label" placeholder="ex: 📶 SIM 1"></div>
-      <div><div class="field-label">Sumă (€)</div><input type="number" id="sub-amount" placeholder="ex: 7" inputmode="decimal" step="0.01"></div>
+      <div>
+        <div class="field-label">Sumă (RON)</div>
+        <div class="input-wrap">
+          <input type="number" id="sub-amount" placeholder="ex: 35" inputmode="decimal" step="0.01" oninput="updateHint('sub-amount','sub-amount-eur')">
+          <div class="input-eur-hint" id="sub-amount-eur"></div>
+        </div>
+      </div>
     </div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeModal('mo-subcat')">Anulează</button>
@@ -734,7 +575,6 @@ margin-left: auto;
 </div>
 
 <!-- Subcategorie Edit -->
-
 <div class="overlay" id="mo-edit-subcat">
   <div class="modal">
     <div class="modal-handle"></div>
@@ -743,62 +583,17 @@ margin-left: auto;
     <input type="hidden" id="es-parent-id">
     <div class="modal-fields">
       <div><div class="field-label">Nume</div><input type="text" id="es-label"></div>
-      <div><div class="field-label">Sumă (€)</div><input type="number" id="es-amount" inputmode="decimal" step="0.01"></div>
+      <div>
+        <div class="field-label">Sumă (RON)</div>
+        <div class="input-wrap">
+          <input type="number" id="es-amount" inputmode="decimal" step="0.01" oninput="updateHint('es-amount','es-amount-eur')">
+          <div class="input-eur-hint" id="es-amount-eur"></div>
+        </div>
+      </div>
     </div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeModal('mo-edit-subcat')">Anulează</button>
       <button class="btn btn-blue" onclick="updateSubcat()">Salvează</button>
-    </div>
-  </div>
-</div>
-
-<!-- ══ PROFILE MODALS ══ -->
-
-<!-- Adaugă Profil Nou -->
-
-<div class="overlay" id="mo-add-profile">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-title">🗂 Profil Nou de Cheltuieli</div>
-    <div class="modal-fields">
-      <div>
-        <div class="field-label">Nume profil</div>
-        <input type="text" id="new-profile-name" placeholder="ex: 🏡 Stil de viață simplu">
-      </div>
-      <div>
-        <div class="field-label">Pornire</div>
-        <select id="new-profile-base">
-          <option value="empty">Profil gol (de la zero)</option>
-          <option value="current">Copie din profilul activ</option>
-        </select>
-      </div>
-    </div>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeModal('mo-add-profile')">Anulează</button>
-      <button class="btn btn-blue" onclick="createProfile()">Creează</button>
-    </div>
-  </div>
-</div>
-
-<!-- Editează / Șterge Profil -->
-
-<div class="overlay" id="mo-manage-profile">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-title">⚙️ Gestionează Profilul</div>
-    <input type="hidden" id="mp-id">
-    <div class="modal-fields">
-      <div>
-        <div class="field-label">Nume profil</div>
-        <input type="text" id="mp-name">
-      </div>
-    </div>
-    <div class="modal-actions" style="flex-direction:column;">
-      <div style="display:flex;gap:10px;width:100%">
-        <button class="btn btn-ghost" onclick="closeModal('mo-manage-profile')" style="flex:1;padding:14px;font-size:14px;border-radius:16px">Anulează</button>
-        <button class="btn btn-blue" onclick="saveProfileRename()" style="flex:1;padding:14px;font-size:14px;border-radius:16px">Salvează</button>
-      </div>
-      <button class="btn btn-danger" id="mp-delete-btn" onclick="deleteProfile()" style="width:100%;padding:14px;font-size:13px;border-radius:16px;margin-top:0">🗑 Șterge Profilul</button>
     </div>
   </div>
 </div>
@@ -811,6 +606,9 @@ margin-left: auto;
 // ══════════════════════════════════════════
 const SUPABASE_URL = 'https://fndjrfieitieqzafhyzz.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_bHDKjiKAVHqW199ICw7i2g_O3olYMAr';
+
+// URL-ul nou specificat de tine pentru preferințe/medie lunară
+const PREFERENCES_API_URL = 'https://gbqmgromjwqdnlwrejnb.supabase.co/rest/v1/bf_preferences?select=*&apikey=sb_publishable_RjWheWI2qN_ES0qOKYmcNQ_iJfgdzz0';
 
 const sb = {
   headers: {
@@ -857,308 +655,42 @@ const sb = {
 };
 
 // ══════════════════════════════════════════
-//  STATE & SECURITY SYSTEM
+//  STATE & SECURITY
 // ══════════════════════════════════════════
 let state = { wallet: [], categories: [] };
-let _salaryEUR = 0, _netMonthly = 0, _walletTotalEUR = 0, _tfrMonthly = 0;
+let supabaseConstantWalletItem = null; 
+let _netMonthlyRON = 0, _walletTotalRON = 0;
 
-let isUnlocked = false;
+let isUnlocked = true;
 let currentPinInput = "";
 const TARGET_PIN = "4579";
 
-// ══════════════════════════════════════════
-//  PROFILE SYSTEM & VALUES INTERPRETER
-// ══════════════════════════════════════════
-const MAIN_PROFILE_ID = 'main';
-let profiles = []; 
-let activeProfileId = MAIN_PROFILE_ID;
-let _nextCatLocalId = 1000; 
+let _nextCatLocalId = 1000;
 let _nextSubLocalId = 5000;
-
 function genCatId() { return _nextCatLocalId++; }
 function genSubId() { return _nextSubLocalId++; }
 
-function profileSettingKey(id) { return `profile_cats_${id}`; }
-function profileSalaryKey(id) { return `profile_salary_data_${id}`; }
-function profileGoalKey(id) { return `profile_goal_data_${id}`; }
+// ── CURRENCY HELPERS ──
+function getEurRate() { return parseFloat(document.getElementById('eur-rate').value) || 4.97; }
+function ronToEur(ron) { return ron / getEurRate(); }
+function fmt(n) {
+  if (isNaN(n) || n === null) return '0';
+  return new Intl.NumberFormat('ro-RO', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(Math.round(n));
+}
+function fmtEur(ron) { return `≈ ${fmt(ronToEur(ron))} €`; }
 
-async function loadProfiles() {
-  try {
-    const rows = await sb.get('fd_settings', 'key=in.(profile_list,active_profile)');
-    const sm = {};
-    (rows || []).forEach(r => sm[r.key] = r.value);
-
-    if (sm.profile_list) {
-      profiles = JSON.parse(sm.profile_list);
-    }
-    if (sm.active_profile) {
-      activeProfileId = sm.active_profile;
-    }
-
-    if (!profiles.find(p => p.id === MAIN_PROFILE_ID)) {
-      profiles.unshift({ id: MAIN_PROFILE_ID, name: '🏠 Principal' });
-    }
-  } catch(e) {
-    profiles = [{ id: MAIN_PROFILE_ID, name: '🏠 Principal' }];
-    activeProfileId = MAIN_PROFILE_ID;
+// ── LIVE EUR HINT ──
+function updateHint(inputId, hintId) {
+  const val = parseFloat(document.getElementById(inputId).value);
+  const hintEl = document.getElementById(hintId);
+  if (!hintEl) return;
+  if (!val || isNaN(val)) {
+    hintEl.textContent = '';
+    hintEl.classList.remove('has-val');
+  } else {
+    hintEl.textContent = fmtEur(val);
+    hintEl.classList.add('has-val');
   }
-}
-
-async function saveProfileList() {
-  try {
-    await sb.upsert('fd_settings', [
-      { key: 'profile_list', value: JSON.stringify(profiles) },
-      { key: 'active_profile', value: activeProfileId }
-    ], 'key');
-  } catch(e) {
-    toast('Eroare salvare profile: ' + e.message, 'err');
-  }
-}
-
-async function saveCurrentProfileData() {
-  const data = state.categories.map(c => ({
-    id: c.id,
-    label: c.label,
-    amount: c.amount,
-    type: c.type,
-    subcats: (c.subcats || []).map(s => ({ id: s.id, label: s.label, amount: s.amount }))
-  }));
-
-  const settingKey = profileSettingKey(activeProfileId);
-  try {
-    await sb.upsert('fd_settings', [{ key: settingKey, value: JSON.stringify(data) }], 'key');
-  } catch(e) {
-    toast('Eroare salvare profil: ' + e.message, 'err');
-  }
-}
-
-async function loadProfileData(profileId) {
-  setLoader('loader-cats', true);
-  try {
-    // 1. Încarcă mai întâi datele specifice profilului (Salariu, Curs, TFR)
-    const salKey = profileSalaryKey(profileId);
-    const salRows = await sb.get('fd_settings', `key=eq.${encodeURIComponent(salKey)}`);
-    
-    if (salRows && salRows.length && salRows[0].value) {
-      const sData = JSON.parse(salRows[0].value);
-      document.getElementById('salary-input').value = sData.salary || '';
-      document.getElementById('salary-currency').value = sData.salary_currency || 'EUR';
-      document.getElementById('tfr-input').value = sData.tfr || '';
-      document.getElementById('eur-rate').value = sData.eur_rate || '19.5';
-    } else {
-      if (profileId === MAIN_PROFILE_ID) {
-        const fallback = await sb.get('fd_settings', 'key=in.(salary,salary_currency,tfr,eur_rate)');
-        const fMap = {};
-        fallback.forEach(f => fMap[f.key] = f.value);
-        document.getElementById('salary-input').value = fMap.salary || '';
-        document.getElementById('salary-currency').value = fMap.salary_currency || 'EUR';
-        document.getElementById('tfr-input').value = fMap.tfr || '';
-        document.getElementById('eur-rate').value = fMap.eur_rate || '19.5';
-      } else {
-        document.getElementById('salary-input').value = '';
-        document.getElementById('salary-currency').value = 'EUR';
-        document.getElementById('tfr-input').value = '';
-        document.getElementById('eur-rate').value = '19.5';
-      }
-    }
-
-    // 2. Încarcă Obiectivul Financiar (Suma dorită) specific profilului
-    const gKey = profileGoalKey(profileId);
-    const goalRows = await sb.get('fd_settings', `key=eq.${encodeURIComponent(gKey)}`);
-    
-    if (goalRows && goalRows.length && goalRows[0].value) {
-      document.getElementById('goal-input').value = goalRows[0].value;
-    } else {
-      if (profileId === MAIN_PROFILE_ID) {
-        const legacyGoal = await sb.get('fd_settings', 'key=eq.goal');
-        document.getElementById('goal-input').value = (legacyGoal && legacyGoal.length) ? legacyGoal[0].value : '';
-      } else {
-        document.getElementById('goal-input').value = '';
-      }
-    }
-
-    // 3. Încarcă cheltuielile specifice
-    if (profileId === MAIN_PROFILE_ID) {
-      const [cats, subcats] = await Promise.all([
-        sb.get('fd_category', 'order=created_at.asc'),
-        sb.get('fd_subcategory', 'order=created_at.asc')
-      ]);
-      const subsMap = {};
-      (subcats || []).forEach(s => {
-        if (!subsMap[s.category_id]) subsMap[s.category_id] = [];
-        subsMap[s.category_id].push(s);
-      });
-      state.categories = (cats || []).map(c => ({ ...c, subcats: subsMap[c.id] || [] }));
-
-      const settingKey = profileSettingKey(MAIN_PROFILE_ID);
-      const mainData = state.categories.map(c => ({
-        id: c.id, label: c.label, amount: c.amount, type: c.type,
-        subcats: (c.subcats||[]).map(s => ({ id: s.id, label: s.label, amount: s.amount }))
-      }));
-      await sb.upsert('fd_settings', [{ key: settingKey, value: JSON.stringify(mainData) }], 'key');
-    } else {
-      const settingKey = profileSettingKey(profileId);
-      const rows = await sb.get('fd_settings', `key=eq.${encodeURIComponent(settingKey)}`);
-      if (rows && rows.length && rows[0].value) {
-        const data = JSON.parse(rows[0].value);
-        state.categories = data.map(c => ({
-          ...c,
-          amount: parseFloat(c.amount) || 0,
-          subcats: (c.subcats || []).map(s => ({ ...s, amount: parseFloat(s.amount) || 0 }))
-        }));
-      } else {
-        state.categories = [];
-      }
-    }
-  } catch(e) {
-    toast('Eroare la încărcare profil: ' + e.message, 'err');
-    state.categories = [];
-  } finally {
-    setLoader('loader-cats', false);
-  }
-}
-
-async function switchProfile(id) {
-  if (id === activeProfileId) return;
-  await saveCurrentProfileData();
-  activeProfileId = id;
-  await saveProfileList();
-  await loadProfileData(id);
-  renderExpenses();
-  recalcAll();
-  renderProfileBar();
-}
-
-function openAddProfile() {
-  document.getElementById('new-profile-name').value = '';
-  document.getElementById('new-profile-base').value = 'empty';
-  openModal('mo-add-profile');
-}
-
-async function createProfile() {
-  const name = document.getElementById('new-profile-name').value.trim();
-  const base = document.getElementById('new-profile-base').value;
-  if (!name) { toast('Introdu un nume pentru profil', 'err'); return; }
-
-  const id = 'p_' + Date.now();
-  profiles.push({ id, name });
-
-  let newCats = [];
-  let salaryPayload = { salary: '', salary_currency: 'EUR', tfr: '', eur_rate: '19.5' };
-  let goalPayload = '';
-
-  if (base === 'current') {
-    newCats = state.categories.map(c => ({
-      id: genCatId(),
-      label: c.label,
-      amount: c.amount,
-      type: c.type,
-      subcats: (c.subcats || []).map(s => ({ id: genSubId(), label: s.label, amount: s.amount }))
-    }));
-
-    salaryPayload = {
-      salary: document.getElementById('salary-input').value,
-      salary_currency: document.getElementById('salary-currency').value,
-      tfr: document.getElementById('tfr-input').value,
-      eur_rate: document.getElementById('eur-rate').value
-    };
-
-    goalPayload = document.getElementById('goal-input').value;
-  }
-
-  await sb.upsert('fd_settings', [
-    { key: profileSettingKey(id), value: JSON.stringify(newCats) },
-    { key: profileSalaryKey(id), value: JSON.stringify(salaryPayload) },
-    { key: profileGoalKey(id), value: goalPayload }
-  ], 'key');
-
-  await saveCurrentProfileData();
-  activeProfileId = id;
-  state.categories = newCats;
-  await saveProfileList();
-
-  renderExpenses();
-  recalcAll();
-  renderProfileBar();
-  closeModal('mo-add-profile');
-  toast(`✅ Profil "${name}" creat`);
-}
-
-function openManageProfile(id) {
-  if (!isUnlocked) return;
-  const p = profiles.find(x => x.id === id);
-  if (!p) return;
-  document.getElementById('mp-id').value = id;
-  document.getElementById('mp-name').value = p.name;
-  const delBtn = document.getElementById('mp-delete-btn');
-  delBtn.style.display = id === MAIN_PROFILE_ID ? 'none' : 'flex';
-  openModal('mo-manage-profile');
-}
-
-async function saveProfileRename() {
-  const id = document.getElementById('mp-id').value;
-  const name = document.getElementById('mp-name').value.trim();
-  if (!name) return;
-  const p = profiles.find(x => x.id === id);
-  if (!p) return;
-  p.name = name;
-  await saveProfileList();
-  renderProfileBar();
-  closeModal('mo-manage-profile');
-  toast('✅ Profil redenumit');
-}
-
-async function deleteProfile() {
-  const id = document.getElementById('mp-id').value;
-  if (id === MAIN_PROFILE_ID) return;
-  if (!confirm('Sigur vrei să ștergi acest profil? Toate datele financiare și cheltuielile din el vor fi șterse.')) return;
-
-  try {
-    await fetch(`${SUPABASE_URL}/rest/v1/fd_settings?key=eq.${encodeURIComponent(profileSettingKey(id))}`, { method: 'DELETE', headers: sb.headers });
-    await fetch(`${SUPABASE_URL}/rest/v1/fd_settings?key=eq.${encodeURIComponent(profileSalaryKey(id))}`, { method: 'DELETE', headers: sb.headers });
-    await fetch(`${SUPABASE_URL}/rest/v1/fd_settings?key=eq.${encodeURIComponent(profileGoalKey(id))}`, { method: 'DELETE', headers: sb.headers });
-  } catch(e) {}
-
-  profiles = profiles.filter(p => p.id !== id);
-
-  if (activeProfileId === id) {
-    activeProfileId = MAIN_PROFILE_ID;
-    await loadProfileData(MAIN_PROFILE_ID);
-  }
-
-  await saveProfileList();
-  renderExpenses();
-  recalcAll();
-  renderProfileBar();
-  closeModal('mo-manage-profile');
-  toast('🗑 Profil șters');
-}
-
-function renderProfileBar() {
-  const bar = document.getElementById('profile-bar');
-  const addBtn = bar.querySelector('.profile-chip-add');
-
-  // Ștergem chip-urile vechi ca să nu se acumuleze la randare
-  bar.querySelectorAll('.profile-chip').forEach(el => el.remove());
-
-  // Actualizăm doar titlul din zona de cheltuieli
-  const activeProfile = profiles.find(p => p.id === activeProfileId);
-  document.getElementById('expenses-profile-label').textContent = activeProfile ? activeProfile.name : '';
-
-  // Generăm bulele (chips) pentru fiecare profil
-  profiles.forEach(p => {
-    const chip = document.createElement('div');
-    chip.className = 'profile-chip' + (p.id === activeProfileId ? ' active' : '');
-    chip.textContent = p.name;
-    chip.onclick = () => {
-      if (p.id === activeProfileId) {
-        openManageProfile(p.id);
-      } else {
-        switchProfile(p.id);
-      }
-    };
-    bar.insertBefore(chip, addBtn);
-  });
 }
 
 // ══════════════════════════════════════════
@@ -1187,7 +719,6 @@ function pressPin(num) {
   if (currentPinInput.length >= 4) return;
   currentPinInput += num;
   document.getElementById('pin-dots').textContent = "• ".repeat(currentPinInput.length);
-  
   if (currentPinInput === TARGET_PIN) {
     isUnlocked = true;
     document.body.classList.add('app-unlocked');
@@ -1198,7 +729,6 @@ function pressPin(num) {
     document.getElementById('pin-screen').classList.remove('open');
     renderWallet();
     renderExpenses();
-    renderProfileBar();
     toast("🔓 Acces deblocat cu succes");
   } else if (currentPinInput.length === 4) {
     toast("❌ PIN incorect!", "err");
@@ -1213,15 +743,11 @@ function clearPin() {
 }
 
 function toggleFormInputs(shouldDisable) {
-  document.getElementById('salary-input').disabled = shouldDisable;
-  document.getElementById('salary-currency').disabled = shouldDisable;
-  document.getElementById('tfr-input').disabled = shouldDisable;
   document.getElementById('eur-rate').disabled = shouldDisable;
-  document.getElementById('goal-input').disabled = shouldDisable;
 }
 
 // ══════════════════════════════════════════
-//  TOAST
+//  TOAST & MODAL
 // ══════════════════════════════════════════
 let _toastTimer;
 function toast(msg, type = 'ok') {
@@ -1232,128 +758,141 @@ function toast(msg, type = 'ok') {
   _toastTimer = setTimeout(() => el.classList.remove('show'), 2800);
 }
 
-// ══════════════════════════════════════════
-//  MODAL
-// ══════════════════════════════════════════
-function openModal(id) { document.getElementById(id).classList.add('open') }
+function openModal(id) { document.getElementById(id).classList.add('open'); }
 function closeModal(id) {
   const el = document.getElementById(id);
   el.classList.remove('open');
   el.querySelectorAll('input[type="text"],input[type="number"]').forEach(i => { if (i.type !== 'hidden') i.value = ''; });
+  el.querySelectorAll('.input-eur-hint').forEach(h => { h.textContent = ''; h.classList.remove('has-val'); });
 }
 document.querySelectorAll('.overlay').forEach(el => {
-  el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open') });
+  el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); });
 });
 
-// ══════════════════════════════════════════
-//  UTILS
-// ══════════════════════════════════════════
-const EUR_FIXED = { EUR: 1, USD: 1.08, RON: 4.97 };
-function toEUR(amount, currency) {
-  const rate = parseFloat(document.getElementById('eur-rate').value) || 19.5;
-  if (currency === 'MDL') return amount / rate;
-  return amount / (EUR_FIXED[currency] || 1);
-}
-function fmt(n) {
-  if (isNaN(n) || n === null) return '0';
-  return new Intl.NumberFormat('ro-RO', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(Math.round(n));
-}
-function symCur(c) { return { EUR: '€', MDL: 'lei', USD: '$', RON: 'lei' }[c] || '€'; }
-function fmtC(n, c) { return `${fmt(n)} ${symCur(c)}`; }
-function timeStr(months) {
-  if (months <= 0) return 'mai puțin de o lună';
-  const y = Math.floor(months / 12), m = months % 12;
-  let s = '';
-  if (y > 0) s += `${y} an${y > 1 ? 'i' : ''} `;
-  if (m > 0) s += `${m} lun${m === 1 ? 'ă' : 'i'}`;
-  return s.trim() || 'mai puțin de o lună';
-}
 function setLoader(id, show) {
-  document.getElementById(id).classList.toggle('show', show);
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('show', show);
 }
 
 // ══════════════════════════════════════════
-//  LOAD ALL
+//  LOAD ALL (ACTUALIZAT PENTRU PRELUARE DINAMICĂ)
 // ══════════════════════════════════════════
 async function loadAll() {
   setLoader('loader-wallet', true);
   setLoader('loader-cats', true);
-
   try {
-    await loadProfiles();
+    // PRELUARE DINAMICĂ: Citim direct din link-ul tău de preferințe
+    const prefResponse = await fetch(PREFERENCES_API_URL);
+    if (prefResponse.ok) {
+      const prefRows = await prefResponse.json();
+      if (prefRows && prefRows.length > 0) {
+        // Extragem din primul rând valoarea proprietății totale
+        const totalInvestitRonRaw = prefRows[0].total_investit_ron;
+        
+        if (totalInvestitRonRaw !== undefined && totalInvestitRonRaw !== null) {
+          // Curățăm valoarea în caz că are format text, lăsând doar numere
+          const digitsOnly = String(totalInvestitRonRaw).replace(/[^\d.]/g, '');
+          const valoareDinamica = parseFloat(digitsOnly) || 0;
+          
+          supabaseConstantWalletItem = {
+            id: 'supabase-constant',
+            label: 'Supabase',
+            amount: valoareDinamica,
+            isConstant: true
+          };
+        }
+      }
+    } else {
+      console.error('Nu s-a putut încărca media din preferințe.');
+    }
 
-    const wallets = await sb.get('fd_wallet', 'order=created_at.asc');
-    state.wallet = wallets || [];
+    // Încărcăm restul datelor din cealaltă bază ca înainte
+    const walletRows = await sb.get('fd_settings', 'key=eq.wallet_ron_data');
+    if (walletRows && walletRows.length && walletRows[0].value) {
+      state.wallet = JSON.parse(walletRows[0].value);
+    } else {
+      state.wallet = [];
+    }
 
-  } catch (e) {
+    const salRows = await sb.get('fd_settings', 'key=eq.salary_ron_data');
+    if (salRows && salRows.length && salRows[0].value) {
+      const d = JSON.parse(salRows[0].value);
+      document.getElementById('eur-rate').value = d.eur_rate || '4.97';
+    }
+
+    const catRows = await sb.get('fd_settings', 'key=eq.categories_ron_data');
+    if (catRows && catRows.length && catRows[0].value) {
+      state.categories = JSON.parse(catRows[0].value);
+    } else {
+      state.categories = [];
+    }
+  } catch(e) {
     toast('Eroare la încărcare: ' + e.message, 'err');
   } finally {
     setLoader('loader-wallet', false);
+    setLoader('loader-cats', false);
   }
-
-  await loadProfileData(activeProfileId);
-
   renderWallet();
   renderExpenses();
-  renderProfileBar();
   recalcAll();
 }
 
 // ══════════════════════════════════════════
-//  SETTINGS SAVE (profile-aware)
+//  SAVE HELPERS
 // ══════════════════════════════════════════
-let _salaryTimer, _goalTimer;
+let _salaryTimer;
 function saveSalaryDebounced() {
   recalcAll();
   clearTimeout(_salaryTimer);
-  _salaryTimer = setTimeout(saveProfileSalarySettings, 900);
-}
-function saveGoalDebounced() {
-  recalcGoal();
-  clearTimeout(_goalTimer);
-  _goalTimer = setTimeout(saveProfileGoalSetting, 900);
+  _salaryTimer = setTimeout(saveSalaryData, 900);
 }
 
-async function saveProfileSalarySettings() {
-  const salaryPayload = {
-    salary: document.getElementById('salary-input').value || '0',
-    salary_currency: document.getElementById('salary-currency').value,
-    tfr: document.getElementById('tfr-input').value || '0',
-    eur_rate: document.getElementById('eur-rate').value || '19.5'
+async function saveSalaryData() {
+  const payload = {
+    salary: '0',
+    eur_rate: document.getElementById('eur-rate').value || '4.97'
   };
-
-  const currentSalKey = profileSalaryKey(activeProfileId);
-
   try {
-    await sb.upsert('fd_settings', [{ key: currentSalKey, value: JSON.stringify(salaryPayload) }], 'key');
-    
-    if (activeProfileId === MAIN_PROFILE_ID) {
-      const legacyRows = [
-        { key: 'salary', value: salaryPayload.salary },
-        { key: 'salary_currency', value: salaryPayload.salary_currency },
-        { key: 'tfr', value: salaryPayload.tfr },
-        { key: 'eur_rate', value: salaryPayload.eur_rate }
-      ];
-      await sb.upsert('fd_settings', legacyRows, 'key');
-    }
-  } catch (e) {
-    toast('Eroare salvare setări financiare profil', 'err');
+    await sb.upsert('fd_settings', [{ key: 'salary_ron_data', value: JSON.stringify(payload) }], 'key');
+  } catch(e) {
+    toast('Eroare salvare date curs', 'err');
   }
 }
 
-async function saveProfileGoalSetting() {
-  const currentGoalKey = profileGoalKey(activeProfileId);
-  const goalVal = document.getElementById('goal-input').value || '0';
-
+async function saveWalletData() {
   try {
-    await sb.upsert('fd_settings', [{ key: currentGoalKey, value: goalVal }], 'key');
-    
-    if (activeProfileId === MAIN_PROFILE_ID) {
-      await sb.upsert('fd_settings', [{ key: 'goal', value: goalVal }], 'key');
-    }
-  } catch (e) {
-    toast('Eroare salvare obiectiv pe profil', 'err');
+    const walletToSave = state.wallet.filter(w => !w.isConstant);
+    await sb.upsert('fd_settings', [{ key: 'wallet_ron_data', value: JSON.stringify(walletToSave) }], 'key');
+  } catch(e) {
+    toast('Eroare salvare portofel', 'err');
   }
+}
+
+let _catSaveTimer;
+function scheduleCatSave() {
+  clearTimeout(_catSaveTimer);
+  _catSaveTimer = setTimeout(saveCategoriesData, 800);
+}
+
+async function saveCategoriesData() {
+  try {
+    await sb.upsert('fd_settings', [{ key: 'categories_ron_data', value: JSON.stringify(state.categories) }], 'key');
+  } catch(e) {
+    toast('Eroare salvare cheltuieli', 'err');
+  }
+}
+
+async function saveMetrics(totalWalletRON, mediaLunaraRON) {
+  try {
+    const payload = {
+      total_active_ron: fmt(totalWalletRON) + ' lei',
+      total_active_eur: fmt(ronToEur(totalWalletRON)) + ' €',
+      media_lunara_ron: fmt(mediaLunaraRON) + ' lei',
+      media_lunara_eur: fmt(ronToEur(mediaLunaraRON)) + ' €',
+      updated_at: new Date().toISOString()
+    };
+    await sb.upsert('fd_settings', [{ key: 'metrics_snapshot', value: JSON.stringify(payload) }], 'key');
+  } catch(e) {}
 }
 
 // ══════════════════════════════════════════
@@ -1362,111 +901,93 @@ async function saveProfileGoalSetting() {
 async function saveWallet() {
   const label = document.getElementById('w-label').value.trim();
   const amount = parseFloat(document.getElementById('w-amount').value) || 0;
-  const currency = document.getElementById('w-currency').value;
   if (!label) return;
-  try {
-    const [row] = await sb.post('fd_wallet', { label, amount, currency });
-    state.wallet.push(row);
-    renderWallet(); recalcAll(); closeModal('mo-wallet');
-    toast('✅ Sursă adăugată');
-  } catch (e) { toast('Eroare: ' + e.message, 'err'); }
+  state.wallet.push({ id: Date.now(), label, amount });
+  await saveWalletData();
+  renderWallet(); recalcAll(); closeModal('mo-wallet');
+  toast('✅ Sursă adăugată');
 }
+
 async function deleteWallet(id) {
-  if (!confirm("Sigur vrei să ștergi această sursă de portofel?")) return;
-  try {
-    await sb.delete('fd_wallet', id);
-    state.wallet = state.wallet.filter(w => w.id !== id);
-    renderWallet(); recalcAll();
-    toast('🗑 Șters');
-  } catch (e) { toast('Eroare: ' + e.message, 'err'); }
+  if (!confirm("Sigur vrei să ștergi această sursă?")) return;
+  state.wallet = state.wallet.filter(w => w.id !== id);
+  await saveWalletData();
+  renderWallet(); recalcAll();
+  toast('🗑 Șters');
 }
+
 function openEditWallet(id) {
   const w = state.wallet.find(x => x.id === id); if (!w) return;
   document.getElementById('ew-id').value = id;
   document.getElementById('ew-label').value = w.label;
   document.getElementById('ew-amount').value = w.amount;
-  document.getElementById('ew-currency').value = w.currency;
+  const hintEl = document.getElementById('ew-amount-eur');
+  if (hintEl && w.amount) {
+    hintEl.textContent = fmtEur(w.amount);
+    hintEl.classList.add('has-val');
+  }
   openModal('mo-edit-wallet');
 }
+
 async function updateWallet() {
   const id = parseInt(document.getElementById('ew-id').value);
   const w = state.wallet.find(x => x.id === id); if (!w) return;
-  const label = document.getElementById('ew-label').value.trim() || w.label;
-  const amount = parseFloat(document.getElementById('ew-amount').value) || 0;
-  const currency = document.getElementById('ew-currency').value;
-  try {
-    await sb.patch('fd_wallet', id, { label, amount, currency });
-    Object.assign(w, { label, amount, currency });
-    renderWallet(); recalcAll(); closeModal('mo-edit-wallet');
-    toast('✅ Actualizat');
-  } catch (e) { toast('Eroare: ' + e.message, 'err'); }
+  w.label = document.getElementById('ew-label').value.trim() || w.label;
+  w.amount = parseFloat(document.getElementById('ew-amount').value) || 0;
+  await saveWalletData();
+  renderWallet(); recalcAll(); closeModal('mo-edit-wallet');
+  toast('✅ Actualizat');
 }
+
 function renderWallet() {
   const el = document.getElementById('wallet-list');
-  if (!state.wallet.length) {
+  
+  let visibleWallet = [...state.wallet];
+  if (supabaseConstantWalletItem && !visibleWallet.some(w => w.id === supabaseConstantWalletItem.id)) {
+    visibleWallet.unshift(supabaseConstantWalletItem);
+  }
+
+  if (!visibleWallet.length) {
     el.innerHTML = '<div class="empty-msg">Nicio sursă adăugată încă.</div>'; return;
   }
-  el.innerHTML = state.wallet.map(w => {
-    const inEUR = toEUR(w.amount, w.currency);
-    const showEUR = w.currency !== 'EUR' ? `<div class="row-sub">≈ ${fmt(inEUR)} €</div>` : '';
-    return `
-      <div class="row-item">
-        <div style="flex:1;min-width:0">
-          <div class="row-label">${w.label}</div>
-          ${showEUR}
-        </div>
-        <span class="row-val">${fmtC(w.amount, w.currency)}</span>
-        <div class="row-actions sensitive-action">
-          <button class="btn btn-ghost btn-icon btn-sm" onclick="openEditWallet(${w.id})">✏️</button>
-          <button class="btn btn-danger btn-icon btn-sm" onclick="deleteWallet(${w.id})">🗑</button>
-        </div>
-      </div>`;
-  }).join('');
+
+  el.innerHTML = visibleWallet.map(w => `
+    <div class="row-item" style="${w.isConstant ? 'border-left: 2px solid var(--gold); padding-left: 6px;' : ''}">
+      <div style="flex:1;min-width:0">
+        <div class="row-label">${w.label}</div>
+      </div>
+      <div style="text-align:right">
+        <span class="row-val" style="${w.isConstant ? 'color: var(--gold);' : ''}">${fmt(w.amount)} lei</span>
+        <span class="row-val-eur">${fmtEur(w.amount)}</span>
+      </div>
+      <div class="row-actions sensitive-action">
+        ${w.isConstant ? 
+          `<span style="font-size:10px; color:var(--dim); padding: 6px 4px; font-family:'Space Mono';">🔒 LOCK</span>` : 
+          `<button class="btn btn-ghost btn-icon btn-sm" onclick="openEditWallet(${w.id})">✏️</button>
+           <button class="btn btn-danger btn-icon btn-sm" onclick="deleteWallet(${w.id})">🗑</button>`
+        }
+      </div>
+    </div>`).join('');
 }
 
 // ══════════════════════════════════════════
-//  CATEGORIES  (profile-aware)
+//  CATEGORIES
 // ══════════════════════════════════════════
-let _profileSaveTimer;
-function scheduleProfileSave() {
-  clearTimeout(_profileSaveTimer);
-  _profileSaveTimer = setTimeout(saveCurrentProfileData, 800);
-}
-
 async function saveCat() {
   const label = document.getElementById('cat-label').value.trim();
   const amount = parseFloat(document.getElementById('cat-amount').value) || 0;
   const type = document.getElementById('cat-type').value;
   if (!label) return;
-
-  if (activeProfileId === MAIN_PROFILE_ID) {
-    try {
-      const [row] = await sb.post('fd_category', { label, amount, type });
-      state.categories.push({ ...row, subcats: [] });
-      scheduleProfileSave();
-      renderExpenses(); recalcAll(); closeModal('mo-cat');
-      toast('✅ Categorie adăugată');
-    } catch (e) { toast('Eroare: ' + e.message, 'err'); }
-  } else {
-    const newCat = { id: genCatId(), label, amount, type, subcats: [] };
-    state.categories.push(newCat);
-    scheduleProfileSave();
-    renderExpenses(); recalcAll(); closeModal('mo-cat');
-    toast('✅ Categorie adăugată');
-  }
+  state.categories.push({ id: genCatId(), label, amount, type, subcats: [] });
+  scheduleCatSave();
+  renderExpenses(); recalcAll(); closeModal('mo-cat');
+  toast('✅ Categorie adăugată');
 }
 
 async function deleteCat(id) {
   if (!confirm("Sigur vrei să ștergi această categorie?")) return;
-
-  if (activeProfileId === MAIN_PROFILE_ID) {
-    try {
-      await sb.delete('fd_category', id);
-    } catch (e) { toast('Eroare: ' + e.message, 'err'); return; }
-  }
-
   state.categories = state.categories.filter(c => c.id !== id);
-  scheduleProfileSave();
+  scheduleCatSave();
   renderExpenses(); recalcAll();
   toast('🗑 Șters');
 }
@@ -1477,29 +998,22 @@ function openEditCat(id) {
   document.getElementById('ec-label').value = c.label;
   document.getElementById('ec-amount').value = c.amount;
   document.getElementById('ec-type').value = c.type;
+  const hintEl = document.getElementById('ec-amount-eur');
+  if (hintEl && c.amount) { hintEl.textContent = fmtEur(c.amount); hintEl.classList.add('has-val'); }
   openModal('mo-edit-cat');
 }
 
 async function updateCat() {
   const id = parseInt(document.getElementById('ec-id').value);
   const c = state.categories.find(x => x.id === id); if (!c) return;
-  const label = document.getElementById('ec-label').value.trim() || c.label;
-  const amount = parseFloat(document.getElementById('ec-amount').value) || 0;
-  const type = document.getElementById('ec-type').value;
-
-  if (activeProfileId === MAIN_PROFILE_ID) {
-    try {
-      await sb.patch('fd_category', id, { label, amount, type });
-    } catch (e) { toast('Eroare: ' + e.message, 'err'); return; }
-  }
-
-  Object.assign(c, { label, amount, type });
-  scheduleProfileSave();
+  c.label = document.getElementById('ec-label').value.trim() || c.label;
+  c.amount = parseFloat(document.getElementById('ec-amount').value) || 0;
+  c.type = document.getElementById('ec-type').value;
+  scheduleCatSave();
   renderExpenses(); recalcAll(); closeModal('mo-edit-cat');
   toast('✅ Actualizat');
 }
 
-// ── SUBCATEGORIES ──
 function openAddSubcat(catId) {
   document.getElementById('sub-parent-id').value = catId;
   openModal('mo-subcat');
@@ -1511,35 +1025,17 @@ async function saveSubcat() {
   const amount = parseFloat(document.getElementById('sub-amount').value) || 0;
   if (!label) return;
   const cat = state.categories.find(c => c.id === parentId); if (!cat) return;
-
-  if (activeProfileId === MAIN_PROFILE_ID) {
-    try {
-      const [row] = await sb.post('fd_subcategory', { category_id: parentId, label, amount });
-      cat.subcats.push(row);
-      scheduleProfileSave();
-      renderExpenses(); recalcAll(); closeModal('mo-subcat');
-      toast('✅ Subcategorie adăugată');
-    } catch (e) { toast('Eroare: ' + e.message, 'err'); }
-  } else {
-    cat.subcats.push({ id: genSubId(), category_id: parentId, label, amount });
-    scheduleProfileSave();
-    renderExpenses(); recalcAll(); closeModal('mo-subcat');
-    toast('✅ Subcategorie adăugată');
-  }
+  cat.subcats.push({ id: genSubId(), label, amount });
+  scheduleCatSave();
+  renderExpenses(); recalcAll(); closeModal('mo-subcat');
+  toast('✅ Subcategorie adăugată');
 }
 
 async function deleteSubcat(catId, subId) {
   if (!confirm("Sigur vrei să ștergi această subcategorie?")) return;
   const cat = state.categories.find(c => c.id === catId); if (!cat) return;
-
-  if (activeProfileId === MAIN_PROFILE_ID) {
-    try {
-      await sb.delete('fd_subcategory', subId);
-    } catch (e) { toast('Eroare: ' + e.message, 'err'); return; }
-  }
-
   cat.subcats = cat.subcats.filter(s => s.id !== subId);
-  scheduleProfileSave();
+  scheduleCatSave();
   renderExpenses(); recalcAll();
   toast('🗑 Șters');
 }
@@ -1551,344 +1047,138 @@ function openEditSubcat(catId, subId) {
   document.getElementById('es-parent-id').value = catId;
   document.getElementById('es-label').value = sub.label;
   document.getElementById('es-amount').value = sub.amount;
+  const hintEl = document.getElementById('es-amount-eur');
+  if (hintEl && sub.amount) { hintEl.textContent = fmtEur(sub.amount); hintEl.classList.add('has-val'); }
   openModal('mo-edit-subcat');
 }
 
 async function updateSubcat() {
-  const catId = parseInt(document.getElementById('es-parent-id').value);
   const subId = parseInt(document.getElementById('es-id').value);
+  const catId = parseInt(document.getElementById('es-parent-id').value);
   const cat = state.categories.find(c => c.id === catId); if (!cat) return;
   const sub = cat.subcats.find(s => s.id === subId); if (!sub) return;
-  const label = document.getElementById('es-label').value.trim() || sub.label;
-  const amount = parseFloat(document.getElementById('es-amount').value) || 0;
-
-  if (activeProfileId === MAIN_PROFILE_ID) {
-    try {
-      await sb.patch('fd_subcategory', subId, { label, amount });
-    } catch (e) { toast('Eroare: ' + e.message, 'err'); return; }
-  }
-
-  Object.assign(sub, { label, amount });
-  scheduleProfileSave();
+  sub.label = document.getElementById('es-label').value.trim() || sub.label;
+  sub.amount = parseFloat(document.getElementById('es-amount').value) || 0;
+  scheduleCatSave();
   renderExpenses(); recalcAll(); closeModal('mo-edit-subcat');
-  toast('✅ Actualizat');
+  toast('✅ Subcategorie actualizată');
 }
 
-function getCatTotal(cat) {
-  if (cat.subcats && cat.subcats.length > 0)
-    return cat.subcats.reduce((s, sub) => s + (parseFloat(sub.amount) || 0), 0);
-  return parseFloat(cat.amount) || 0;
+function toggleSubMenu(id) {
+  const subEl = document.getElementById(`subcats-${id}`);
+  const btnEl = document.getElementById(`btn-toggle-${id}`);
+  if (subEl && btnEl) {
+    const isOpen = subEl.classList.toggle('open');
+    btnEl.classList.toggle('open', isOpen);
+  }
 }
 
-function renderCatList(elId, cats) {
-  const el = document.getElementById(elId);
-  if (!cats.length) { el.innerHTML = '<div class="empty-msg">Nicio categorie.</div>'; return; }
-  el.innerHTML = cats.map(cat => {
-    const total = getCatTotal(cat);
-    const hasSubs = cat.subcats && cat.subcats.length > 0;
-    const subsHtml = hasSubs ? cat.subcats.map(sub => `
-      <div class="sub-row">
-        <span class="sub-lbl">${sub.label}</span>
-        <span class="sub-val">${fmt(sub.amount)} €</span>
-        <div class="row-actions sensitive-action">
-          <button class="btn btn-ghost btn-icon btn-sm" onclick="openEditSubcat(${cat.id},${sub.id})">✏️</button>
-          <button class="btn btn-danger btn-icon btn-sm" onclick="deleteSubcat(${cat.id},${sub.id})">🗑</button>
-        </div>
-      </div>`).join('') : '';
+function renderExpenses() {
+  const annualEl = document.getElementById('annual-list');
+  const monthlyEl = document.getElementById('monthly-list');
+  const annuals = state.categories.filter(c => c.type === 'annual');
+  const monthlies = state.categories.filter(c => c.type === 'monthly');
+
+  const mapper = (c) => {
+    let subSum = 0;
+    const subRowsHtml = (c.subcats || []).map(s => {
+      subSum += s.amount;
+      return `
+        <div class="sub-row">
+          <span class="sub-lbl">${s.label}</span>
+          <div class="sub-val-wrap">
+            <span class="sub-val">${fmt(s.amount)} lei</span>
+            <span class="sub-val-eur">${fmtEur(s.amount)}</span>
+          </div>
+          <div class="row-actions sensitive-action">
+            <button class="btn btn-ghost btn-icon btn-sm" onclick="openEditSubcat(${c.id}, ${s.id})">✏️</button>
+            <button class="btn btn-danger btn-icon btn-sm" onclick="deleteSubcat(${c.id}, ${s.id})">🗑</button>
+          </div>
+        </div>`;
+    }).join('');
+
+    const finalVal = c.amount + subSum;
     return `
       <div class="cat-item">
         <div class="cat-row">
-          ${hasSubs
-        ? `<button class="cat-toggle" id="tgl-${cat.id}" onclick="toggleSub(${cat.id})">▶</button>`
-        : `<span style="width:20px;display:inline-block"></span>`}
-          <span class="cat-lbl">${cat.label}</span>
-          <span class="cat-val">${fmt(total)} €</span>
+          <div class="cat-clickable-zone" onclick="toggleSubMenu(${c.id})">
+            <button class="cat-toggle" id="btn-toggle-${c.id}">▶</button>
+            <span class="cat-lbl">${c.label}</span>
+          </div>
+          <div class="cat-val-wrap">
+            <span class="cat-val">${fmt(finalVal)} lei</span>
+            <span class="cat-val-eur">${fmtEur(finalVal)}</span>
+          </div>
           <div class="row-actions sensitive-action">
-            <button class="btn btn-ghost btn-icon btn-sm" title="+ Subcategorie" onclick="openAddSubcat(${cat.id})">＋</button>
-            <button class="btn btn-ghost btn-icon btn-sm" onclick="openEditCat(${cat.id})">✏️</button>
-            <button class="btn btn-danger btn-icon btn-sm" onclick="deleteCat(${cat.id})">🗑</button>
+            <button class="btn btn-ghost btn-icon btn-sm" onclick="openAddSubcat(${c.id})">➕</button>
+            <button class="btn btn-ghost btn-icon btn-sm" onclick="openEditCat(${c.id})">✏️</button>
+            <button class="btn btn-danger btn-icon btn-sm" onclick="deleteCat(${c.id})">🗑</button>
           </div>
         </div>
-        ${hasSubs ? `<div class="subcats" id="sub-${cat.id}">${subsHtml}</div>` : ''}
+        <div class="subcats" id="subcats-${c.id}">${subRowsHtml}</div>
       </div>`;
-  }).join('');
-}
+  };
 
-function toggleSub(catId) {
-  document.getElementById(`sub-${catId}`)?.classList.toggle('open');
-  document.getElementById(`tgl-${catId}`)?.classList.toggle('open');
-}
-function renderExpenses() {
-  renderCatList('annual-list', state.categories.filter(c => c.type === 'annual'));
-  renderCatList('monthly-list', state.categories.filter(c => c.type === 'monthly'));
+  annualEl.innerHTML = annuals.length ? annuals.map(mapper).join('') : '<div class="empty-msg">Nicio cheltuială anuală.</div>';
+  monthlyEl.innerHTML = monthlies.length ? monthlies.map(mapper).join('') : '<div class="empty-msg">Nicio cheltuială lunară.</div>';
 }
 
 // ══════════════════════════════════════════
-//  RECALC ALL
+//  RECALCULATIONS
 // ══════════════════════════════════════════
+let _metricsSaveTimeout;
+
 function recalcAll() {
-  const salary = parseFloat(document.getElementById('salary-input').value) || 0;
-  const salCur = document.getElementById('salary-currency').value;
-  _tfrMonthly = parseFloat(document.getElementById('tfr-input').value) || 0;
-  _salaryEUR = toEUR(salary, salCur);
-  _walletTotalEUR = state.wallet.reduce((s, w) => s + toEUR(w.amount, w.currency), 0);
-
-  document.getElementById('wallet-total').textContent = `${fmt(_walletTotalEUR)} €`;
-  document.getElementById('salary-eur').textContent = `${fmt(_salaryEUR)} €`;
-  document.getElementById('tfr-badge').textContent = `${fmt(_tfrMonthly)} €`;
-  document.getElementById('salary-annual').textContent = `${fmt((_salaryEUR + _tfrMonthly) * 12)} €`;
-
-  const monthlySum = state.categories.filter(c => c.type === 'monthly').reduce((s, c) => s + getCatTotal(c), 0);
-  const annualSum = state.categories.filter(c => c.type === 'annual').reduce((s, c) => s + getCatTotal(c), 0);
-
-  document.getElementById('annual-total').textContent = `${fmt(annualSum)} €`;
-  document.getElementById('monthly-total').textContent = `${fmt(monthlySum)} €`;
-
-  const monthlyAvg = monthlySum + (annualSum / 12);
-  document.getElementById('sum-monthly-avg').textContent = `${fmt(monthlyAvg)} €`;
-  document.getElementById('sum-annual').textContent = `${fmt(monthlySum * 12 + annualSum)} €`;
-
-  _netMonthly = _salaryEUR - monthlyAvg;
-  const netEl = document.getElementById('net-val');
-  netEl.textContent = `${_netMonthly >= 0 ? '+' : ''}${fmt(_netMonthly)} €`;
-  netEl.className = 'net-val ' + (_netMonthly >= 0 ? 'net-pos' : 'net-neg');
-  document.getElementById('net-formula').textContent =
-    `${fmt(_salaryEUR)} € (salariu) − ${fmt(monthlyAvg)} € (cheltuieli medii/lună)`;
-
-  recalcGoal();
-}
-
-// ══════════════════════════════════════════
-//  GOAL
-// ══════════════════════════════════════════
-function recalcGoal() {
-  const goal = parseFloat(document.getElementById('goal-input').value) || 0;
-  const resultEl = document.getElementById('goal-result');
-  if (!goal || goal <= 0) { 
-    resultEl.innerHTML = ''; 
-    renderOptimizationDashboard(); // Se randează izolat chiar dacă nu este setat un obiectiv
-    return; 
+  let totalRON = 0;
+  (state.wallet || []).forEach(w => totalRON += w.amount);
+  if (supabaseConstantWalletItem) {
+    totalRON += supabaseConstantWalletItem.amount;
   }
-
-  const alreadyHave = _walletTotalEUR;
-  const needed = Math.max(0, goal - alreadyHave);
-  const net = _netMonthly;
-  const tfr = _tfrMonthly;
-  const pct = Math.min(100, (alreadyHave / goal) * 100);
-
-  let html = `
-    <div class="divider"></div>
-    <div class="info-row"><span class="info-lbl">Obiectiv</span><span class="badge badge-gold">${fmt(goal)} €</span></div>
-    <div class="info-row"><span class="info-lbl">Deții deja</span><span class="badge badge-green">${fmt(alreadyHave)} €</span></div>
-    <div class="info-row"><span class="info-lbl">Rămâne de strâns</span><span class="badge">${fmt(needed)} €</span></div>
-    <div class="progress-bar-wrap"><div class="progress-bar" style="width:${pct}%"></div></div>
-    <div style="text-align:right;font-size:9px;color:var(--dim);margin-top:-3px;margin-bottom:10px;font-family:'Space Mono',monospace">${fmt(pct)}% atins</div>
-  `;
-
-  if (alreadyHave >= goal) {
-    html += `<div class="info-box green">🎉 Felicitări! Ai deja suma dorită în portofel!</div>`;
-    resultEl.innerHTML = html; 
-    renderOptimizationDashboard();
-    return;
-  }
-
-  if (net <= 0) {
-    html += `<div class="info-box red">⚠️ Soldul net lunar este <strong>${fmt(net)} €</strong>. Nu poți economisi cu cheltuielile actuale. Reduce cheltuielile sau mărește salariul.</div>`;
-    resultEl.innerHTML = html; 
-    renderOptimizationDashboard();
-    return;
-  }
-
-  const monthsNeeded = Math.ceil(needed / net);
-  const tStr = timeStr(monthsNeeded);
-
-  html += `
-    <div class="goal-time-display">
-      <div class="total-lbl">Timp estimat până la obiectiv</div>
-      <div class="goal-time-num">${tStr}</div>
-      <div class="goal-time-sub">economisind ${fmt(net)} €/lună din salariu</div>
-    </div>
-  `;
-
-  if (tfr > 0) {
-    const savingsCombined = net + tfr;
-    const monthsCombined = savingsCombined > 0 ? Math.ceil(needed / savingsCombined) : 0;
-
-    html += `
-      <div class="tfr-wrap">
-        <div class="tfr-title">📊 TFR acumulat</div>
-        <div class="tfr-grid">
-          <div class="tfr-block"><div class="tfr-lbl">TFR / lună</div><div class="tfr-val">${fmt(tfr)} €</div></div>
-          <div class="tfr-block"><div class="tfr-lbl">TFR / an</div><div class="tfr-val">${fmt(tfr * 12)} €</div></div>
-          <div class="tfr-block" style="grid-column:span 2">
-            <div class="tfr-lbl">Timp atingere obiectiv din salariu + TFR adunat</div>
-            <div class="tfr-val" style="font-size:14px; color:var(--cyan); font-weight:800;">${timeStr(monthsCombined)}</div>
-          </div>
-        </div>
-      </div>`;
-  }
-
-  const rows = Math.min(monthsNeeded, 200);
-  const now = new Date();
-  const hasTFR = tfr > 0;
-  let tableRows = '';
-
-  for (let m = 1; m <= rows; m++) {
-    const d = new Date(now.getFullYear(), now.getMonth() + m, 1);
-    const mon = d.toLocaleString('ro-RO', { month: 'short', year: '2-digit' });
-    const balNet = alreadyHave + net * m;
-    const balTFR = hasTFR ? (alreadyHave + (net + tfr) * m) : null;
-    const tfrOnly = hasTFR ? (tfr * m) : null;
-    const reachedNet = balNet >= goal;
-    const reachedTFR = hasTFR ? (balTFR >= goal) : false;
-    const reached = reachedNet;
-    const pctRow = Math.min(100, (balNet / goal) * 100);
-    const tfrCell = hasTFR ? `<td class="col-purple">${fmt(tfrOnly)} €</td>` : '';
-    const balTFRCell = hasTFR
-      ? `<td class="col-cyan" style="${reachedTFR ? 'opacity:.4' : ''}">${fmt(Math.min(balTFR, goal * 1.5))} €${reachedTFR ? ' ✅' : ''}</td>`
-      : '';
-
-    tableRows += `
-      <tr class="${reached ? 'done' : ''}">
-        <td>${mon}</td>
-        <td class="col-green">${fmt(Math.min(balNet, goal))} €${reachedNet ? ' ✅' : ''}</td>
-        ${tfrCell}
-        ${balTFRCell}
-        <td>${fmt(pctRow)}%</td>
-        <td>${reached ? '--' : fmt(Math.max(0, goal - balNet)) + ' €'}</td>
-      </tr>`;
-    if (reached) break;
-  }
-
-  if (monthsNeeded > 200) {
-    const colspan = hasTFR ? 6 : 4;
-    tableRows += `<tr><td colspan="${colspan}" style="color:var(--dim);text-align:center;padding:10px 8px;font-size:10px">... și ${monthsNeeded - 60} luni în plus</td></tr>`;
-  }
-
-  const tfrHeaders = hasTFR ? `<th>TFR acc.</th><th>Bal.+TFR</th>` : '';
-  html += `
-    <div class="goal-table-wrap">
-      <table class="goal-table">
-        <thead>
-          <tr><th>Luna</th><th>Bal. net</th>${tfrHeaders}<th>%</th><th>Rămâne</th></tr>
-        </thead>
-        <tbody>${tableRows}</tbody>
-      </table>
-    </div>
-    <div class="info-box" style="margin-top:12px">
-      💡 Economisind <strong>${fmt(net)} €/lună</strong> vei atinge <strong>${fmt(goal)} €</strong> în <strong>${tStr}</strong>.
-      ${hasTFR ? `<br>📊 TFR-ul tău crește cu <strong>${fmt(tfr)} €/lună</strong> separat.` : ''}
-    </div>`;
-
-  resultEl.innerHTML = html;
-  renderOptimizationDashboard();
-}
-
-// ══════════════════════════════════════════
-//  OPTIMIZATION / TOP EXPENSES RENDER (Profil-aware fix)
-// ══════════════════════════════════════════
-function renderOptimizationDashboard() {
-  const catListEl = document.getElementById('top-categories-list');
-  const subcatListEl = document.getElementById('top-subcategories-list');
   
-  if (!state.categories || state.categories.length === 0) {
-    catListEl.innerHTML = '<div class="empty-msg">Nu există date pentru analiză.</div>';
-    subcatListEl.innerHTML = '<div class="empty-msg">Nu există date pentru analiză.</div>';
-    return;
-  }
+  _walletTotalRON = totalRON;
+  document.getElementById('wallet-total').textContent = `${fmt(totalRON)} lei`;
+  document.getElementById('wallet-total-eur').textContent = fmtEur(totalRON);
 
-  // Folosim strict categoriile din profilul curent (state.categories)
-  let processedCats = state.categories.map(c => {
-    const rawTotal = getCatTotal(c);
-    const monthlyValue = c.type === 'annual' ? (rawTotal / 12) : rawTotal;
-    return {
-      label: c.label,
-      value: monthlyValue,
-      typeLabel: c.type === 'annual' ? 'TIP: ANUALĂ (Plătită o singură dată pe an)' : 'TIP: LUNARĂ (Recurentă lună de lună)'
-    };
-  }).filter(c => c.value > 0);
-
-  processedCats.sort((a, b) => b.value - a.value);
-
-  let processedSubs = [];
+  let annualDirect = 0, monthlyDirect = 0;
   state.categories.forEach(c => {
-    if (c.subcats && c.subcats.length > 0) {
-      c.subcats.forEach(s => {
-        const sAmount = parseFloat(s.amount) || 0;
-        const monthlyValue = c.type === 'annual' ? (sAmount / 12) : sAmount;
-        processedSubs.push({
-          id: `opt-sub-${c.id}-${s.id}`,
-          label: s.label,
-          parentLabel: `DIN CATEGORIA: ${c.label.toUpperCase()}`,
-          value: monthlyValue,
-          typeLabel: c.type === 'annual' ? 'TIP: ANUALĂ (Plătită o singură dată pe an)' : 'TIP: LUNARĂ (Recurentă lună de lună)'
-        });
-      });
-    }
+    let subSum = 0;
+    (c.subcats || []).forEach(s => subSum += s.amount);
+    const cTotal = c.amount + subSum;
+    if (c.type === 'annual') annualDirect += cTotal;
+    else monthlyDirect += cTotal;
   });
 
-  processedSubs.sort((a, b) => b.value - a.value);
+  const monthlyAvgTotal = monthlyDirect + (annualDirect / 12);
+  const annualCompleteTotal = annualDirect + (monthlyDirect * 12);
 
-  if (processedCats.length === 0) {
-    catListEl.innerHTML = '<div class="empty-msg">Nicio cheltuială înregistrată.</div>';
-  } else {
-    const maxCat = processedCats[0].value;
-    catListEl.innerHTML = processedCats.map((c, index) => {
-      const pct = maxCat > 0 ? (c.value / maxCat) * 100 : 0;
-      const uniqueId = `opt-cat-${index}`;
-      return `
-        <div class="opt-item" style="margin-bottom: 6px; cursor: pointer; -webkit-tap-highlight-color:transparent;" onclick="document.getElementById('${uniqueId}').style.display = document.getElementById('${uniqueId}').style.display === 'flex' ? 'none' : 'flex'">
-          <div class="opt-info" style="align-items: center;">
-            <div>
-              <div class="opt-name" style="font-size: 13px; display: flex; align-items: center; gap: 5px;">
-                <span style="font-size: 9px; color: var(--dim);">▶</span> ${c.label}
-              </div>
-              <div id="${uniqueId}" style="margin-top: 5px; display: none; gap: 4px; flex-wrap: wrap; transition: all 0.2s;">
-                <span class="opt-badge-type" style="margin-left: 0; padding: 2px 5px; font-size: 8px; background: rgba(255,255,255,0.06); color: var(--muted); border: 1px solid var(--border2); border-radius: 4px;">${c.typeLabel}</span>
-              </div>
-            </div>
-            <span class="opt-amount">${fmt(c.value)} €/lună</span>
-          </div>
-          <div class="opt-progress-bg" style="margin-top: 6px;">
-            <div class="opt-progress-fill" style="width: ${pct}%;"></div>
-          </div>
-        </div>`;
-    }).join('');
-  }
+  document.getElementById('annual-total').textContent = `${fmt(annualDirect)} lei`;
+  document.getElementById('annual-total-eur').textContent = fmtEur(annualDirect);
+  document.getElementById('monthly-total').textContent = `${fmt(monthlyDirect)} lei`;
+  document.getElementById('monthly-total-eur').textContent = fmtEur(monthlyDirect);
+  document.getElementById('sum-monthly-avg').textContent = `${fmt(monthlyAvgTotal)} lei`;
+  document.getElementById('sum-monthly-avg-eur').textContent = fmtEur(monthlyAvgTotal);
+  document.getElementById('sum-annual').textContent = `${fmt(annualCompleteTotal)} lei`;
+  document.getElementById('sum-annual-eur').textContent = fmtEur(annualCompleteTotal);
 
-  if (processedSubs.length === 0) {
-    subcatListEl.innerHTML = '<div class="empty-msg">Nu există subcategorii definite.</div>';
-  } else {
-    const maxSub = processedSubs[0].value;
-    subcatListEl.innerHTML = processedSubs.map(s => {
-      const pct = maxSub > 0 ? (s.value / maxSub) * 100 : 0;
-      return `
-        <div class="opt-item" style="margin-bottom: 6px; cursor: pointer; -webkit-tap-highlight-color:transparent;" onclick="document.getElementById('${s.id}').style.display = document.getElementById('${s.id}').style.display === 'flex' ? 'none' : 'flex'">
-          <div class="opt-info" style="align-items: center;">
-            <div>
-              <div class="opt-name" style="font-size: 13px; display: flex; align-items: center; gap: 5px;">
-                <span style="font-size: 9px; color: var(--dim);">▶</span> ${s.label}
-              </div>
-              <div id="${s.id}" style="margin-top: 5px; display: none; gap: 4px; flex-direction: column; transition: all 0.2s;">
-                <span class="opt-badge-type" style="margin-left: 0; color: var(--blue2); background: rgba(79,142,247,0.08); border: 1px solid rgba(79,142,247,0.15); padding: 2px 5px; font-size: 8px; font-weight: 700; width: max-content; border-radius: 4px;">${s.parentLabel}</span>
-                <span class="opt-badge-type" style="margin-left: 0; padding: 2px 5px; font-size: 8px; background: rgba(255,255,255,0.06); color: var(--muted); border: 1px solid var(--border2); width: max-content; border-radius: 4px;">${s.typeLabel}</span>
-              </div>
-            </div>
-            <span class="opt-amount" style="color: var(--cyan);">${fmt(s.value)} €/lună</span>
-          </div>
-          <div class="opt-progress-bg" style="margin-top: 6px;">
-            <div class="opt-progress-fill" style="width: ${pct}%; --orange: var(--cyan); background: linear-gradient(90deg, var(--cyan), var(--blue));"></div>
-          </div>
-        </div>`;
-    }).join('');
-  }
+  _netMonthlyRON = monthlyAvgTotal;
+  const netEl = document.getElementById('net-val');
+  const netEurEl = document.getElementById('net-val-eur');
+  netEl.textContent = `${fmt(monthlyAvgTotal)} lei`;
+  netEurEl.textContent = fmtEur(monthlyAvgTotal);
+
+  clearTimeout(_metricsSaveTimeout);
+  _metricsSaveTimeout = setTimeout(() => saveMetrics(totalRON, monthlyAvgTotal), 1200);
 }
 
-// ══════════════════════════════════════════
-//  INIT
-// ══════════════════════════════════════════
-loadAll();
-</script>
-
+window.addEventListener('DOMContentLoaded', () => {
+  loadAll();
+  // Forțează stilul vizual de deblocat la pornire
+  document.body.classList.add('app-unlocked');
+  const lockBtn = document.getElementById('global-lock-btn');
+  if(lockBtn) {
+    lockBtn.className = "btn btn-lock unlocked";
+    lockBtn.innerHTML = "Deblocat";
+  }
+});</script>
 </body>
 </html>
