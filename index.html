@@ -7,48 +7,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-
-:root{
---bg:#04060e;
---glass:rgba(255,255,255,0.048);
---glass2:rgba(255,255,255,0.028);
---glass3:rgba(255,255,255,0.015);
---border:rgba(255,255,255,0.09);
---border2:rgba(255,255,255,0.045);
---blue:#4f8ef7;
---blue2:#88b4ff;
---purple:#b197fc;
---green:#3ecf8e;
---gold:#f5c842;
---red:#fc6363;
---cyan:#22d3ee;
---pink:#f472b6;
---text:#eef2ff;
---muted:#8899bb;
---dim:#3d4f6e;
---r:22px;
---r-sm:14px;
---r-xs:9px;
---shadow:0 32px 80px rgba(0,0,0,0.6);
-}
-
+:root{--bg:#04060e;--glass:rgba(255,255,255,0.048);--glass2:rgba(255,255,255,0.028);--glass3:rgba(255,255,255,0.015);--border:rgba(255,255,255,0.09);--border2:rgba(255,255,255,0.045);--blue:#4f8ef7;--blue2:#88b4ff;--purple:#b197fc;--green:#3ecf8e;--gold:#f5c842;--red:#fc6363;--cyan:#22d3ee;--pink:#f472b6;--text:#eef2ff;--muted:#8899bb;--dim:#3d4f6e;--r:22px;--r-sm:14px;--r-xs:9px;--shadow:0 32px 80px rgba(0,0,0,0.6);}
 html,body{width:100%;min-height:100vh;overflow-x:hidden;background:var(--bg);font-family:'Syne',sans-serif;color:var(--text);-webkit-font-smoothing:antialiased;}
-
-body{
-background:
-radial-gradient(ellipse 90% 55% at 10% 0%, rgba(79,142,247,0.14) 0%, transparent 55%),
-radial-gradient(ellipse 70% 45% at 90% 90%, rgba(177,151,252,0.1) 0%, transparent 55%),
-radial-gradient(ellipse 50% 40% at 50% 50%, rgba(34,211,238,0.04) 0%, transparent 60%),
-linear-gradient(180deg,#04060e 0%,#060a16 100%);
-padding-bottom:100px;
-}
-
-body::before{
-content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
-background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-opacity:0.35;
-}
-
+body{background:radial-gradient(ellipse 90% 55% at 10% 0%, rgba(79,142,247,0.14) 0%, transparent 55%),radial-gradient(ellipse 70% 45% at 90% 90%, rgba(177,151,252,0.1) 0%, transparent 55%),radial-gradient(ellipse 50% 40% at 50% 50%, rgba(34,211,238,0.04) 0%, transparent 60%),linear-gradient(180deg,#04060e 0%,#060a16 100%);padding-bottom:100px;}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");opacity:0.35;}
 .hdr{position:sticky;top:0;z-index:100;padding:14px 18px 12px;background:rgba(4,6,14,0.88);backdrop-filter:blur(30px);border-bottom:1px solid var(--border);}
 .hdr-inner{display:flex;align-items:center;justify-content:space-between}
 .hdr h1{font-size:17px;font-weight:800;letter-spacing:-0.5px;background:linear-gradient(130deg,#fff 0%,var(--blue2) 55%,var(--cyan) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
@@ -56,27 +18,17 @@ opacity:0.35;
 .live-badge{display:flex;align-items:center;gap:6px;background:rgba(62,207,142,0.1);border:1px solid rgba(62,207,142,0.22);border-radius:50px;padding:5px 12px;font-size:10px;font-weight:700;color:var(--green);letter-spacing:0.8px;}
 .live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 2s infinite;box-shadow:0 0 8px var(--green)}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0.25}}
-
 .main{position:relative;z-index:1;padding:18px 14px;display:flex;flex-direction:column;gap:16px;max-width:560px;margin:0 auto}
-
 .card{background:var(--glass);border:1px solid var(--border);border-radius:var(--r);backdrop-filter:blur(24px);box-shadow:var(--shadow);overflow:hidden;animation:fadeUp .55s cubic-bezier(.16,1,.3,1) both;}
-.card:nth-child(1){animation-delay:.04s}
-.card:nth-child(2){animation-delay:.1s}
-.card:nth-child(3){animation-delay:.16s}
+.card:nth-child(1){animation-delay:.04s}.card:nth-child(2){animation-delay:.1s}.card:nth-child(3){animation-delay:.16s}
 @keyframes fadeUp{from{opacity:0;transform:translateY(26px) scale(0.988)}to{opacity:1;transform:translateY(0) scale(1)}}
-
 .card-hdr{padding:15px 18px 13px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border2);gap:8px;}
 .card-title{display:flex;align-items:center;gap:9px;font-size:10px;font-weight:700;letter-spacing:1.8px;color:var(--muted);text-transform:uppercase;flex-shrink:0}
 .dot{width:7px;height:7px;border-radius:50%}
 .dot-blue{background:var(--blue);box-shadow:0 0 10px var(--blue);animation:pulse 2.5s infinite}
-.dot-green{background:var(--green);box-shadow:0 0 10px var(--green);animation:pulse 2.5s infinite 0.3s}
 .dot-gold{background:var(--gold);box-shadow:0 0 10px var(--gold);animation:pulse 2.5s infinite 0.6s}
-.dot-purple{background:var(--purple);box-shadow:0 0 10px var(--purple);animation:pulse 2.5s infinite 0.9s}
-.dot-cyan{background:var(--cyan);box-shadow:0 0 10px var(--cyan);animation:pulse 2.5s infinite 1.2s}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.25}}
-
 .card-body{padding:16px 18px}
-
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;padding:9px 18px;border-radius:50px;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;transition:all .2s cubic-bezier(.16,1,.3,1);white-space:nowrap;-webkit-tap-highlight-color:transparent;}
 .btn-blue{background:linear-gradient(135deg,var(--blue) 0%,var(--blue2) 100%);color:#fff;box-shadow:0 4px 20px rgba(79,142,247,0.32);}
 .btn-blue:active{transform:scale(0.95);box-shadow:0 2px 10px rgba(79,142,247,0.22)}
@@ -86,23 +38,40 @@ opacity:0.35;
 .btn-danger:active{background:rgba(252,99,99,0.15)}
 .btn-sm{padding:6px 14px;font-size:11px}
 .btn-icon{padding:6px 9px;border-radius:10px}
-
 .fab-refresh{position:fixed;right:20px;bottom:28px;z-index:150;width:52px;height:52px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(135deg,var(--blue) 0%,var(--blue2) 100%);box-shadow:0 6px 28px rgba(79,142,247,0.45),0 2px 8px rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;font-size:20px;opacity:1;transition:opacity .35s cubic-bezier(.16,1,.3,1), transform .2s cubic-bezier(.16,1,.3,1), box-shadow .2s;-webkit-tap-highlight-color:transparent;}
 .fab-refresh.hidden{opacity:0;pointer-events:none;}
 .fab-refresh:active{transform:scale(0.9);box-shadow:0 3px 12px rgba(79,142,247,0.3)}
 .fab-refresh.spinning svg{animation:spin-fab .7s linear infinite}
 .fab-refresh.loading-state{opacity:0.6;pointer-events:none;}
 @keyframes spin-fab{to{transform:rotate(360deg)}}
-
 .currency-toggle{display:flex;gap:4px;background:rgba(255,255,255,0.03);border:1px solid var(--border2);border-radius:10px;padding:3px;}
 .curr-btn{padding:5px 12px;border-radius:7px;border:none;cursor:pointer;font-family:'Space Mono',monospace;font-size:10px;font-weight:700;color:var(--dim);background:transparent;transition:all .18s cubic-bezier(.16,1,.3,1);-webkit-tap-highlight-color:transparent;}
 .curr-btn.active{background:rgba(79,142,247,0.18);color:var(--blue2);border:1px solid rgba(79,142,247,0.25);}
 .curr-btn.eur-active{background:rgba(245,200,66,0.15);color:var(--gold);border:1px solid rgba(245,200,66,0.3);}
-
-.input-wrap{position:relative}
 .input-converted-hint{font-family:'Space Mono',monospace;font-size:9px;color:var(--dim);margin-top:5px;padding-left:2px;transition:color .2s;min-height:13px;}
 .input-converted-hint.has-val{color:rgba(134,180,255,0.55)}
 .input-converted-hint.eur{color:rgba(245,200,66,0.55)}
+
+/* ── RATE INFO BOX -- afișat în modale sub câmpul de sumă ── */
+.rate-info-box{
+  display:flex;align-items:flex-start;gap:7px;
+  background:rgba(255,255,255,0.022);
+  border:1px solid rgba(255,255,255,0.065);
+  border-radius:9px;
+  padding:7px 10px;
+  margin-top:7px;
+  font-family:'Space Mono',monospace;
+  font-size:9.5px;
+  color:var(--dim);
+  line-height:1.55;
+  transition:border-color .2s,background .2s;
+}
+.rate-info-box.active-ron{border-color:rgba(79,142,247,0.22);background:rgba(79,142,247,0.05);}
+.rate-info-box.active-eur{border-color:rgba(245,200,66,0.22);background:rgba(245,200,66,0.04);}
+.rate-info-icon{font-size:11px;flex-shrink:0;margin-top:1px;}
+.rate-info-text{flex:1;}
+.rate-info-val{font-weight:700;color:var(--text);}
+.rate-info-formula{display:block;margin-top:2px;font-size:8.5px;opacity:.6;}
 
 input[type="text"],input[type="number"],select{background:rgba(255,255,255,0.035);border:1px solid var(--border);border-radius:var(--r-sm);color:var(--text);font-family:'Syne',sans-serif;font-size:14px;font-weight:500;padding:11px 14px;width:100%;outline:none;transition:border .2s,box-shadow .2s,background .2s;-webkit-appearance:none;}
 input:focus,select:focus{border-color:rgba(79,142,247,0.55);box-shadow:0 0 0 3px rgba(79,142,247,0.1);background:rgba(79,142,247,0.035);}
@@ -110,18 +79,14 @@ input.eur-mode{border-color:rgba(245,200,66,0.35);}
 input.eur-mode:focus{border-color:rgba(245,200,66,0.6);box-shadow:0 0 0 3px rgba(245,200,66,0.08);background:rgba(245,200,66,0.025);}
 select option{background:#0d1530}
 .field-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px}
-
 .amount-field-wrap{display:flex;flex-direction:column;gap:0}
 .amount-field-top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
 .amount-field-top .field-label{margin-bottom:0}
-
 .input-with-badge{position:relative}
 .input-curr-badge{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-family:'Space Mono',monospace;font-size:10px;font-weight:700;color:var(--dim);pointer-events:none;}
 .input-with-badge input{padding-right:48px}
 .input-curr-badge.ron{color:rgba(134,180,255,0.5)}
 .input-curr-badge.eur{color:rgba(245,200,66,0.65)}
-
-/* ── DUAL RATE WIDGET ── */
 .net-banner{padding:24px 20px 20px;position:relative;overflow:hidden}
 .net-banner::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 100% at 50% 100%, rgba(245,200,66,0.04) 0%, transparent 70%);pointer-events:none}
 .net-center{text-align:center;position:relative}
@@ -129,120 +94,84 @@ select option{background:#0d1530}
 .net-val{font-size:44px;font-weight:800;letter-spacing:-2.5px;font-family:'Space Mono',monospace;transition:color .3s}
 .net-pos{background:linear-gradient(135deg,#e03a3a 0%,#c0282a 60%,#a01f22 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 18px rgba(200,40,42,0.3));}
 .net-eur-sub{font-size:11px;color:var(--dim);font-family:'Space Mono',monospace;margin-top:6px}
-
-/* Dual rate widget */
 .dual-rate-widget{margin-top:20px;display:flex;flex-direction:column;gap:8px;}
-
 .rate-card{display:flex;align-items:center;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.07);border-radius:14px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.06);}
 .rate-card.sell{border-color:rgba(62,207,142,0.15);}
 .rate-card.buy{border-color:rgba(252,99,99,0.15);}
-
 .rate-label-block{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 12px;gap:3px;min-width:70px;border-right:1px solid rgba(255,255,255,0.07);}
 .rate-type-badge{font-family:'Space Mono',monospace;font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:3px 7px;border-radius:5px;white-space:nowrap;}
 .rate-type-badge.sell{background:rgba(62,207,142,0.12);color:var(--green);border:1px solid rgba(62,207,142,0.2);}
 .rate-type-badge.buy{background:rgba(252,99,99,0.12);color:var(--red);border:1px solid rgba(252,99,99,0.2);}
 .rate-desc{font-family:'Space Mono',monospace;font-size:7px;color:var(--dim);text-align:center;margin-top:3px;}
-
-.rate-eq-block{display:flex;align-items:center;justify-content:center;padding:0 10px;color:var(--dim);font-size:11px;}
-
 .rate-pairs{display:flex;align-items:center;flex:1;gap:0;}
 .rate-pair-seg{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 14px;gap:3px;}
 .rate-pair-lbl{font-family:'Space Mono',monospace;font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--dim);}
 .rate-pair-val{font-family:'Space Mono',monospace;font-size:15px;font-weight:700;color:var(--text);}
 .rate-divider-v{width:1px;background:rgba(255,255,255,0.06);align-self:stretch;}
-
 .rate-input-seg{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 10px;gap:3px;flex:1;position:relative;cursor:text;}
 .rate-input-seg.sell-input::after{content:'';position:absolute;bottom:5px;left:50%;transform:translateX(-50%);width:24px;height:1.5px;border-radius:2px;background:var(--green);opacity:0.5;}
 .rate-input-seg.buy-input::after{content:'';position:absolute;bottom:5px;left:50%;transform:translateX(-50%);width:24px;height:1.5px;border-radius:2px;background:var(--red);opacity:0.5;}
 .rate-input-seg .rate-pair-lbl{color:var(--dim);}
-
 .rate-input-seg input{background:none;border:none;padding:0;margin:0;font-family:'Space Mono',monospace;font-size:15px;font-weight:700;width:58px;text-align:center;box-shadow:none;border-radius:0;}
 .rate-input-seg.sell-input input{color:var(--green);-webkit-text-fill-color:var(--green);}
 .rate-input-seg.sell-input input:focus{color:var(--cyan);-webkit-text-fill-color:var(--cyan);box-shadow:none;background:none;border:none;}
 .rate-input-seg.buy-input input{color:var(--red);-webkit-text-fill-color:var(--red);}
 .rate-input-seg.buy-input input:focus{color:#ff9090;-webkit-text-fill-color:#ff9090;box-shadow:none;background:none;border:none;}
-
 .rate-save-indicator{font-size:8px;color:var(--green);font-family:'Space Mono',monospace;margin-top:4px;text-align:center;opacity:0;transition:opacity .3s;letter-spacing:1px;}
 .rate-save-indicator.show{opacity:1}
-
-/* ── DUAL WALLET TOTALS ── */
 .wallet-dual-totals{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px 0 6px;}
-
-.wallet-total-block{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:16px 12px;border-radius:18px;gap:6px;position:relative;overflow:hidden;
-}
-.wallet-total-block::before{
-  content:'';position:absolute;inset:0;opacity:0.06;pointer-events:none;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-.wallet-total-block.ron-block{
-  background:linear-gradient(145deg, rgba(79,142,247,0.12) 0%, rgba(134,180,255,0.06) 100%);
-  border:1px solid rgba(79,142,247,0.22);
-}
-.wallet-total-block.eur-block{
-  background:linear-gradient(145deg, rgba(245,200,66,0.1) 0%, rgba(245,200,66,0.04) 100%);
-  border:1px solid rgba(245,200,66,0.22);
-}
-
-.wallet-total-scenario{
-  font-family:'Space Mono',monospace;font-size:7.5px;font-weight:700;
-  text-transform:uppercase;letter-spacing:1.5px;padding:3px 9px;border-radius:20px;
-  margin-bottom:2px;
-}
-.ron-block .wallet-total-scenario{
-  background:rgba(79,142,247,0.12);color:var(--blue2);border:1px solid rgba(79,142,247,0.2);
-}
-.eur-block .wallet-total-scenario{
-  background:rgba(245,200,66,0.12);color:var(--gold);border:1px solid rgba(245,200,66,0.2);
-}
-
-.wallet-total-lbl{
-  font-size:8px;color:var(--dim);text-transform:uppercase;
-  letter-spacing:1.5px;font-family:'Space Mono',monospace;text-align:center;line-height:1.4;
-}
-
-.wallet-total-num{
-  font-family:'Space Mono',monospace;font-weight:800;letter-spacing:-1px;
-  line-height:1;text-align:center;
-}
-.ron-block .wallet-total-num{
-  font-size:22px;
-  background:linear-gradient(135deg,#fff 0%,var(--blue2) 60%,var(--cyan) 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-}
-.eur-block .wallet-total-num{
-  font-size:22px;
-  background:linear-gradient(135deg,#fff 0%,var(--gold) 70%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-}
-
-.wallet-total-hint{
-  font-family:'Space Mono',monospace;font-size:9px;
-  text-align:center;line-height:1.4;margin-top:2px;
-}
+.wallet-total-block{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px 12px;border-radius:18px;gap:6px;position:relative;overflow:hidden;}
+.wallet-total-block.ron-block{background:linear-gradient(145deg, rgba(79,142,247,0.12) 0%, rgba(134,180,255,0.06) 100%);border:1px solid rgba(79,142,247,0.22);}
+.wallet-total-block.eur-block{background:linear-gradient(145deg, rgba(245,200,66,0.1) 0%, rgba(245,200,66,0.04) 100%);border:1px solid rgba(245,200,66,0.22);}
+.wallet-total-scenario{font-family:'Space Mono',monospace;font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:3px 9px;border-radius:20px;margin-bottom:2px;}
+.ron-block .wallet-total-scenario{background:rgba(79,142,247,0.12);color:var(--blue2);border:1px solid rgba(79,142,247,0.2);}
+.eur-block .wallet-total-scenario{background:rgba(245,200,66,0.12);color:var(--gold);border:1px solid rgba(245,200,66,0.2);}
+.wallet-total-lbl{font-size:8px;color:var(--dim);text-transform:uppercase;letter-spacing:1.5px;font-family:'Space Mono',monospace;text-align:center;line-height:1.4;}
+.wallet-total-num{font-family:'Space Mono',monospace;font-weight:800;letter-spacing:-1px;line-height:1;text-align:center;}
+.ron-block .wallet-total-num{font-size:22px;background:linear-gradient(135deg,#fff 0%,var(--blue2) 60%,var(--cyan) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.eur-block .wallet-total-num{font-size:22px;background:linear-gradient(135deg,#fff 0%,var(--gold) 70%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.wallet-total-hint{font-family:'Space Mono',monospace;font-size:9px;text-align:center;line-height:1.4;margin-top:2px;}
 .ron-block .wallet-total-hint{color:rgba(134,180,255,0.45);}
 .eur-block .wallet-total-hint{color:rgba(245,200,66,0.4);}
-
 .wallet-const-row{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:rgba(245,200,66,0.045);border:1px solid rgba(245,200,66,0.12);border-radius:11px;margin-bottom:2px;}
 .wallet-const-label{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--muted);}
-.wallet-const-lock{font-size:9px;color:var(--dim);opacity:0.5}
 .wallet-const-val{font-family:'Space Mono',monospace;font-size:12px;font-weight:700;color:var(--gold);}
-
-.row-item{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--border2)}
-.row-item:last-child{border-bottom:none}
-.row-label{flex:1;font-size:13px;font-weight:600;color:var(--text);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.row-sub{font-size:10px;color:var(--dim);font-family:'Space Mono',monospace;margin-top:2px}
-.row-val{font-family:'Space Mono',monospace;font-size:12px;font-weight:700;color:var(--text);white-space:nowrap}
-.row-val-eur{font-family:'Space Mono',monospace;font-size:9px;color:var(--dim);display:block;text-align:right;margin-top:2px}
 .row-actions{display:flex;gap:4px;flex-shrink:0}
 .empty-msg{color:var(--dim);font-size:12px;padding:12px 0;font-style:italic;text-align:center}
 
-.curr-chip{display:inline-flex;align-items:center;font-family:'Space Mono',monospace;font-size:8px;font-weight:700;padding:2px 6px;border-radius:5px;margin-left:4px;vertical-align:middle;}
+/* ── CURR CHIP ── */
+.curr-chip{display:inline-flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:8px;font-weight:700;padding:2px 0;border-radius:5px;margin-right:5px;vertical-align:middle;min-width:36px;width:36px;text-align:center;flex-shrink:0;}
 .curr-chip.ron{background:rgba(79,142,247,0.1);color:rgba(134,180,255,0.6);border:1px solid rgba(79,142,247,0.15)}
 .curr-chip.eur{background:rgba(245,200,66,0.1);color:rgba(245,200,66,0.7);border:1px solid rgba(245,200,66,0.2)}
-.curr-chip.mixed{background:rgba(177,151,252,0.1);color:rgba(177,151,252,0.8);border:1px solid rgba(177,151,252,0.25);font-size:7px}
+.curr-chip.after-label{margin-right:0;margin-left:5px;}
+
+/* ── ARROW CHIP -- containerul NU se rotește, doar .arrow-icon interior ── */
+.curr-chip.arrow{
+  background:rgba(255,255,255,0.055);
+  color:var(--muted);
+  border:1px solid rgba(255,255,255,0.1);
+  font-size:8px;
+  overflow:hidden;
+  transition:background .18s, border-color .18s, color .18s;
+  -webkit-tap-highlight-color:transparent;
+  height:18px;        /* ← adaugă asta */
+  line-height:18px;   /* ← adaugă asta */
+  padding:0;          /* ← adaugă asta */
+}
+
+.curr-chip.arrow.open{
+  color:var(--blue2);
+  background:rgba(79,142,247,0.1);
+  border-color:rgba(79,142,247,0.2);
+}
+.arrow-icon{
+  display:inline-block;
+  line-height:1;
+  transition:transform .22s cubic-bezier(.16,1,.3,1);
+}
+.curr-chip.arrow.open .arrow-icon{
+  transform:rotate(90deg);
+}
 
 .total-row{padding:10px 0 0;margin-top:4px}
 .total-mini-card{display:flex;align-items:center;justify-content:space-between;background:rgba(245,200,66,0.06);border:1px solid rgba(245,200,66,0.14);border-radius:12px;padding:10px 14px;width:100%;}
@@ -250,28 +179,16 @@ select option{background:#0d1530}
 .total-mini-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
 .total-mini-ron{font-family:'Space Mono',monospace;font-size:15px;font-weight:700;color:var(--gold);letter-spacing:-0.5px;line-height:1;}
 .total-mini-eur{font-family:'Space Mono',monospace;font-size:9px;color:rgba(245,200,66,0.4);letter-spacing:0.3px;line-height:1;}
-
-.badge{background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.2);border-radius:9px;padding:5px 10px;font-size:11px;font-weight:700;color:var(--blue2);font-family:'Space Mono',monospace;white-space:nowrap}
-.badge-green{background:rgba(62,207,142,0.1);border-color:rgba(62,207,142,0.25);color:var(--green)}
-.badge-gold{background:rgba(245,200,66,0.1);border-color:rgba(245,200,66,0.25);color:var(--gold)}
-.badge-purple{background:rgba(177,151,252,0.1);border-color:rgba(177,151,252,0.25);color:var(--purple)}
-.badge-red{background:rgba(252,99,99,0.1);border-color:rgba(252,99,99,0.25);color:var(--red)}
-
 .divider{height:1px;background:var(--border2);margin:12px 0}
-
 .section-sep{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--dim);margin:16px 0 10px;display:flex;align-items:center;gap:9px;}
 .section-sep::after{content:'';flex:1;height:1px;background:var(--border2)}
-
 .cat-item{margin-bottom:1px}
 .cat-row{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--border2);}
-.cat-row:last-child{border-bottom:none}
 .cat-clickable-zone{display:flex;align-items:center;gap:8px;flex:1;min-width:0;-webkit-tap-highlight-color:transparent;}
 .cat-clickable-zone.has-subcats{cursor:pointer;}
 .cat-clickable-zone.no-subcats{cursor:default;}
-.cat-toggle{background:none;border:none;color:var(--dim);font-size:9px;padding:2px 4px;transition:transform .22s cubic-bezier(.16,1,.3,1);line-height:1;pointer-events:none;visibility:hidden;width:16px;flex-shrink:0;}
-.cat-toggle.visible{visibility:visible;}
-.cat-toggle.open{transform:rotate(90deg)}
-.cat-lbl{flex:1;font-size:13px;font-weight:700;color:var(--text);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cat-toggle{display:none !important;}
+.cat-lbl{flex:1;font-size:13px;font-weight:700;color:var(--text);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;align-items:center;}
 .cat-val-wrap{text-align:right;flex-shrink:0}
 .cat-val{font-family:'Space Mono',monospace;font-size:12px;font-weight:700;color:var(--gold);white-space:nowrap;display:block}
 .cat-val-eur{font-family:'Space Mono',monospace;font-size:9px;color:rgba(245,200,66,0.5);white-space:nowrap;display:block}
@@ -279,18 +196,15 @@ select option{background:#0d1530}
 .subcats.open{display:block}
 .sub-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.025)}
 .sub-row:last-child{border-bottom:none}
-.sub-lbl{flex:1;font-size:12px;color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sub-lbl{flex:1;font-size:12px;color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;align-items:center;}
 .sub-val-wrap{text-align:right}
 .sub-val{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap;display:block}
 .sub-val-eur{font-family:'Space Mono',monospace;font-size:9px;color:var(--dim);white-space:nowrap;display:block}
-
 .sum-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
 .sum-block{background:var(--glass2);border:1px solid var(--border2);border-radius:16px;padding:14px 12px;text-align:center}
 .s-lbl{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--dim);margin-bottom:8px}
 .s-val{font-size:16px;font-weight:800;font-family:'Space Mono',monospace;background:linear-gradient(135deg,#fff,var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.s-val.blue{background:linear-gradient(135deg,#fff,var(--blue2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .s-val-eur{font-size:9px;color:var(--dim);font-family:'Space Mono',monospace;margin-top:4px}
-
 .overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.7);backdrop-filter:blur(14px);align-items:flex-end;justify-content:center}
 .overlay.open{display:flex}
 .modal{background:linear-gradient(180deg,#0d1530 0%,#090f22 100%);border:1px solid var(--border);border-radius:26px 26px 0 0;padding:24px 18px 48px;width:100%;max-width:560px;animation:slideUp .3s cubic-bezier(.16,1,.3,1);}
@@ -300,24 +214,20 @@ select option{background:#0d1530}
 .modal-fields{display:flex;flex-direction:column;gap:13px}
 .modal-actions{display:flex;gap:10px;margin-top:20px}
 .modal-actions .btn{flex:1;padding:14px;font-size:14px;border-radius:16px}
-.flex-row{display:flex;gap:10px}
+.flex-row{display:flex;gap:10px;align-items:flex-end}
 .flex-row>*{flex:1}
-
 .loader{display:none;text-align:center;padding:20px;color:var(--dim);font-size:12px;font-family:'Space Mono',monospace}
 .loader.show{display:block}
 .spinner{display:inline-block;width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px}
 @keyframes spin{to{transform:rotate(360deg)}}
-
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:rgba(13,21,48,0.97);border:1px solid var(--border);border-radius:14px;padding:12px 20px;font-size:13px;font-weight:600;color:var(--text);z-index:500;transition:transform .3s cubic-bezier(.16,1,.3,1),opacity .3s;opacity:0;pointer-events:none;white-space:nowrap;}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 .toast.ok{border-color:rgba(62,207,142,0.3);color:var(--green)}
 .toast.err{border-color:rgba(252,99,99,0.3);color:var(--red)}
-
 .btn-lock{background:rgba(252,99,99,0.1);color:var(--red);border:1px solid rgba(252,99,99,0.25);border-radius:12px;font-size:11px;padding:4px 12px;gap:6px;}
 .btn-lock.unlocked{background:rgba(62,207,142,0.1);color:var(--green);border-color:rgba(62,207,142,0.25);}
 .sensitive-action{display:none !important;}
 body.app-unlocked .sensitive-action{display:inline-flex !important;}
-
 .pin-overlay{display:none;position:fixed;inset:0;z-index:999;background:rgba(4,6,14,0.95);backdrop-filter:blur(20px);align-items:center;justify-content:center;}
 .pin-overlay.open{display:flex;}
 .pin-container{width:100%;max-width:280px;text-align:center;padding:20px;}
@@ -326,10 +236,6 @@ body.app-unlocked .sensitive-action{display:inline-flex !important;}
 .pin-key{background:var(--glass);border:1px solid var(--border);border-radius:50%;width:64px;height:64px;font-size:22px;font-weight:600;color:var(--text);display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;margin:0 auto;transition:background 0.1s;}
 .pin-key:active{background:var(--border);color:#fff;}
 .pin-key.clear{font-size:14px;color:var(--red);background:rgba(252,99,99,0.05);border-color:rgba(252,99,99,0.15);border-radius:16px;width:100%;height:50px;grid-column:span 3;margin-top:10px;}
-
-.info-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border2)}
-.info-row:last-child{border-bottom:none}
-.info-lbl{font-size:12px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -355,58 +261,39 @@ body.app-unlocked .sensitive-action{display:inline-flex !important;}
       <div class="net-val net-pos" id="net-val">0 lei</div>
       <div class="net-eur-sub" id="net-val-eur">≈ 0 €</div>
     </div>
-
-    <!-- DUAL RATE WIDGET -->
     <div class="dual-rate-widget">
-
-      <!-- CURS VÂNZARE — pentru portofel -->
       <div class="rate-card sell">
         <div class="rate-label-block">
           <span class="rate-type-badge sell">VÂNZARE</span>
           <span class="rate-desc">Portofel<br>EUR → LEI</span>
         </div>
         <div class="rate-pairs">
-          <div class="rate-pair-seg">
-            <span class="rate-pair-lbl">1 EUR</span>
-            <span class="rate-pair-val" style="color:var(--green);">=</span>
-          </div>
+          <div class="rate-pair-seg"><span class="rate-pair-lbl">1 EUR</span><span class="rate-pair-val" style="color:var(--green);">=</span></div>
           <div class="rate-divider-v"></div>
           <div class="rate-input-seg sell-input">
             <span class="rate-pair-lbl">Curs vânzare</span>
             <input type="number" id="eur-rate-sell" value="5.17" inputmode="decimal" min="0" step="0.01" oninput="onEurRateChange()">
           </div>
           <div class="rate-divider-v"></div>
-          <div class="rate-pair-seg">
-            <span class="rate-pair-lbl">Monedă</span>
-            <span class="rate-pair-val" style="font-size:13px;color:var(--muted);">RON</span>
-          </div>
+          <div class="rate-pair-seg"><span class="rate-pair-lbl">Monedă</span><span class="rate-pair-val" style="font-size:13px;color:var(--muted);">RON</span></div>
         </div>
       </div>
-
-      <!-- CURS CUMPĂRARE — pentru cheltuieli -->
       <div class="rate-card buy">
         <div class="rate-label-block">
           <span class="rate-type-badge buy">CUMPĂRARE</span>
           <span class="rate-desc">Cheltuieli<br>LEI → EUR</span>
         </div>
         <div class="rate-pairs">
-          <div class="rate-pair-seg">
-            <span class="rate-pair-lbl">1 EUR</span>
-            <span class="rate-pair-val" style="color:var(--red);">=</span>
-          </div>
+          <div class="rate-pair-seg"><span class="rate-pair-lbl">1 EUR</span><span class="rate-pair-val" style="color:var(--red);">=</span></div>
           <div class="rate-divider-v"></div>
           <div class="rate-input-seg buy-input">
             <span class="rate-pair-lbl">Curs cumpărare</span>
             <input type="number" id="eur-rate-buy" value="5.37" inputmode="decimal" min="0" step="0.01" oninput="onEurRateChange()">
           </div>
           <div class="rate-divider-v"></div>
-          <div class="rate-pair-seg">
-            <span class="rate-pair-lbl">Monedă</span>
-            <span class="rate-pair-val" style="font-size:13px;color:var(--muted);">RON</span>
-          </div>
+          <div class="rate-pair-seg"><span class="rate-pair-lbl">Monedă</span><span class="rate-pair-val" style="font-size:13px;color:var(--muted);">RON</span></div>
         </div>
       </div>
-
     </div>
     <div class="rate-save-indicator" id="rate-save-indicator">✓ Cursuri salvate</div>
   </div>
@@ -419,22 +306,18 @@ body.app-unlocked .sensitive-action{display:inline-flex !important;}
     <div class="card-body">
       <div class="loader" id="loader-wallet"><span class="spinner"></span>Se încarcă...</div>
       <div id="wallet-list"></div>
-
-      <!-- DUAL TOTALS: Total RON & Total EUR -->
       <div class="wallet-dual-totals">
-        <!-- Total RON: RON nativ + EUR×cursVânzare -->
         <div class="wallet-total-block ron-block">
           <span class="wallet-total-scenario">RON</span>
           <div class="wallet-total-lbl">Dacă tot capitalul<br>ar fi în lei</div>
           <div class="wallet-total-num" id="wallet-total-ron">0</div>
-          <div class="wallet-total-hint" id="wallet-total-ron-hint">RON + EUR × <span id="hint-sell-rate">5.17</span></div>
+          <div class="wallet-total-hint">RON + EUR × <span id="hint-sell-rate">5.17</span></div>
         </div>
-        <!-- Total EUR: EUR nativ + RON÷cursCumpărare -->
         <div class="wallet-total-block eur-block">
           <span class="wallet-total-scenario">EUR</span>
           <div class="wallet-total-lbl">Dacă tot capitalul<br>ar fi în euro</div>
           <div class="wallet-total-num" id="wallet-total-eur">0</div>
-          <div class="wallet-total-hint" id="wallet-total-eur-hint">EUR + RON ÷ <span id="hint-buy-rate">5.37</span></div>
+          <div class="wallet-total-hint">EUR + RON ÷ <span id="hint-buy-rate">5.37</span></div>
         </div>
       </div>
     </div>
@@ -447,7 +330,6 @@ body.app-unlocked .sensitive-action{display:inline-flex !important;}
     </div>
     <div class="card-body">
       <div class="loader" id="loader-cats"><span class="spinner"></span>Se încarcă...</div>
-
       <div class="section-sep">📅 Cheltuieli Anuale (o dată/an)</div>
       <div id="annual-list"></div>
       <div class="total-row">
@@ -459,9 +341,7 @@ body.app-unlocked .sensitive-action{display:inline-flex !important;}
           </div>
         </div>
       </div>
-
       <div class="divider"></div>
-
       <div class="section-sep">🗓 Cheltuieli Lunare</div>
       <div id="monthly-list"></div>
       <div class="total-row">
@@ -473,7 +353,6 @@ body.app-unlocked .sensitive-action{display:inline-flex !important;}
           </div>
         </div>
       </div>
-
       <div class="sum-grid">
         <div class="sum-block">
           <div class="s-lbl">Media lunară totală</div>
@@ -493,8 +372,7 @@ body.app-unlocked .sensitive-action{display:inline-flex !important;}
 
 <button class="fab-refresh" id="fab-refresh" onclick="handleFabRefresh()" title="Reîncarcă datele">
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M23 4v6h-6"/>
-    <path d="M1 20v-6h6"/>
+    <path d="M23 4v6h-6"/><path d="M1 20v-6h6"/>
     <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/>
   </svg>
 </button>
@@ -504,18 +382,10 @@ body.app-unlocked .sensitive-action{display:inline-flex !important;}
     <div style="font-size:12px;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px;">Introdu PIN Securitate</div>
     <div class="pin-display" id="pin-dots"></div>
     <div class="pin-grid">
-      <div class="pin-key" onclick="pressPin('1')">1</div>
-      <div class="pin-key" onclick="pressPin('2')">2</div>
-      <div class="pin-key" onclick="pressPin('3')">3</div>
-      <div class="pin-key" onclick="pressPin('4')">4</div>
-      <div class="pin-key" onclick="pressPin('5')">5</div>
-      <div class="pin-key" onclick="pressPin('6')">6</div>
-      <div class="pin-key" onclick="pressPin('7')">7</div>
-      <div class="pin-key" onclick="pressPin('8')">8</div>
-      <div class="pin-key" onclick="pressPin('9')">9</div>
-      <div></div>
-      <div class="pin-key" onclick="pressPin('0')">0</div>
-      <div></div>
+      <div class="pin-key" onclick="pressPin('1')">1</div><div class="pin-key" onclick="pressPin('2')">2</div><div class="pin-key" onclick="pressPin('3')">3</div>
+      <div class="pin-key" onclick="pressPin('4')">4</div><div class="pin-key" onclick="pressPin('5')">5</div><div class="pin-key" onclick="pressPin('6')">6</div>
+      <div class="pin-key" onclick="pressPin('7')">7</div><div class="pin-key" onclick="pressPin('8')">8</div><div class="pin-key" onclick="pressPin('9')">9</div>
+      <div></div><div class="pin-key" onclick="pressPin('0')">0</div><div></div>
       <button class="pin-key clear" onclick="clearPin()">Închide</button>
     </div>
   </div>
@@ -529,24 +399,13 @@ body.app-unlocked .sensitive-action{display:inline-flex !important;}
     <div class="modal-fields">
       <div><div class="field-label">Etichetă</div><input type="text" id="w-label" placeholder="ex: 👝 Revolut"></div>
       <div class="amount-field-wrap">
-        <div class="amount-field-top">
-          <div class="field-label">Sumă</div>
-          <div class="currency-toggle">
-            <button class="curr-btn active" id="w-curr-ron" onclick="setCurrencyMode('w','ron')">RON</button>
-            <button class="curr-btn" id="w-curr-eur" onclick="setCurrencyMode('w','eur')">EUR</button>
-          </div>
-        </div>
-        <div class="input-with-badge">
-          <input type="number" id="w-amount" placeholder="ex: 2500" inputmode="decimal" step="0.01" oninput="updateConvertedHint('w')">
-          <span class="input-curr-badge ron" id="w-curr-badge">LEI</span>
-        </div>
+        <div class="amount-field-top"><div class="field-label">Sumă</div><div class="currency-toggle"><button class="curr-btn active" id="w-curr-ron" onclick="setCurrencyMode('w','ron')">RON</button><button class="curr-btn" id="w-curr-eur" onclick="setCurrencyMode('w','eur')">EUR</button></div></div>
+        <div class="input-with-badge"><input type="number" id="w-amount" placeholder="ex: 2500" inputmode="decimal" step="0.01" oninput="updateConvertedHint('w')"><span class="input-curr-badge ron" id="w-curr-badge">LEI</span></div>
         <div class="input-converted-hint" id="w-converted-hint"></div>
+        <div class="rate-info-box active-ron" id="w-rate-info"><span class="rate-info-icon">ℹ️</span><span class="rate-info-text" id="w-rate-info-text"></span></div>
       </div>
     </div>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeModal('mo-wallet')">Anulează</button>
-      <button class="btn btn-blue" onclick="saveWallet()">Adaugă</button>
-    </div>
+    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal('mo-wallet')">Anulează</button><button class="btn btn-blue" onclick="saveWallet()">Adaugă</button></div>
   </div>
 </div>
 
@@ -559,24 +418,13 @@ body.app-unlocked .sensitive-action{display:inline-flex !important;}
     <div class="modal-fields">
       <div><div class="field-label">Etichetă</div><input type="text" id="ew-label"></div>
       <div class="amount-field-wrap">
-        <div class="amount-field-top">
-          <div class="field-label">Sumă</div>
-          <div class="currency-toggle">
-            <button class="curr-btn active" id="ew-curr-ron" onclick="setCurrencyMode('ew','ron')">RON</button>
-            <button class="curr-btn" id="ew-curr-eur" onclick="setCurrencyMode('ew','eur')">EUR</button>
-          </div>
-        </div>
-        <div class="input-with-badge">
-          <input type="number" id="ew-amount" inputmode="decimal" step="0.01" oninput="updateConvertedHint('ew')">
-          <span class="input-curr-badge ron" id="ew-curr-badge">LEI</span>
-        </div>
+        <div class="amount-field-top"><div class="field-label">Sumă</div><div class="currency-toggle"><button class="curr-btn active" id="ew-curr-ron" onclick="setCurrencyMode('ew','ron')">RON</button><button class="curr-btn" id="ew-curr-eur" onclick="setCurrencyMode('ew','eur')">EUR</button></div></div>
+        <div class="input-with-badge"><input type="number" id="ew-amount" inputmode="decimal" step="0.01" oninput="updateConvertedHint('ew')"><span class="input-curr-badge ron" id="ew-curr-badge">LEI</span></div>
         <div class="input-converted-hint" id="ew-converted-hint"></div>
+        <div class="rate-info-box active-ron" id="ew-rate-info"><span class="rate-info-icon">ℹ️</span><span class="rate-info-text" id="ew-rate-info-text"></span></div>
       </div>
     </div>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeModal('mo-edit-wallet')">Anulează</button>
-      <button class="btn btn-blue" onclick="updateWallet()">Salvează</button>
-    </div>
+    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal('mo-edit-wallet')">Anulează</button><button class="btn btn-blue" onclick="updateWallet()">Salvează</button></div>
   </div>
 </div>
 
@@ -589,31 +437,14 @@ body.app-unlocked .sensitive-action{display:inline-flex !important;}
       <div><div class="field-label">Nume categorie</div><input type="text" id="cat-label" placeholder="ex: 🏠 Chirie"></div>
       <div class="flex-row">
         <div class="amount-field-wrap">
-          <div class="amount-field-top">
-            <div class="field-label">Sumă</div>
-            <div class="currency-toggle">
-              <button class="curr-btn active" id="cat-curr-ron" onclick="setCurrencyMode('cat','ron')">RON</button>
-              <button class="curr-btn" id="cat-curr-eur" onclick="setCurrencyMode('cat','eur')">EUR</button>
-            </div>
-          </div>
-          <div class="input-with-badge">
-            <input type="number" id="cat-amount" placeholder="ex: 1500" inputmode="decimal" step="0.01" oninput="updateConvertedHint('cat')">
-            <span class="input-curr-badge ron" id="cat-curr-badge">LEI</span>
-          </div>
+          <div class="amount-field-top"><div class="field-label">Sumă</div><div class="currency-toggle"><button class="curr-btn active" id="cat-curr-ron" onclick="setCurrencyMode('cat','ron')">RON</button><button class="curr-btn" id="cat-curr-eur" onclick="setCurrencyMode('cat','eur')">EUR</button></div></div>
+          <div class="input-with-badge"><input type="number" id="cat-amount" placeholder="ex: 1500" inputmode="decimal" step="0.01" oninput="updateConvertedHint('cat')"><span class="input-curr-badge ron" id="cat-curr-badge">LEI</span></div>
           <div class="input-converted-hint" id="cat-converted-hint"></div>
         </div>
-        <div><div class="field-label">Tip</div>
-          <select id="cat-type">
-            <option value="monthly">Lunară 🗓</option>
-            <option value="annual">Anuală 📅</option>
-          </select>
-        </div>
+        <div><div class="field-label">Tip</div><select id="cat-type"><option value="monthly">Lunară 🗓</option><option value="annual">Anuală 📅</option></select></div>
       </div>
     </div>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeModal('mo-cat')">Anulează</button>
-      <button class="btn btn-blue" onclick="saveCat()">Adaugă</button>
-    </div>
+    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal('mo-cat')">Anulează</button><button class="btn btn-blue" onclick="saveCat()">Adaugă</button></div>
   </div>
 </div>
 
@@ -627,31 +458,14 @@ body.app-unlocked .sensitive-action{display:inline-flex !important;}
       <div><div class="field-label">Nume</div><input type="text" id="ec-label"></div>
       <div class="flex-row">
         <div class="amount-field-wrap">
-          <div class="amount-field-top">
-            <div class="field-label">Sumă</div>
-            <div class="currency-toggle">
-              <button class="curr-btn active" id="ec-curr-ron" onclick="setCurrencyMode('ec','ron')">RON</button>
-              <button class="curr-btn" id="ec-curr-eur" onclick="setCurrencyMode('ec','eur')">EUR</button>
-            </div>
-          </div>
-          <div class="input-with-badge">
-            <input type="number" id="ec-amount" inputmode="decimal" step="0.01" oninput="updateConvertedHint('ec')">
-            <span class="input-curr-badge ron" id="ec-curr-badge">LEI</span>
-          </div>
+          <div class="amount-field-top"><div class="field-label">Sumă</div><div class="currency-toggle"><button class="curr-btn active" id="ec-curr-ron" onclick="setCurrencyMode('ec','ron')">RON</button><button class="curr-btn" id="ec-curr-eur" onclick="setCurrencyMode('ec','eur')">EUR</button></div></div>
+          <div class="input-with-badge"><input type="number" id="ec-amount" inputmode="decimal" step="0.01" oninput="updateConvertedHint('ec')"><span class="input-curr-badge ron" id="ec-curr-badge">LEI</span></div>
           <div class="input-converted-hint" id="ec-converted-hint"></div>
         </div>
-        <div><div class="field-label">Tip</div>
-          <select id="ec-type">
-            <option value="monthly">Lunară 🗓</option>
-            <option value="annual">Anuală 📅</option>
-          </select>
-        </div>
+        <div><div class="field-label">Tip</div><select id="ec-type"><option value="monthly">Lunară 🗓</option><option value="annual">Anuală 📅</option></select></div>
       </div>
     </div>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeModal('mo-edit-cat')">Anulează</button>
-      <button class="btn btn-blue" onclick="updateCat()">Salvează</button>
-    </div>
+    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal('mo-edit-cat')">Anulează</button><button class="btn btn-blue" onclick="updateCat()">Salvează</button></div>
   </div>
 </div>
 
@@ -664,24 +478,12 @@ body.app-unlocked .sensitive-action{display:inline-flex !important;}
     <div class="modal-fields">
       <div><div class="field-label">Nume</div><input type="text" id="sub-label" placeholder="ex: 📶 SIM 1"></div>
       <div class="amount-field-wrap">
-        <div class="amount-field-top">
-          <div class="field-label">Sumă</div>
-          <div class="currency-toggle">
-            <button class="curr-btn active" id="sub-curr-ron" onclick="setCurrencyMode('sub','ron')">RON</button>
-            <button class="curr-btn" id="sub-curr-eur" onclick="setCurrencyMode('sub','eur')">EUR</button>
-          </div>
-        </div>
-        <div class="input-with-badge">
-          <input type="number" id="sub-amount" placeholder="ex: 35" inputmode="decimal" step="0.01" oninput="updateConvertedHint('sub')">
-          <span class="input-curr-badge ron" id="sub-curr-badge">LEI</span>
-        </div>
+        <div class="amount-field-top"><div class="field-label">Sumă</div><div class="currency-toggle"><button class="curr-btn active" id="sub-curr-ron" onclick="setCurrencyMode('sub','ron')">RON</button><button class="curr-btn" id="sub-curr-eur" onclick="setCurrencyMode('sub','eur')">EUR</button></div></div>
+        <div class="input-with-badge"><input type="number" id="sub-amount" placeholder="ex: 35" inputmode="decimal" step="0.01" oninput="updateConvertedHint('sub')"><span class="input-curr-badge ron" id="sub-curr-badge">LEI</span></div>
         <div class="input-converted-hint" id="sub-converted-hint"></div>
       </div>
     </div>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeModal('mo-subcat')">Anulează</button>
-      <button class="btn btn-blue" onclick="saveSubcat()">Adaugă</button>
-    </div>
+    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal('mo-subcat')">Anulează</button><button class="btn btn-blue" onclick="saveSubcat()">Adaugă</button></div>
   </div>
 </div>
 
@@ -690,906 +492,562 @@ body.app-unlocked .sensitive-action{display:inline-flex !important;}
   <div class="modal">
     <div class="modal-handle"></div>
     <div class="modal-title">✏️ Editează Subcategorie</div>
-    <input type="hidden" id="es-id">
-    <input type="hidden" id="es-parent-id">
+    <input type="hidden" id="es-id"><input type="hidden" id="es-parent-id">
     <div class="modal-fields">
       <div><div class="field-label">Nume</div><input type="text" id="es-label"></div>
       <div class="amount-field-wrap">
-        <div class="amount-field-top">
-          <div class="field-label">Sumă</div>
-          <div class="currency-toggle">
-            <button class="curr-btn active" id="es-curr-ron" onclick="setCurrencyMode('es','ron')">RON</button>
-            <button class="curr-btn" id="es-curr-eur" onclick="setCurrencyMode('es','eur')">EUR</button>
-          </div>
-        </div>
-        <div class="input-with-badge">
-          <input type="number" id="es-amount" inputmode="decimal" step="0.01" oninput="updateConvertedHint('es')">
-          <span class="input-curr-badge ron" id="es-curr-badge">LEI</span>
-        </div>
+        <div class="amount-field-top"><div class="field-label">Sumă</div><div class="currency-toggle"><button class="curr-btn active" id="es-curr-ron" onclick="setCurrencyMode('es','ron')">RON</button><button class="curr-btn" id="es-curr-eur" onclick="setCurrencyMode('es','eur')">EUR</button></div></div>
+        <div class="input-with-badge"><input type="number" id="es-amount" inputmode="decimal" step="0.01" oninput="updateConvertedHint('es')"><span class="input-curr-badge ron" id="es-curr-badge">LEI</span></div>
         <div class="input-converted-hint" id="es-converted-hint"></div>
       </div>
     </div>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeModal('mo-edit-subcat')">Anulează</button>
-      <button class="btn btn-blue" onclick="updateSubcat()">Salvează</button>
-    </div>
+    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal('mo-edit-subcat')">Anulează</button><button class="btn btn-blue" onclick="updateSubcat()">Salvează</button></div>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-// ══════════════════════════════════════════
-//  SUPABASE CONFIG
-// ══════════════════════════════════════════
-const SUPABASE_URL = 'https://fndjrfieitieqzafhyzz.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_bHDKjiKAVHqW199ICw7i2g_O3olYMAr';
-const PREFERENCES_API_URL = 'https://gbqmgromjwqdnlwrejnb.supabase.co/rest/v1/bf_preferences?select=*&apikey=sb_publishable_RjWheWI2qN_ES0qOKYmcNQ_iJfgdzz0';
+const SUPABASE_URL='https://fndjrfieitieqzafhyzz.supabase.co';
+const SUPABASE_ANON_KEY='sb_publishable_bHDKjiKAVHqW199ICw7i2g_O3olYMAr';
+const PREFERENCES_API_URL='https://gbqmgromjwqdnlwrejnb.supabase.co/rest/v1/bf_preferences?select=*&apikey=sb_publishable_RjWheWI2qN_ES0qOKYmcNQ_iJfgdzz0';
+const sb={headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON_KEY,'Authorization':`Bearer ${SUPABASE_ANON_KEY}`,'Prefer':'return=representation'},async get(t,p=''){const r=await fetch(`${SUPABASE_URL}/rest/v1/${t}?${p}`,{headers:this.headers});if(!r.ok)throw new Error(await r.text());return r.json();},async post(t,b){const r=await fetch(`${SUPABASE_URL}/rest/v1/${t}`,{method:'POST',headers:this.headers,body:JSON.stringify(b)});if(!r.ok)throw new Error(await r.text());return r.json();},async patch(t,id,b){const r=await fetch(`${SUPABASE_URL}/rest/v1/${t}?id=eq.${id}`,{method:'PATCH',headers:this.headers,body:JSON.stringify(b)});if(!r.ok)throw new Error(await r.text());return r.json();},async delete(t,id){const r=await fetch(`${SUPABASE_URL}/rest/v1/${t}?id=eq.${id}`,{method:'DELETE',headers:this.headers});if(!r.ok)throw new Error(await r.text());return true;},async upsert(t,b,c='key'){const r=await fetch(`${SUPABASE_URL}/rest/v1/${t}?on_conflict=${c}`,{method:'POST',headers:{...this.headers,'Prefer':'resolution=merge-duplicates,return=representation'},body:JSON.stringify(b)});if(!r.ok)throw new Error(await r.text());return r.json();}};
 
-const sb = {
-  headers: {
-    'Content-Type': 'application/json',
-    'apikey': SUPABASE_ANON_KEY,
-    'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-    'Prefer': 'return=representation'
-  },
-  async get(table, params = '') {
-    const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${params}`, { headers: this.headers });
-    if (!r.ok) throw new Error(await r.text());
-    return r.json();
-  },
-  async post(table, body) {
-    const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
-      method: 'POST', headers: this.headers, body: JSON.stringify(body)
-    });
-    if (!r.ok) throw new Error(await r.text());
-    return r.json();
-  },
-  async patch(table, id, body) {
-    const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}?id=eq.${id}`, {
-      method: 'PATCH', headers: this.headers, body: JSON.stringify(body)
-    });
-    if (!r.ok) throw new Error(await r.text());
-    return r.json();
-  },
-  async delete(table, id) {
-    const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}?id=eq.${id}`, {
-      method: 'DELETE', headers: this.headers
-    });
-    if (!r.ok) throw new Error(await r.text());
-    return true;
-  },
-  async upsert(table, body, onConflict = 'key') {
-    const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}?on_conflict=${onConflict}`, {
-      method: 'POST',
-      headers: { ...this.headers, 'Prefer': 'resolution=merge-duplicates,return=representation' },
-      body: JSON.stringify(body)
-    });
-    if (!r.ok) throw new Error(await r.text());
-    return r.json();
-  }
-};
+let state={wallet:[],categories:[]};
+let supabaseConstantWalletItem=null;
+let _netMonthlyRON=0,_walletTotalRON=0;
+const modalCurrencyMode={};
+let isUnlocked=true,isLoading=false,currentPinInput='';
+const TARGET_PIN='4579';
+function genId(){return Date.now()*1000+Math.floor(Math.random()*1000);}
 
-// ══════════════════════════════════════════
-//  STATE & SECURITY
-// ══════════════════════════════════════════
-let state = { wallet: [], categories: [] };
-let supabaseConstantWalletItem = null;
-let _netMonthlyRON = 0, _walletTotalRON = 0;
+function getEurRateSell(){return parseFloat(document.getElementById('eur-rate-sell').value)||5.17;}
+function getEurRateBuy(){return parseFloat(document.getElementById('eur-rate-buy').value)||5.37;}
+function ronToEurSell(r){return r/getEurRateSell();}
+function eurToRonSell(e){return e*getEurRateSell();}
+function ronToEurBuy(r){return r/getEurRateBuy();}
+function eurToRonBuy(e){return e*getEurRateBuy();}
+function fmt(n){if(isNaN(n)||n===null)return'0';return new Intl.NumberFormat('ro-RO',{minimumFractionDigits:0,maximumFractionDigits:0}).format(Math.round(n));}
+function fmtEurBuy(r){const e=ronToEurBuy(r),rounded=Math.round(e*10)/10;return`≈ ${new Intl.NumberFormat('ro-RO',{minimumFractionDigits:0,maximumFractionDigits:1}).format(rounded)} €`;}
+function fmtEurVal(e){const rounded=Math.round(e*10)/10;return new Intl.NumberFormat('ro-RO',{minimumFractionDigits:0,maximumFractionDigits:1}).format(rounded);}
+function entryRonVal(entry,ctx){if(entry.isConstant)return entry.amount||0;const curr=entry.currency||entry.originalCurrency||'ron';const native=entry.nativeAmount!==undefined?entry.nativeAmount:entry.originalAmount!==undefined?entry.originalAmount:entry.amount||0;if(curr!=='eur')return native;return ctx==='expense'?eurToRonBuy(native):eurToRonSell(native);}
+function catTotalRon(c){const s=c.subcats||[];if(s.length>0)return s.reduce((a,x)=>a+entryRonVal(x,'expense'),0);return entryRonVal(c,'expense');}
 
-const modalCurrencyMode = {};
+const prefixContext={'w':'wallet','ew':'wallet','cat':'expense','ec':'expense','sub':'expense','es':'expense'};
 
-let isUnlocked = true;
-let isLoading = false;
-let currentPinInput = "";
-const TARGET_PIN = "4579";
+/* ── Actualizează caseta info-curs în modal ── */
+function updateRateInfoBox(prefix){
+  const box=document.getElementById(`${prefix}-rate-info`);
+  const txt=document.getElementById(`${prefix}-rate-info-text`);
+  if(!box||!txt)return;
+  const mode=modalCurrencyMode[prefix]||'ron';
+  const ctx=prefixContext[prefix]||'wallet';
+  const rateSell=getEurRateSell();
+  const rateBuy=getEurRateBuy();
 
-function genId() {
-  return Date.now() * 1000 + Math.floor(Math.random() * 1000);
-}
-
-// ── DUAL CURRENCY HELPERS ──
-function getEurRateSell() { return parseFloat(document.getElementById('eur-rate-sell').value) || 5.17; }
-function getEurRateBuy()  { return parseFloat(document.getElementById('eur-rate-buy').value)  || 5.37; }
-function getEurRate() { return getEurRateSell(); }
-
-function ronToEurSell(ron) { return ron / getEurRateSell(); }
-function eurToRonSell(eur) { return eur * getEurRateSell(); }
-function ronToEurBuy(ron)  { return ron / getEurRateBuy();  }
-function eurToRonBuy(eur)  { return eur * getEurRateBuy();  }
-
-function eurToRon(eur, context) {
-  return context === 'expense' ? eurToRonBuy(eur) : eurToRonSell(eur);
-}
-function ronToEur(ron, context) {
-  return context === 'expense' ? ronToEurBuy(ron) : ronToEurSell(ron);
-}
-
-function fmt(n) {
-  if (isNaN(n) || n === null) return '0';
-  return new Intl.NumberFormat('ro-RO', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(Math.round(n));
-}
-
-function fmtEurSell(ron) {
-  const e = ronToEurSell(ron);
-  const rounded = Math.round(e * 10) / 10;
-  return `≈ ${new Intl.NumberFormat('ro-RO', { minimumFractionDigits: 0, maximumFractionDigits: 1 }).format(rounded)} €`;
-}
-
-function fmtEurBuy(ron) {
-  const e = ronToEurBuy(ron);
-  const rounded = Math.round(e * 10) / 10;
-  return `≈ ${new Intl.NumberFormat('ro-RO', { minimumFractionDigits: 0, maximumFractionDigits: 1 }).format(rounded)} €`;
-}
-
-function fmtEur(ron) { return fmtEurSell(ron); }
-
-// Format EUR value with 1 decimal
-function fmtEurVal(eur) {
-  const rounded = Math.round(eur * 10) / 10;
-  return new Intl.NumberFormat('ro-RO', { minimumFractionDigits: 0, maximumFractionDigits: 1 }).format(rounded);
-}
-
-function entryRonVal(entry, context) {
-  if (entry.isConstant) return entry.amount || 0;
-  const curr = entry.currency || entry.originalCurrency || 'ron';
-  const native = (entry.nativeAmount !== undefined)
-    ? entry.nativeAmount
-    : (entry.originalAmount !== undefined ? entry.originalAmount : (entry.amount || 0));
-  if (curr !== 'eur') return native;
-  return context === 'expense' ? eurToRonBuy(native) : eurToRonSell(native);
-}
-
-function catTotalRon(c) {
-  const subcats = c.subcats || [];
-  if (subcats.length > 0) {
-    return subcats.reduce((acc, s) => acc + entryRonVal(s, 'expense'), 0);
-  }
-  return entryRonVal(c, 'expense');
-}
-
-// ── CURRENCY TOGGLE (modals) ──
-const prefixContext = {
-  'w': 'wallet', 'ew': 'wallet',
-  'cat': 'expense', 'ec': 'expense',
-  'sub': 'expense', 'es': 'expense'
-};
-
-function setCurrencyMode(prefix, mode) {
-  modalCurrencyMode[prefix] = mode;
-  const ronBtn = document.getElementById(`${prefix}-curr-ron`);
-  const eurBtn = document.getElementById(`${prefix}-curr-eur`);
-  const badge  = document.getElementById(`${prefix}-curr-badge`);
-  const input  = document.getElementById(`${prefix}-amount`);
-  if (ronBtn) ronBtn.className = 'curr-btn' + (mode === 'ron' ? ' active' : '');
-  if (eurBtn) eurBtn.className = 'curr-btn' + (mode === 'eur' ? ' eur-active' : '');
-  if (badge)  { badge.textContent = mode === 'eur' ? '€' : 'LEI'; badge.className = `input-curr-badge ${mode}`; }
-  if (input)  { input.className = mode === 'eur' ? 'eur-mode' : ''; input.placeholder = mode === 'eur' ? 'ex: 150' : 'ex: 750'; }
-  updateConvertedHint(prefix);
-}
-
-function updateConvertedHint(prefix) {
-  const val    = parseFloat(document.getElementById(`${prefix}-amount`).value);
-  const hintEl = document.getElementById(`${prefix}-converted-hint`);
-  if (!hintEl) return;
-  const mode    = modalCurrencyMode[prefix] || 'ron';
-  const context = prefixContext[prefix] || 'wallet';
-  const rateSell = getEurRateSell();
-  const rateBuy  = getEurRateBuy();
-
-  if (!val || isNaN(val)) {
-    hintEl.textContent = '';
-    hintEl.className = 'input-converted-hint';
-    return;
-  }
-  if (mode === 'eur') {
-    const rate = context === 'expense' ? rateBuy : rateSell;
-    hintEl.textContent = `= ${fmt(val * rate)} lei`;
-    hintEl.className = 'input-converted-hint has-val eur';
+  if(ctx==='wallet'){
+    // Portofel → curs VÂNZARE (EUR → RON)
+    const rate=rateSell;
+    if(mode==='eur'){
+      txt.innerHTML=`Convertire EUR → LEI la curs <span class="rate-info-val">vânzare ${rate}</span><span class="rate-info-formula">1 EUR × ${rate} = ${rate} lei</span>`;
+    } else {
+      txt.innerHTML=`Echivalent EUR la curs <span class="rate-info-val">vânzare ${rate}</span><span class="rate-info-formula">suma ÷ ${rate} = € afișat</span>`;
+    }
+    box.className=`rate-info-box ${mode==='eur'?'active-eur':'active-ron'}`;
   } else {
-    const rate = context === 'expense' ? rateBuy : rateSell;
-    const eur = val / rate;
-    const rounded = Math.round(eur * 10) / 10;
-    hintEl.textContent = `≈ ${new Intl.NumberFormat('ro-RO', { minimumFractionDigits:0, maximumFractionDigits:1 }).format(rounded)} €`;
-    hintEl.className = 'input-converted-hint has-val';
+    // Cheltuieli → curs CUMPĂRARE (LEI → EUR)
+    const rate=rateBuy;
+    if(mode==='eur'){
+      txt.innerHTML=`Convertire EUR → LEI la curs <span class="rate-info-val">cumpărare ${rate}</span><span class="rate-info-formula">1 EUR × ${rate} = ${rate} lei</span>`;
+    } else {
+      txt.innerHTML=`Echivalent EUR la curs <span class="rate-info-val">cumpărare ${rate}</span><span class="rate-info-formula">suma ÷ ${rate} = € afișat</span>`;
+    }
+    box.className=`rate-info-box ${mode==='eur'?'active-eur':'active-ron'}`;
   }
 }
 
-function resetCurrencyMode(prefix) {
-  modalCurrencyMode[prefix] = 'ron';
-  const ronBtn = document.getElementById(`${prefix}-curr-ron`);
-  const eurBtn = document.getElementById(`${prefix}-curr-eur`);
-  const badge  = document.getElementById(`${prefix}-curr-badge`);
-  const input  = document.getElementById(`${prefix}-amount`);
-  if (ronBtn) ronBtn.className = 'curr-btn active';
-  if (eurBtn) eurBtn.className = 'curr-btn';
-  if (badge)  { badge.textContent = 'LEI'; badge.className = 'input-curr-badge ron'; }
-  if (input)  { input.className = ''; }
+function setCurrencyMode(prefix,mode){
+  modalCurrencyMode[prefix]=mode;
+  const rB=document.getElementById(`${prefix}-curr-ron`);
+  const eB=document.getElementById(`${prefix}-curr-eur`);
+  const badge=document.getElementById(`${prefix}-curr-badge`);
+  const input=document.getElementById(`${prefix}-amount`);
+  if(rB)rB.className='curr-btn'+(mode==='ron'?' active':'');
+  if(eB)eB.className='curr-btn'+(mode==='eur'?' eur-active':'');
+  if(badge){badge.textContent=mode==='eur'?'€':'LEI';badge.className=`input-curr-badge ${mode}`;}
+  if(input){input.className=mode==='eur'?'eur-mode':'';input.placeholder=mode==='eur'?'ex: 150':'ex: 750';}
+  updateConvertedHint(prefix);
+  updateRateInfoBox(prefix);
 }
 
-// ══════════════════════════════════════════
-//  EUR RATE CHANGE
-// ══════════════════════════════════════════
+function updateConvertedHint(prefix){
+  const val=parseFloat(document.getElementById(`${prefix}-amount`).value);
+  const hintEl=document.getElementById(`${prefix}-converted-hint`);
+  if(!hintEl)return;
+  const mode=modalCurrencyMode[prefix]||'ron';
+  const ctx=prefixContext[prefix]||'wallet';
+  const rateSell=getEurRateSell(),rateBuy=getEurRateBuy();
+  if(!val||isNaN(val)){hintEl.textContent='';hintEl.className='input-converted-hint';return;}
+  const fmtNum=(n,dec=0)=>new Intl.NumberFormat('ro-RO',{minimumFractionDigits:dec,maximumFractionDigits:dec}).format(n);
+  const fmtRate=(r)=>new Intl.NumberFormat('ro-RO',{minimumFractionDigits:2,maximumFractionDigits:2}).format(r);
+  if(mode==='eur'){
+    const rate=ctx==='expense'?rateBuy:rateSell;
+    const result=val*rate;
+    hintEl.textContent=`${fmtNum(val)} € × ${fmtRate(rate)} = ${fmtNum(result)} lei`;
+    hintEl.className='input-converted-hint has-val eur';
+  } else {
+    const rate=ctx==='expense'?rateBuy:rateSell;
+    const eur=val/rate;
+    hintEl.textContent=`${fmtNum(val)} lei ÷ ${fmtRate(rate)} = ${fmtNum(eur,2)} €`;
+    hintEl.className='input-converted-hint has-val';
+  }
+}
+
+
+function resetCurrencyMode(prefix){
+  modalCurrencyMode[prefix]='ron';
+  const rB=document.getElementById(`${prefix}-curr-ron`);
+  const eB=document.getElementById(`${prefix}-curr-eur`);
+  const badge=document.getElementById(`${prefix}-curr-badge`);
+  const input=document.getElementById(`${prefix}-amount`);
+  if(rB)rB.className='curr-btn active';
+  if(eB)eB.className='curr-btn';
+  if(badge){badge.textContent='LEI';badge.className='input-curr-badge ron';}
+  if(input)input.className='';
+  updateRateInfoBox(prefix);
+}
+
 let _eurRateTimer;
-function onEurRateChange() {
-  // Update rate hint spans
-  const sellRate = getEurRateSell();
-  const buyRate  = getEurRateBuy();
-  document.querySelectorAll('#hint-sell-rate').forEach(el => el.textContent = sellRate);
-  document.querySelectorAll('#hint-buy-rate').forEach(el => el.textContent = buyRate);
-
-  renderWallet();
-  renderExpenses();
-  recalcAll();
-  ['w','ew','cat','ec','sub','es'].forEach(p => updateConvertedHint(p));
+function onEurRateChange(){
+  const sellRate=getEurRateSell(),buyRate=getEurRateBuy();
+  document.querySelectorAll('#hint-sell-rate').forEach(el=>el.textContent=sellRate);
+  document.querySelectorAll('#hint-buy-rate').forEach(el=>el.textContent=buyRate);
+  renderWallet();renderExpenses();recalcAll();
+  ['w','ew','cat','ec','sub','es'].forEach(p=>{updateConvertedHint(p);updateRateInfoBox(p);});
   clearTimeout(_eurRateTimer);
-  _eurRateTimer = setTimeout(async () => {
+  _eurRateTimer=setTimeout(async()=>{
     await saveSalaryData();
-    const ind = document.getElementById('rate-save-indicator');
-    if (ind) { ind.classList.add('show'); setTimeout(() => ind.classList.remove('show'), 2000); }
-  }, 700);
+    const ind=document.getElementById('rate-save-indicator');
+    if(ind){ind.classList.add('show');setTimeout(()=>ind.classList.remove('show'),2000);}
+  },700);
 }
 
-// ══════════════════════════════════════════
-//  FAB REFRESH
-// ══════════════════════════════════════════
-async function handleFabRefresh() {
-  if (isLoading) {
-    toast('⏳ Se încarcă deja...', 'ok');
-    return;
-  }
-  const fab = document.getElementById('fab-refresh');
-  fab.classList.add('spinning', 'loading-state');
-  try {
-    if (state.categories.length > 0) await saveCategoriesData();
-    if (state.wallet.length > 0) await saveWalletData();
+async function handleFabRefresh(){
+  if(isLoading){toast('⏳ Se încarcă deja...','ok');return;}
+  const fab=document.getElementById('fab-refresh');
+  fab.classList.add('spinning','loading-state');
+  try{
+    if(state.categories.length>0)await saveCategoriesData();
+    if(state.wallet.length>0)await saveWalletData();
     await loadAll();
     toast('🔄 Date actualizate');
-  } catch(e) {
-    toast('Eroare la refresh: ' + e.message, 'err');
-  } finally {
-    setTimeout(() => fab.classList.remove('spinning', 'loading-state'), 600);
-  }
+  }catch(e){toast('Eroare la refresh: '+e.message,'err');}
+  finally{setTimeout(()=>fab.classList.remove('spinning','loading-state'),600);}
 }
 
-// ══════════════════════════════════════════
-//  LOCK SYSTEM
-// ══════════════════════════════════════════
-function handleLockClick() {
-  if (isUnlocked) {
-    isUnlocked = false;
-    currentPinInput = "";
+function handleLockClick(){
+  if(isUnlocked){
+    isUnlocked=false;currentPinInput='';
     document.body.classList.remove('app-unlocked');
-    const lockBtn = document.getElementById('global-lock-btn');
-    lockBtn.className = "btn btn-lock";
-    lockBtn.innerHTML = "Blocat";
-    toggleFormInputs(true);
-    renderWallet();
-    renderExpenses();
-    toast("🔒 Aplicația a fost blocată");
+    const lb=document.getElementById('global-lock-btn');
+    lb.className='btn btn-lock';lb.innerHTML='Blocat';
+    toggleFormInputs(true);renderWallet();renderExpenses();
+    toast('🔒 Aplicația a fost blocată');
   } else {
-    currentPinInput = "";
-    document.getElementById('pin-dots').textContent = "";
+    currentPinInput='';
+    document.getElementById('pin-dots').textContent='';
     document.getElementById('pin-screen').classList.add('open');
   }
 }
-
-function pressPin(num) {
-  if (currentPinInput.length >= 4) return;
-  currentPinInput += num;
-  document.getElementById('pin-dots').textContent = "• ".repeat(currentPinInput.length);
-  if (currentPinInput === TARGET_PIN) {
-    isUnlocked = true;
+function pressPin(num){
+  if(currentPinInput.length>=4)return;
+  currentPinInput+=num;
+  document.getElementById('pin-dots').textContent='• '.repeat(currentPinInput.length);
+  if(currentPinInput===TARGET_PIN){
+    isUnlocked=true;
     document.body.classList.add('app-unlocked');
-    const lockBtn = document.getElementById('global-lock-btn');
-    lockBtn.className = "btn btn-lock unlocked";
-    lockBtn.innerHTML = "Deblocat";
+    const lb=document.getElementById('global-lock-btn');
+    lb.className='btn btn-lock unlocked';lb.innerHTML='Deblocat';
     toggleFormInputs(false);
     document.getElementById('pin-screen').classList.remove('open');
-    renderWallet();
-    renderExpenses();
-    toast("🔓 Acces deblocat cu succes");
-  } else if (currentPinInput.length === 4) {
-    toast("❌ PIN incorect!", "err");
-    clearPin();
+    renderWallet();renderExpenses();
+    toast('🔓 Acces deblocat cu succes');
+  } else if(currentPinInput.length===4){
+    toast('❌ PIN incorect!','err');clearPin();
   }
 }
+function clearPin(){currentPinInput='';document.getElementById('pin-dots').textContent='';document.getElementById('pin-screen').classList.remove('open');}
+function toggleFormInputs(shouldDisable){}
 
-function clearPin() {
-  currentPinInput = "";
-  document.getElementById('pin-dots').textContent = "";
-  document.getElementById('pin-screen').classList.remove('open');
-}
-
-function toggleFormInputs(shouldDisable) {}
-
-// ══════════════════════════════════════════
-//  TOAST & MODAL
-// ══════════════════════════════════════════
 let _toastTimer;
-function toast(msg, type = 'ok') {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.className = `toast show ${type}`;
-  clearTimeout(_toastTimer);
-  _toastTimer = setTimeout(() => el.classList.remove('show'), 2800);
+function toast(msg,type='ok'){
+  const el=document.getElementById('toast');
+  el.textContent=msg;el.className=`toast show ${type}`;
+  clearTimeout(_toastTimer);_toastTimer=setTimeout(()=>el.classList.remove('show'),2800);
 }
 
-function openModal(id) { document.getElementById(id).classList.add('open'); }
-function closeModal(id) {
-  const el = document.getElementById(id);
+const modalPrefixMap={'mo-wallet':'w','mo-edit-wallet':'ew','mo-cat':'cat','mo-edit-cat':'ec','mo-subcat':'sub','mo-edit-subcat':'es'};
+
+function openModal(id){
+  document.getElementById(id).classList.add('open');
+  const prefix=modalPrefixMap[id];
+  if(prefix)updateRateInfoBox(prefix);
+}
+function closeModal(id){
+  const el=document.getElementById(id);
   el.classList.remove('open');
-  el.querySelectorAll('input[type="text"],input[type="number"]').forEach(i => { if (i.type !== 'hidden') i.value = ''; });
-  el.querySelectorAll('.input-converted-hint').forEach(h => { h.textContent = ''; h.className = 'input-converted-hint'; });
-  const prefixMap = {'mo-wallet':'w','mo-edit-wallet':'ew','mo-cat':'cat','mo-edit-cat':'ec','mo-subcat':'sub','mo-edit-subcat':'es'};
-  const prefix = prefixMap[id];
-  if (prefix) resetCurrencyMode(prefix);
+  el.querySelectorAll('input[type="text"],input[type="number"]').forEach(i=>{if(i.type!=='hidden')i.value='';});
+  el.querySelectorAll('.input-converted-hint').forEach(h=>{h.textContent='';h.className='input-converted-hint';});
+  const prefix=modalPrefixMap[id];
+  if(prefix)resetCurrencyMode(prefix);
 }
-document.querySelectorAll('.overlay').forEach(el => {
-  el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); });
+document.querySelectorAll('.overlay').forEach(el=>{
+  el.addEventListener('click',e=>{if(e.target===el)el.classList.remove('open');});
 });
+function setLoader(id,show){const el=document.getElementById(id);if(el)el.classList.toggle('show',show);}
 
-function setLoader(id, show) {
-  const el = document.getElementById(id);
-  if (el) el.classList.toggle('show', show);
-}
-
-// ══════════════════════════════════════════
-//  LOAD ALL
-// ══════════════════════════════════════════
-async function loadAll() {
-  if (isLoading) return;
-  isLoading = true;
-  setLoader('loader-wallet', true);
-  setLoader('loader-cats', true);
-  try {
-    const prefResponse = await fetch(PREFERENCES_API_URL);
-    if (prefResponse.ok) {
-      const prefRows = await prefResponse.json();
-      if (prefRows && prefRows.length > 0) {
-        const totalInvestitRonRaw = prefRows[0].total_investit_ron;
-        if (totalInvestitRonRaw !== undefined && totalInvestitRonRaw !== null) {
-          const digitsOnly = String(totalInvestitRonRaw).replace(/[^\d.]/g, '');
-          const valoareDinamica = parseFloat(digitsOnly) || 0;
-          supabaseConstantWalletItem = {
-            id: 'supabase-constant',
-            label: 'Obligațiuni',
-            amount: valoareDinamica,
-            currency: 'ron',
-            isConstant: true
-          };
+async function loadAll(){
+  if(isLoading)return;
+  isLoading=true;setLoader('loader-wallet',true);setLoader('loader-cats',true);
+  try{
+    const prefResponse=await fetch(PREFERENCES_API_URL);
+    if(prefResponse.ok){
+      const prefRows=await prefResponse.json();
+      if(prefRows&&prefRows.length>0){
+        const raw=prefRows[0].total_investit_ron;
+        if(raw!==undefined&&raw!==null){
+          const digitsOnly=String(raw).replace(/[^\d.]/g,'');
+          const val=parseFloat(digitsOnly)||0;
+          supabaseConstantWalletItem={id:'supabase-constant',label:'Obligațiuni',amount:val,currency:'ron',isConstant:true};
         }
       }
     }
-
-    const walletRows = await sb.get('fd_settings', 'key=eq.wallet_ron_data');
-    if (walletRows && walletRows.length && walletRows[0].value) {
-      const parsedWallet = JSON.parse(walletRows[0].value);
-      if (parsedWallet.length > 0) {
-        state.wallet = parsedWallet;
-      } else if (state.wallet.length === 0) {
-        state.wallet = [];
-      }
+    const wRows=await sb.get('fd_settings','key=eq.wallet_ron_data');
+    if(wRows&&wRows.length&&wRows[0].value){const p=JSON.parse(wRows[0].value);if(p.length>0)state.wallet=p;else if(state.wallet.length===0)state.wallet=[];}
+    const sRows=await sb.get('fd_settings','key=eq.salary_ron_data');
+    if(sRows&&sRows.length&&sRows[0].value){
+      const d=JSON.parse(sRows[0].value);
+      const ps=parseFloat(d.eur_rate_sell||d.eur_rate);
+      if(ps&&ps>0)document.getElementById('eur-rate-sell').value=ps;
+      const pb=parseFloat(d.eur_rate_buy);
+      if(pb&&pb>0)document.getElementById('eur-rate-buy').value=pb;
     }
-
-    const salRows = await sb.get('fd_settings', 'key=eq.salary_ron_data');
-    if (salRows && salRows.length && salRows[0].value) {
-      const d = JSON.parse(salRows[0].value);
-      const parsedSell = parseFloat(d.eur_rate_sell || d.eur_rate);
-      if (parsedSell && parsedSell > 0) {
-        document.getElementById('eur-rate-sell').value = parsedSell;
-      }
-      const parsedBuy = parseFloat(d.eur_rate_buy);
-      if (parsedBuy && parsedBuy > 0) {
-        document.getElementById('eur-rate-buy').value = parsedBuy;
-      }
-    }
-
-    const catRows = await sb.get('fd_settings', 'key=eq.categories_ron_data');
-    if (catRows && catRows.length && catRows[0].value) {
-      const parsedCats = JSON.parse(catRows[0].value);
-      if (parsedCats.length > 0) {
-        state.categories = parsedCats;
-      } else if (state.categories.length === 0) {
-        state.categories = [];
-      }
-    }
-
-  } catch(e) {
-    toast('Eroare la încărcare: ' + e.message, 'err');
-  } finally {
-    setLoader('loader-wallet', false);
-    setLoader('loader-cats', false);
-    isLoading = false;
-  }
-  renderWallet();
-  renderExpenses();
-  recalcAll();
+    const cRows=await sb.get('fd_settings','key=eq.categories_ron_data');
+    if(cRows&&cRows.length&&cRows[0].value){const p=JSON.parse(cRows[0].value);if(p.length>0)state.categories=p;else if(state.categories.length===0)state.categories=[];}
+  }catch(e){toast('Eroare la încărcare: '+e.message,'err');}
+  finally{setLoader('loader-wallet',false);setLoader('loader-cats',false);isLoading=false;}
+  renderWallet();renderExpenses();recalcAll();
 }
 
-// ══════════════════════════════════════════
-//  SAVE HELPERS
-// ══════════════════════════════════════════
-async function saveSalaryData() {
-  const payload = {
-    salary: '0',
-    eur_rate_sell: document.getElementById('eur-rate-sell').value || '5.17',
-    eur_rate_buy:  document.getElementById('eur-rate-buy').value  || '5.37',
-    eur_rate: document.getElementById('eur-rate-sell').value || '5.17'
-  };
-  try {
-    await sb.upsert('fd_settings', [{ key: 'salary_ron_data', value: JSON.stringify(payload) }], 'key');
-  } catch(e) { toast('Eroare salvare cursuri', 'err'); }
+async function saveSalaryData(){
+  const payload={salary:'0',eur_rate_sell:document.getElementById('eur-rate-sell').value||'5.17',eur_rate_buy:document.getElementById('eur-rate-buy').value||'5.37',eur_rate:document.getElementById('eur-rate-sell').value||'5.17'};
+  try{await sb.upsert('fd_settings',[{key:'salary_ron_data',value:JSON.stringify(payload)}],'key');}
+  catch(e){toast('Eroare salvare cursuri','err');}
 }
-
-async function saveWalletData() {
-  try {
-    const walletToSave = state.wallet.filter(w => !w.isConstant);
-    await sb.upsert('fd_settings', [{ key: 'wallet_ron_data', value: JSON.stringify(walletToSave) }], 'key');
-  } catch(e) { toast('Eroare salvare portofel', 'err'); }
+async function saveWalletData(){
+  try{const w=state.wallet.filter(x=>!x.isConstant);await sb.upsert('fd_settings',[{key:'wallet_ron_data',value:JSON.stringify(w)}],'key');}
+  catch(e){toast('Eroare salvare portofel','err');}
 }
-
 let _catSaveTimer;
-function scheduleCatSave() {
-  clearTimeout(_catSaveTimer);
-  _catSaveTimer = setTimeout(saveCategoriesData, 800);
+function scheduleCatSave(){clearTimeout(_catSaveTimer);_catSaveTimer=setTimeout(saveCategoriesData,800);}
+async function saveCategoriesData(){
+  try{await sb.upsert('fd_settings',[{key:'categories_ron_data',value:JSON.stringify(state.categories)}],'key');}
+  catch(e){toast('Eroare salvare cheltuieli','err');}
+}
+async function saveMetrics(totalWalletRON,mediaLunaraRON){
+  try{
+    const payload={total_active_ron:fmt(totalWalletRON)+' lei',total_active_eur:fmt(ronToEurSell(totalWalletRON))+' €',media_lunara_ron:fmt(mediaLunaraRON)+' lei',media_lunara_eur:fmt(ronToEurBuy(mediaLunaraRON))+' €',updated_at:new Date().toISOString()};
+    await sb.upsert('fd_settings',[{key:'metrics_snapshot',value:JSON.stringify(payload)}],'key');
+  }catch(e){}
 }
 
-async function saveCategoriesData() {
-  try {
-    await sb.upsert('fd_settings', [{ key: 'categories_ron_data', value: JSON.stringify(state.categories) }], 'key');
-  } catch(e) { toast('Eroare salvare cheltuieli', 'err'); }
+/* ── WALLET ── */
+async function saveWallet(){
+  const label=document.getElementById('w-label').value.trim();if(!label)return;
+  const rawVal=parseFloat(document.getElementById('w-amount').value)||0;
+  const mode=modalCurrencyMode['w']||'ron';
+  state.wallet.push({id:genId(),label,currency:mode,nativeAmount:rawVal});
+  await saveWalletData();renderWallet();recalcAll();closeModal('mo-wallet');toast('✅ Sursă adăugată');
 }
-
-async function saveMetrics(totalWalletRON, mediaLunaraRON) {
-  try {
-    const payload = {
-      total_active_ron: fmt(totalWalletRON) + ' lei',
-      total_active_eur: fmt(ronToEurSell(totalWalletRON)) + ' €',
-      media_lunara_ron: fmt(mediaLunaraRON) + ' lei',
-      media_lunara_eur: fmt(ronToEurBuy(mediaLunaraRON)) + ' €',
-      updated_at: new Date().toISOString()
-    };
-    await sb.upsert('fd_settings', [{ key: 'metrics_snapshot', value: JSON.stringify(payload) }], 'key');
-  } catch(e) {}
+async function deleteWallet(id){
+  if(!confirm('Sigur vrei să ștergi această sursă?'))return;
+  state.wallet=state.wallet.filter(w=>String(w.id)!==String(id));
+  await saveWalletData();renderWallet();recalcAll();toast('🗑 Șters');
 }
-
-// ══════════════════════════════════════════
-//  WALLET
-// ══════════════════════════════════════════
-async function saveWallet() {
-  const label = document.getElementById('w-label').value.trim();
-  if (!label) return;
-  const rawVal = parseFloat(document.getElementById('w-amount').value) || 0;
-  const mode = modalCurrencyMode['w'] || 'ron';
-  state.wallet.push({ id: genId(), label, currency: mode, nativeAmount: rawVal });
-  await saveWalletData();
-  renderWallet(); recalcAll(); closeModal('mo-wallet');
-  toast('✅ Sursă adăugată');
-}
-
-async function deleteWallet(id) {
-  if (!confirm("Sigur vrei să ștergi această sursă?")) return;
-  state.wallet = state.wallet.filter(w => String(w.id) !== String(id));
-  await saveWalletData();
-  renderWallet(); recalcAll();
-  toast('🗑 Șters');
-}
-
-function openEditWallet(id) {
-  const w = state.wallet.find(x => String(x.id) === String(id));
-  if (!w) return;
-  document.getElementById('ew-id').value = id;
-  document.getElementById('ew-label').value = w.label;
-  const curr = w.currency || w.originalCurrency || 'ron';
-  setCurrencyMode('ew', curr);
-  const displayVal = w.nativeAmount ?? (curr === 'eur' ? ronToEurSell(w.amount || 0) : (w.amount || 0));
-  document.getElementById('ew-amount').value = displayVal;
+function openEditWallet(id){
+  const w=state.wallet.find(x=>String(x.id)===String(id));if(!w)return;
+  document.getElementById('ew-id').value=id;
+  document.getElementById('ew-label').value=w.label;
+  const curr=w.currency||w.originalCurrency||'ron';
+  setCurrencyMode('ew',curr);
+  const dv=w.nativeAmount!=null?w.nativeAmount:(curr==='eur'?ronToEurSell(w.amount||0):(w.amount||0));
+  document.getElementById('ew-amount').value=dv;
   updateConvertedHint('ew');
   openModal('mo-edit-wallet');
 }
-
-async function updateWallet() {
-  const id = document.getElementById('ew-id').value;
-  const w = state.wallet.find(x => String(x.id) === String(id));
-  if (!w) return;
-  w.label = document.getElementById('ew-label').value.trim() || w.label;
-  const rawVal = parseFloat(document.getElementById('ew-amount').value) || 0;
-  const mode = modalCurrencyMode['ew'] || 'ron';
-  w.currency = mode;
-  w.nativeAmount = rawVal;
-  delete w.amount; delete w.originalCurrency; delete w.originalAmount;
-  await saveWalletData();
-  renderWallet(); recalcAll(); closeModal('mo-edit-wallet');
-  toast('✅ Actualizat');
+async function updateWallet(){
+  const id=document.getElementById('ew-id').value;
+  const w=state.wallet.find(x=>String(x.id)===String(id));if(!w)return;
+  w.label=document.getElementById('ew-label').value.trim()||w.label;
+  const rawVal=parseFloat(document.getElementById('ew-amount').value)||0;
+  const mode=modalCurrencyMode['ew']||'ron';
+  w.currency=mode;w.nativeAmount=rawVal;
+  delete w.amount;delete w.originalCurrency;delete w.originalAmount;
+  await saveWalletData();renderWallet();recalcAll();closeModal('mo-edit-wallet');toast('✅ Actualizat');
 }
-
-function walletRonVal(w) {
-  if (w.isConstant) return w.amount || 0;
-  return entryRonVal(w, 'wallet');
-}
-
-// ── COMPUTE DUAL WALLET TOTALS ──
-// totalRON = sum(RON_native) + sum(EUR_native × rateSell)  → "dacă tot e în lei"
-// totalEUR = sum(EUR_native) + sum(RON_native ÷ rateBuy)   → "dacă tot e în euro"
-function computeWalletDualTotals(walletList, constantItem) {
-  const rateSell = getEurRateSell();
-  const rateBuy  = getEurRateBuy();
-
-  let totalRON = 0; // all as RON
-  let totalEUR = 0; // all as EUR
-
-  // Constant item (always RON)
-  if (constantItem) {
-    const v = constantItem.amount || 0;
-    totalRON += v;
-    totalEUR += v / rateBuy;
-  }
-
-  walletList.forEach(w => {
-    if (w.isConstant) return; // handled above
-    const curr   = w.currency || w.originalCurrency || 'ron';
-    const native = (w.nativeAmount !== undefined) ? w.nativeAmount
-                 : (w.originalAmount !== undefined ? w.originalAmount : (w.amount || 0));
-
-    if (curr === 'eur') {
-      // EUR source:
-      totalRON += native * rateSell; // EUR × vânzare → lei
-      totalEUR += native;            // already EUR
-    } else {
-      // RON source:
-      totalRON += native;             // already RON
-      totalEUR += native / rateBuy;  // RON ÷ cumpărare → euro
-    }
+function walletRonVal(w){if(w.isConstant)return w.amount||0;return entryRonVal(w,'wallet');}
+function computeWalletDualTotals(walletList,constantItem){
+  const rateSell=getEurRateSell(),rateBuy=getEurRateBuy();
+  let totalRON=0,totalEUR=0;
+  if(constantItem){const v=constantItem.amount||0;totalRON+=v;totalEUR+=v/rateBuy;}
+  walletList.forEach(w=>{
+    if(w.isConstant)return;
+    const curr=w.currency||w.originalCurrency||'ron';
+    const native=w.nativeAmount!==undefined?w.nativeAmount:w.originalAmount!==undefined?w.originalAmount:(w.amount||0);
+    if(curr==='eur'){totalRON+=native*rateSell;totalEUR+=native;}
+    else{totalRON+=native;totalEUR+=native/rateBuy;}
   });
-
-  return { totalRON, totalEUR };
+  return{totalRON,totalEUR};
 }
 
-function renderWallet() {
-  const el = document.getElementById('wallet-list');
-  let visibleWallet = [...state.wallet];
-  let html = '';
-  const rateSell = getEurRateSell();
-
-  if (supabaseConstantWalletItem) {
-    const v = supabaseConstantWalletItem.amount || 0;
-    html += '<div class="wallet-const-row">' +
-      '<div class="wallet-const-label">' +
-        '<span>🏛</span>' +
-        '<span>' + supabaseConstantWalletItem.label + '</span>' +
-        '<span class="curr-chip ron">RON</span>' +
-      '</div>' +
-      '<div style="text-align:right">' +
-        '<span class="wallet-const-val">' + fmt(v) + ' lei</span>' +
-        '<div style="font-size:9px;color:var(--dim);font-family:Space Mono,monospace;margin-top:2px">' + new Intl.NumberFormat('ro-RO',{minimumFractionDigits:0,maximumFractionDigits:1}).format(Math.round(v/getEurRateBuy()*10)/10) + ' EUR × ' + getEurRateBuy() + '</div>' +
-      '</div>' +
-    '</div>';
+function renderWallet(){
+  const el=document.getElementById('wallet-list');let html='';
+  const rateSell=getEurRateSell();
+  if(supabaseConstantWalletItem){
+    const v=supabaseConstantWalletItem.amount||0;
+    html+='<div class="wallet-const-row"><div class="wallet-const-label"><span>🏛</span><span>'+supabaseConstantWalletItem.label+'</span><span class="curr-chip ron">RON</span></div><div style="text-align:right"><span class="wallet-const-val">'+fmt(v)+' lei</span><div style="font-size:9px;color:var(--dim);font-family:Space Mono,monospace;margin-top:2px">'+new Intl.NumberFormat('ro-RO',{minimumFractionDigits:0,maximumFractionDigits:1}).format(Math.round(v/getEurRateBuy()*10)/10)+' EUR × '+getEurRateBuy()+'</div></div></div>';
   }
-
-  if (!visibleWallet.length && !supabaseConstantWalletItem) {
-    el.innerHTML = '<div class="empty-msg">Nicio sursa adaugata inca.</div>';
-    return;
-  }
-
-  if (visibleWallet.length === 0) {
-    el.innerHTML = html;
-    return;
-  }
-
-  html += visibleWallet.map(w => {
-    const ronVal = walletRonVal(w);
-    const curr = w.currency || w.originalCurrency || 'ron';
-    const native = (w.nativeAmount !== undefined) ? w.nativeAmount : (w.originalAmount !== undefined ? w.originalAmount : (w.amount || 0));
-    let secondLine = curr === 'eur'
-      ? fmt(native) + ' EUR × ' + rateSell
-      : new Intl.NumberFormat('ro-RO',{minimumFractionDigits:0,maximumFractionDigits:1}).format(Math.round(ronVal/getEurRateBuy()*10)/10) + ' EUR × ' + getEurRateBuy();
-    const currChip = curr === 'eur'
-      ? '<span class="curr-chip eur">EUR</span>'
-      : '<span class="curr-chip ron">RON</span>';
-    const editHtml =
-      '<button class="btn btn-ghost btn-icon btn-sm sensitive-action" onclick="openEditWallet(\'' + w.id + '\')">✏️</button>' +
-      '<button class="btn btn-danger btn-icon btn-sm sensitive-action" onclick="deleteWallet(\'' + w.id + '\')">🗑</button>';
-    return '<div class="wallet-const-row">' +
-      '<div class="wallet-const-label" style="flex:1;min-width:0;overflow:hidden">' + w.label + currChip + '</div>' +
-      '<div style="text-align:right;margin-right:8px;flex-shrink:0">' +
-        '<span class="wallet-const-val">' + fmt(ronVal) + ' lei</span>' +
-        '<div style="font-size:9px;color:var(--dim);font-family:Space Mono,monospace;margin-top:2px">' + secondLine + '</div>' +
-      '</div>' +
-      '<div style="display:flex;gap:4px;flex-shrink:0">' + editHtml + '</div>' +
-    '</div>';
+  if(!state.wallet.length&&!supabaseConstantWalletItem){el.innerHTML='<div class="empty-msg">Nicio sursa adaugata inca.</div>';return;}
+  html+=state.wallet.map(w=>{
+    const ronVal=walletRonVal(w);
+    const curr=w.currency||w.originalCurrency||'ron';
+    const native=w.nativeAmount!==undefined?w.nativeAmount:w.originalAmount!==undefined?w.originalAmount:(w.amount||0);
+    let secondLine=curr==='eur'?fmt(native)+' EUR × '+rateSell:new Intl.NumberFormat('ro-RO',{minimumFractionDigits:0,maximumFractionDigits:1}).format(Math.round(ronVal/getEurRateBuy()*10)/10)+' EUR × '+getEurRateBuy();
+    const currChip=curr==='eur'?'<span class="curr-chip eur after-label">EUR</span>':'<span class="curr-chip ron after-label">RON</span>';
+    const editHtml='<button class="btn btn-ghost btn-icon btn-sm sensitive-action" onclick="openEditWallet(\''+w.id+'\')">✏️</button><button class="btn btn-danger btn-icon btn-sm sensitive-action" onclick="deleteWallet(\''+w.id+'\')">🗑</button>';
+    return'<div class="wallet-const-row"><div class="wallet-const-label" style="flex:1;min-width:0;overflow:hidden">'+w.label+currChip+'</div><div style="text-align:right;margin-right:8px;flex-shrink:0"><span class="wallet-const-val">'+fmt(ronVal)+' lei</span><div style="font-size:9px;color:var(--dim);font-family:Space Mono,monospace;margin-top:2px">'+secondLine+'</div></div><div style="display:flex;gap:4px;flex-shrink:0">'+editHtml+'</div></div>';
   }).join('');
-
-  el.innerHTML = html;
+  el.innerHTML=html;
 }
 
-// ══════════════════════════════════════════
-//  CATEGORIES
-// ══════════════════════════════════════════
-async function saveCat() {
-  const label = document.getElementById('cat-label').value.trim();
-  if (!label) return;
-  const rawVal = parseFloat(document.getElementById('cat-amount').value) || 0;
-  const mode = modalCurrencyMode['cat'] || 'ron';
-  const type = document.getElementById('cat-type').value;
-  state.categories.push({ id: genId(), label, currency: mode, nativeAmount: rawVal, type, subcats: [] });
-  scheduleCatSave();
-  renderExpenses(); recalcAll(); closeModal('mo-cat');
-  toast('✅ Categorie adăugată');
+/* ── CATEGORII ── */
+async function saveCat(){
+  const label=document.getElementById('cat-label').value.trim();if(!label)return;
+  const rawVal=parseFloat(document.getElementById('cat-amount').value)||0;
+  const mode=modalCurrencyMode['cat']||'ron';
+  const type=document.getElementById('cat-type').value;
+  const newId=genId();
+  state.categories.push({id:newId,label,currency:mode,nativeAmount:rawVal,type,subcats:[]});
+  scheduleCatSave();renderExpenses();recalcAll();closeModal('mo-cat');toast('✅ Categorie adăugată');
+  setTimeout(()=>{const el=document.getElementById('cat-item-'+newId);if(el)el.scrollIntoView({behavior:'smooth',block:'center'});},80);
 }
-
-async function deleteCat(id) {
-  if (!confirm("Sigur vrei să ștergi această categorie?")) return;
-  state.categories = state.categories.filter(c => String(c.id) !== String(id));
-  scheduleCatSave();
-  renderExpenses(); recalcAll();
-  toast('🗑 Șters');
+async function deleteCat(id){
+  if(!confirm('Sigur vrei să ștergi această categorie?'))return;
+  state.categories=state.categories.filter(c=>String(c.id)!==String(id));
+  scheduleCatSave();renderExpenses();recalcAll();toast('🗑 Șters');
 }
-
-function openEditCat(id) {
-  const c = state.categories.find(x => String(x.id) === String(id));
-  if (!c) return;
-  document.getElementById('ec-id').value = id;
-  document.getElementById('ec-label').value = c.label;
-  document.getElementById('ec-type').value = c.type;
-  const origCurr = c.currency || c.originalCurrency || 'ron';
-  setCurrencyMode('ec', origCurr);
-  const displayVal = (c.nativeAmount !== undefined) ? c.nativeAmount : (origCurr === 'eur' ? ronToEurBuy(c.amount || 0) : (c.amount || 0));
-  document.getElementById('ec-amount').value = displayVal;
+function openEditCat(id){
+  const c=state.categories.find(x=>String(x.id)===String(id));if(!c)return;
+  document.getElementById('ec-id').value=id;
+  document.getElementById('ec-label').value=c.label;
+  document.getElementById('ec-type').value=c.type;
+  const origCurr=c.currency||c.originalCurrency||'ron';
+  setCurrencyMode('ec',origCurr);
+  const dv=c.nativeAmount!==undefined?c.nativeAmount:(origCurr==='eur'?ronToEurBuy(c.amount||0):(c.amount||0));
+  document.getElementById('ec-amount').value=dv;
   updateConvertedHint('ec');
   openModal('mo-edit-cat');
 }
-
-async function updateCat() {
-  const id = document.getElementById('ec-id').value;
-  const c = state.categories.find(x => String(x.id) === String(id));
-  if (!c) return;
-  c.label = document.getElementById('ec-label').value.trim() || c.label;
-  const rawVal = parseFloat(document.getElementById('ec-amount').value) || 0;
-  const mode = modalCurrencyMode['ec'] || 'ron';
-  c.currency = mode;
-  c.nativeAmount = rawVal;
-  delete c.amount; delete c.originalCurrency; delete c.originalAmount;
-  c.type = document.getElementById('ec-type').value;
-  scheduleCatSave();
-  renderExpenses(); recalcAll(); closeModal('mo-edit-cat');
-  toast('✅ Actualizat');
+async function updateCat(){
+  const id=document.getElementById('ec-id').value;
+  const c=state.categories.find(x=>String(x.id)===String(id));if(!c)return;
+  c.label=document.getElementById('ec-label').value.trim()||c.label;
+  const rawVal=parseFloat(document.getElementById('ec-amount').value)||0;
+  const mode=modalCurrencyMode['ec']||'ron';
+  c.currency=mode;c.nativeAmount=rawVal;
+  delete c.amount;delete c.originalCurrency;delete c.originalAmount;
+  c.type=document.getElementById('ec-type').value;
+  scheduleCatSave();renderExpenses();recalcAll();closeModal('mo-edit-cat');toast('✅ Actualizat');
 }
-
-function openAddSubcat(catId) {
-  document.getElementById('sub-parent-id').value = catId;
+function openAddSubcat(catId){
+  document.getElementById('sub-parent-id').value=catId;
   openModal('mo-subcat');
 }
 
-async function saveSubcat() {
-  const parentId = document.getElementById('sub-parent-id').value;
-  const label = document.getElementById('sub-label').value.trim();
-  if (!label) return;
-  const rawVal = parseFloat(document.getElementById('sub-amount').value) || 0;
-  const mode = modalCurrencyMode['sub'] || 'ron';
-  const cat = state.categories.find(c => String(c.id) === String(parentId));
-  if (!cat) return;
-  if (!cat.subcats) cat.subcats = [];
-  cat.subcats.push({ id: genId(), label, currency: mode, nativeAmount: rawVal });
-  scheduleCatSave();
-  renderExpenses(); recalcAll(); closeModal('mo-subcat');
-  toast('✅ Subcategorie adăugată');
+async function saveSubcat(){
+  const parentId=document.getElementById('sub-parent-id').value;
+  const label=document.getElementById('sub-label').value.trim();if(!label)return;
+  const rawVal=parseFloat(document.getElementById('sub-amount').value)||0;
+  const mode=modalCurrencyMode['sub']||'ron';
+  const cat=state.categories.find(c=>String(c.id)===String(parentId));if(!cat)return;
+  if(!cat.subcats)cat.subcats=[];
+  const newSubId=genId();
+  cat.subcats.push({id:newSubId,label,currency:mode,nativeAmount:rawVal});
+  scheduleCatSave();renderExpenses();recalcAll();closeModal('mo-subcat');toast('✅ Subcategorie adăugată');
+
+  // ── Auto-expand categoria și scroll la noua subcategorie ──
+  setTimeout(()=>{
+    const subContainer=document.getElementById(`subcats-${parentId}`);
+    const arrowBadge=document.getElementById(`arrow-badge-${parentId}`);
+    if(subContainer&&!subContainer.classList.contains('open')){
+      subContainer.classList.add('open');
+      if(arrowBadge)arrowBadge.classList.add('open');
+    }
+    setTimeout(()=>{
+      const allSubs=subContainer?subContainer.querySelectorAll('.sub-row'):[];
+      const lastSub=allSubs[allSubs.length-1];
+      if(lastSub)lastSub.scrollIntoView({behavior:'smooth',block:'center'});
+    },80);
+  },60);
 }
 
-async function deleteSubcat(catId, subId) {
-  if (!confirm("Sigur vrei să ștergi această subcategorie?")) return;
-  const cat = state.categories.find(c => String(c.id) === String(catId));
-  if (!cat) return;
-  cat.subcats = cat.subcats.filter(s => String(s.id) !== String(subId));
-  scheduleCatSave();
-  renderExpenses(); recalcAll();
-  toast('🗑 Șters');
+async function deleteSubcat(catId,subId){
+  if(!confirm('Sigur vrei să ștergi această subcategorie?'))return;
+  const cat=state.categories.find(c=>String(c.id)===String(catId));if(!cat)return;
+  cat.subcats=cat.subcats.filter(s=>String(s.id)!==String(subId));
+  scheduleCatSave();renderExpenses();recalcAll();toast('🗑 Șters');
 }
-
-function openEditSubcat(catId, subId) {
-  const cat = state.categories.find(c => String(c.id) === String(catId));
-  if (!cat) return;
-  const sub = cat.subcats.find(s => String(s.id) === String(subId));
-  if (!sub) return;
-  document.getElementById('es-id').value = subId;
-  document.getElementById('es-parent-id').value = catId;
-  document.getElementById('es-label').value = sub.label;
-  const origCurr = sub.currency || sub.originalCurrency || 'ron';
-  setCurrencyMode('es', origCurr);
-  const displayVal = (sub.nativeAmount !== undefined) ? sub.nativeAmount : (origCurr === 'eur' ? ronToEurBuy(sub.amount || 0) : (sub.amount || 0));
-  document.getElementById('es-amount').value = displayVal;
+function openEditSubcat(catId,subId){
+  const cat=state.categories.find(c=>String(c.id)===String(catId));if(!cat)return;
+  const sub=cat.subcats.find(s=>String(s.id)===String(subId));if(!sub)return;
+  document.getElementById('es-id').value=subId;
+  document.getElementById('es-parent-id').value=catId;
+  document.getElementById('es-label').value=sub.label;
+  const origCurr=sub.currency||sub.originalCurrency||'ron';
+  setCurrencyMode('es',origCurr);
+  const dv=sub.nativeAmount!==undefined?sub.nativeAmount:(origCurr==='eur'?ronToEurBuy(sub.amount||0):(sub.amount||0));
+  document.getElementById('es-amount').value=dv;
   updateConvertedHint('es');
   openModal('mo-edit-subcat');
 }
-
-async function updateSubcat() {
-  const subId = document.getElementById('es-id').value;
-  const catId = document.getElementById('es-parent-id').value;
-  const cat = state.categories.find(c => String(c.id) === String(catId));
-  if (!cat) return;
-  const sub = cat.subcats.find(s => String(s.id) === String(subId));
-  if (!sub) return;
-  sub.label = document.getElementById('es-label').value.trim() || sub.label;
-  const rawVal = parseFloat(document.getElementById('es-amount').value) || 0;
-  const mode = modalCurrencyMode['es'] || 'ron';
-  sub.currency = mode;
-  sub.nativeAmount = rawVal;
-  delete sub.amount; delete sub.originalCurrency; delete sub.originalAmount;
-  scheduleCatSave();
-  renderExpenses(); recalcAll(); closeModal('mo-edit-subcat');
-  toast('✅ Subcategorie actualizată');
+async function updateSubcat(){
+  const subId=document.getElementById('es-id').value;
+  const catId=document.getElementById('es-parent-id').value;
+  const cat=state.categories.find(c=>String(c.id)===String(catId));if(!cat)return;
+  const sub=cat.subcats.find(s=>String(s.id)===String(subId));if(!sub)return;
+  sub.label=document.getElementById('es-label').value.trim()||sub.label;
+  const rawVal=parseFloat(document.getElementById('es-amount').value)||0;
+  const mode=modalCurrencyMode['es']||'ron';
+  sub.currency=mode;sub.nativeAmount=rawVal;
+  delete sub.amount;delete sub.originalCurrency;delete sub.originalAmount;
+  scheduleCatSave();renderExpenses();recalcAll();closeModal('mo-edit-subcat');toast('✅ Subcategorie actualizată');
 }
 
-function toggleSubMenu(id) {
-  const subEl = document.getElementById(`subcats-${id}`);
-  const btnEl = document.getElementById(`btn-toggle-${id}`);
-  if (subEl && btnEl) {
-    const isOpen = subEl.classList.toggle('open');
-    btnEl.classList.toggle('open', isOpen);
+/* ── Toggle subcategorii -- doar .arrow-icon se rotește, nu întregul chip ── */
+function toggleSubMenu(id){
+  const subEl=document.getElementById(`subcats-${id}`);
+  const arrowBadge=document.getElementById(`arrow-badge-${id}`);
+  if(subEl){
+    const isOpen=subEl.classList.toggle('open');
+    if(arrowBadge)arrowBadge.classList.toggle('open',isOpen);
   }
 }
 
-// ══════════════════════════════════════════
-//  RENDER EXPENSES
-// ══════════════════════════════════════════
-function renderExpenses() {
-  const annualEl  = document.getElementById('annual-list');
-  const monthlyEl = document.getElementById('monthly-list');
-  const annuals   = state.categories.filter(c => c.type === 'annual');
-  const monthlies = state.categories.filter(c => c.type === 'monthly');
-  const rateBuy   = getEurRateBuy();
+function renderExpenses(){
+  const scrollY=window.scrollY;
+  const openSubcats=new Set();
+  document.querySelectorAll('.subcats.open').forEach(el=>openSubcats.add(el.id.replace('subcats-','')));
+  const annualEl=document.getElementById('annual-list');
+  const monthlyEl=document.getElementById('monthly-list');
+  const sortCats=arr=>[...arr.filter(c=>!c.subcats||c.subcats.length===0),...arr.filter(c=>c.subcats&&c.subcats.length>0)];
+  const annuals=sortCats(state.categories.filter(c=>c.type==='annual'));
+  const monthlies=sortCats(state.categories.filter(c=>c.type==='monthly'));
 
-  const mapper = (c) => {
-    const subcats = c.subcats || [];
-    const hasSubcats = subcats.length > 0;
-    const totalRon = catTotalRon(c);
+  const mapper=(c)=>{
+    const subcats=c.subcats||[];
+    const hasSubcats=subcats.length>0;
+    const totalRon=catTotalRon(c);
+    const isOpen=openSubcats.has(String(c.id));
 
-    let hasSub_ron = false, hasSub_eur = false;
-    if (hasSubcats) {
-      subcats.forEach(s => {
-        const sc = s.currency || s.originalCurrency || 'ron';
-        if (sc === 'eur') hasSub_eur = true; else hasSub_ron = true;
-      });
+    // Chip cu săgeată: corpul NU se rotește, doar .arrow-icon interior
+    let catChip='';
+    if(hasSubcats){
+      const openCls=isOpen?' open':'';
+      catChip=`<span class="curr-chip arrow${openCls}" id="arrow-badge-${c.id}"><span class="arrow-icon">&#9654;</span></span>`;
     } else {
-      const oc = c.currency || c.originalCurrency || 'ron';
-      if (oc === 'eur') hasSub_eur = true; else hasSub_ron = true;
+      const oc=c.currency||c.originalCurrency||'ron';
+      catChip=oc==='eur'?'<span class="curr-chip eur">EUR</span>':'<span class="curr-chip ron">RON</span>';
     }
 
-    let catChip = '';
-    if (hasSubcats) {
-      if (hasSub_eur && hasSub_ron) catChip = '<span class="curr-chip mixed">EUR & RON</span>';
-      else if (hasSub_eur) catChip = '<span class="curr-chip eur">EUR</span>';
-      else catChip = '<span class="curr-chip ron">RON</span>';
-    } else {
-      const oc = c.currency || c.originalCurrency || 'ron';
-      catChip = oc === 'eur' ? '<span class="curr-chip eur">EUR</span>' : '<span class="curr-chip ron">RON</span>';
-    }
-
-    const subRowsHtml = subcats.map(s => {
-      const sRon    = entryRonVal(s, 'expense');
-      const sCurr   = s.currency || s.originalCurrency || 'ron';
-      const sNative = (s.nativeAmount !== undefined) ? s.nativeAmount : (s.originalAmount !== undefined ? s.originalAmount : (s.amount || 0));
-      const subSecondLine = sCurr === 'eur'
-        ? fmt(sNative) + ' EUR × ' + rateBuy + ' (cump.)'
-        : fmtEurBuy(sRon);
-      const subChip = sCurr === 'eur' ? '<span class="curr-chip eur" style="font-size:7px">EUR</span>' : '';
-      return '<div class="sub-row">' +
-        '<span class="sub-lbl">' + s.label + subChip + '</span>' +
-        '<div class="sub-val-wrap">' +
-          '<span class="sub-val">' + fmt(sRon) + ' lei</span>' +
-          '<span class="sub-val-eur">' + subSecondLine + '</span>' +
-        '</div>' +
-        '<div class="row-actions sensitive-action">' +
-          '<button class="btn btn-ghost btn-icon btn-sm" onclick="openEditSubcat(\'' + c.id + '\', \'' + s.id + '\')">✏️</button>' +
-          '<button class="btn btn-danger btn-icon btn-sm" onclick="deleteSubcat(\'' + c.id + '\', \'' + s.id + '\')">🗑</button>' +
-        '</div>' +
-      '</div>';
+    const subRowsHtml=subcats.map(s=>{
+      const sRon=entryRonVal(s,'expense');
+      const sCurr=s.currency||s.originalCurrency||'ron';
+      const subChip=sCurr==='eur'?'<span class="curr-chip eur" style="font-size:7px">EUR</span>':'<span class="curr-chip ron" style="font-size:7px">RON</span>';
+      return'<div class="sub-row"><span class="sub-lbl">'+subChip+' '+s.label+'</span>'
+        +'<div class="sub-val-wrap"><span class="sub-val">'+fmt(sRon)+' lei</span><span class="sub-val-eur">'+fmtEurBuy(sRon)+'</span></div>'
+        +'<div class="row-actions sensitive-action">'
+          +'<button class="btn btn-ghost btn-icon btn-sm" onclick="openEditSubcat(\''+c.id+'\', \''+s.id+'\')">✏️</button>'
+          +'<button class="btn btn-danger btn-icon btn-sm" onclick="deleteSubcat(\''+c.id+'\', \''+s.id+'\')">🗑</button>'
+        +'</div></div>';
     }).join('');
 
-    const catOrigCurr = c.currency || c.originalCurrency || 'ron';
-    const catNative   = (c.nativeAmount !== undefined) ? c.nativeAmount : (c.originalAmount !== undefined ? c.originalAmount : (c.amount || 0));
-    let catSecondLine = '';
-    if (!hasSubcats && catOrigCurr === 'eur') {
-      catSecondLine = fmt(catNative) + ' EUR × ' + rateBuy + ' (cump.)';
-    } else {
-      catSecondLine = fmtEurBuy(totalRon);
-    }
+    const zoneClass='cat-clickable-zone'+(hasSubcats?' has-subcats':' no-subcats');
+    const onClickZone=hasSubcats?`onclick="toggleSubMenu('${c.id}')"` :'';
+    const subcatsClass='subcats'+(isOpen?' open':'');
 
-    const toggleClass = 'cat-toggle' + (hasSubcats ? ' visible' : '');
-    const zoneClass   = 'cat-clickable-zone' + (hasSubcats ? ' has-subcats' : ' no-subcats');
-    const onClickZone = hasSubcats ? `onclick="toggleSubMenu('${c.id}')"` : '';
-
-    return '<div class="cat-item">' +
-      '<div class="cat-row">' +
-        '<div class="' + zoneClass + '" ' + onClickZone + '>' +
-          '<button class="' + toggleClass + '" id="btn-toggle-' + c.id + '">&#9654;</button>' +
-          '<span class="cat-lbl">' + c.label + catChip + '</span>' +
-        '</div>' +
-        '<div class="cat-val-wrap">' +
-          '<span class="cat-val">' + fmt(totalRon) + ' lei</span>' +
-          '<span class="cat-val-eur">' + catSecondLine + '</span>' +
-        '</div>' +
-        '<div class="row-actions sensitive-action">' +
-          '<button class="btn btn-ghost btn-icon btn-sm" onclick="openAddSubcat(\'' + c.id + '\')">➕</button>' +
-          '<button class="btn btn-ghost btn-icon btn-sm" onclick="openEditCat(\'' + c.id + '\')">✏️</button>' +
-          '<button class="btn btn-danger btn-icon btn-sm" onclick="deleteCat(\'' + c.id + '\')">🗑</button>' +
-        '</div>' +
-      '</div>' +
-      '<div class="subcats" id="subcats-' + c.id + '">' + subRowsHtml + '</div>' +
-    '</div>';
+    return'<div class="cat-item" id="cat-item-'+c.id+'">'
+      +'<div class="cat-row">'
+        +'<div class="'+zoneClass+'" '+onClickZone+'>'
+          +'<span class="cat-lbl">'+catChip+' '+c.label+'</span>'
+        +'</div>'
+        +'<div class="cat-val-wrap"><span class="cat-val">'+fmt(totalRon)+' lei</span><span class="cat-val-eur">'+fmtEurBuy(totalRon)+'</span></div>'
+        +'<div class="row-actions sensitive-action">'
+          +'<button class="btn btn-ghost btn-icon btn-sm" onclick="openAddSubcat(\''+c.id+'\')">➕</button>'
+          +'<button class="btn btn-ghost btn-icon btn-sm" onclick="openEditCat(\''+c.id+'\')">✏️</button>'
+          +'<button class="btn btn-danger btn-icon btn-sm" onclick="deleteCat(\''+c.id+'\')">🗑</button>'
+        +'</div>'
+      +'</div>'
+      +'<div class="'+subcatsClass+'" id="subcats-'+c.id+'">'+subRowsHtml+'</div>'
+    +'</div>';
   };
 
-  annualEl.innerHTML  = annuals.length   ? annuals.map(mapper).join('')   : '<div class="empty-msg">Nicio cheltuială anuală.</div>';
-  monthlyEl.innerHTML = monthlies.length ? monthlies.map(mapper).join('') : '<div class="empty-msg">Nicio cheltuială lunară.</div>';
+  annualEl.innerHTML=annuals.length?annuals.map(mapper).join(''):'<div class="empty-msg">Nicio cheltuială anuală.</div>';
+  monthlyEl.innerHTML=monthlies.length?monthlies.map(mapper).join(''):'<div class="empty-msg">Nicio cheltuială lunară.</div>';
+  window.scrollTo({top:scrollY,behavior:'instant'});
 }
 
-// ══════════════════════════════════════════
-//  RECALCULATIONS
-// ══════════════════════════════════════════
 let _metricsSaveTimeout;
-
-function recalcAll() {
-  const rateSell = getEurRateSell();
-  const rateBuy  = getEurRateBuy();
-
-  // ── DUAL WALLET TOTALS ──
-  const { totalRON, totalEUR } = computeWalletDualTotals(state.wallet, supabaseConstantWalletItem);
-
-  _walletTotalRON = totalRON;
-
-  // Update RON total block
-  document.getElementById('wallet-total-ron').textContent = fmt(totalRON) + ' lei';
-  document.getElementById('hint-sell-rate').textContent   = rateSell;
-
-  // Update EUR total block
-  document.getElementById('wallet-total-eur').textContent = fmtEurVal(totalEUR) + ' €';
-  document.getElementById('hint-buy-rate').textContent    = rateBuy;
-
-  // ── EXPENSES ──
-  let annualDirect = 0, monthlyDirect = 0;
-  state.categories.forEach(c => {
-    const total = catTotalRon(c);
-    if (c.type === 'annual') annualDirect  += total;
-    else                     monthlyDirect += total;
-  });
-
-  const monthlyAvgTotal     = monthlyDirect + (annualDirect / 12);
-  const annualCompleteTotal = annualDirect + (monthlyDirect * 12);
-
-  document.getElementById('annual-total').textContent      = `${fmt(annualDirect)} lei`;
-  document.getElementById('annual-total-eur').textContent  = fmtEurBuy(annualDirect);
-  document.getElementById('monthly-total').textContent     = `${fmt(monthlyDirect)} lei`;
-  document.getElementById('monthly-total-eur').textContent = fmtEurBuy(monthlyDirect);
-
-  document.getElementById('sum-monthly-avg').textContent     = `${fmt(monthlyAvgTotal)} lei`;
-  document.getElementById('sum-monthly-avg-eur').textContent = fmtEurBuy(monthlyAvgTotal);
-  document.getElementById('sum-annual').textContent          = `${fmt(annualCompleteTotal)} lei`;
-  document.getElementById('sum-annual-eur').textContent      = fmtEurBuy(annualCompleteTotal);
-
-  _netMonthlyRON = monthlyAvgTotal;
-  document.getElementById('net-val').textContent     = `${fmt(monthlyAvgTotal)} lei`;
-  document.getElementById('net-val-eur').textContent = fmtEurBuy(monthlyAvgTotal);
-
+function recalcAll(){
+  const rateSell=getEurRateSell(),rateBuy=getEurRateBuy();
+  const{totalRON,totalEUR}=computeWalletDualTotals(state.wallet,supabaseConstantWalletItem);
+  _walletTotalRON=totalRON;
+  document.getElementById('wallet-total-ron').textContent=fmt(totalRON)+' lei';
+  document.getElementById('hint-sell-rate').textContent=rateSell;
+  document.getElementById('wallet-total-eur').textContent=fmtEurVal(totalEUR)+' €';
+  document.getElementById('hint-buy-rate').textContent=rateBuy;
+  let annualDirect=0,monthlyDirect=0;
+  state.categories.forEach(c=>{const total=catTotalRon(c);if(c.type==='annual')annualDirect+=total;else monthlyDirect+=total;});
+  const monthlyAvgTotal=monthlyDirect+(annualDirect/12);
+  const annualCompleteTotal=annualDirect+(monthlyDirect*12);
+  document.getElementById('annual-total').textContent=`${fmt(annualDirect)} lei`;
+  document.getElementById('annual-total-eur').textContent=fmtEurBuy(annualDirect);
+  document.getElementById('monthly-total').textContent=`${fmt(monthlyDirect)} lei`;
+  document.getElementById('monthly-total-eur').textContent=fmtEurBuy(monthlyDirect);
+  document.getElementById('sum-monthly-avg').textContent=`${fmt(monthlyAvgTotal)} lei`;
+  document.getElementById('sum-monthly-avg-eur').textContent=fmtEurBuy(monthlyAvgTotal);
+  document.getElementById('sum-annual').textContent=`${fmt(annualCompleteTotal)} lei`;
+  document.getElementById('sum-annual-eur').textContent=fmtEurBuy(annualCompleteTotal);
+  _netMonthlyRON=monthlyAvgTotal;
+  document.getElementById('net-val').textContent=`${fmt(monthlyAvgTotal)} lei`;
+  document.getElementById('net-val-eur').textContent=fmtEurBuy(monthlyAvgTotal);
   clearTimeout(_metricsSaveTimeout);
-  _metricsSaveTimeout = setTimeout(() => saveMetrics(totalRON, monthlyAvgTotal), 1200);
+  _metricsSaveTimeout=setTimeout(()=>saveMetrics(totalRON,monthlyAvgTotal),1200);
 }
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded',()=>{
   loadAll();
   document.body.classList.add('app-unlocked');
-  const lockBtn = document.getElementById('global-lock-btn');
-  if (lockBtn) {
-    lockBtn.className = "btn btn-lock unlocked";
-    lockBtn.innerHTML = "Deblocat";
-  }
-
-  const fab = document.getElementById('fab-refresh');
+  const lockBtn=document.getElementById('global-lock-btn');
+  if(lockBtn){lockBtn.className='btn btn-lock unlocked';lockBtn.innerHTML='Deblocat';}
+  // Init rate info boxes
+  ['w','ew','cat','ec','sub','es'].forEach(p=>updateRateInfoBox(p));
+  const fab=document.getElementById('fab-refresh');
   let _scrollTimer;
-  window.addEventListener('scroll', () => {
+  window.addEventListener('scroll',()=>{
     fab.classList.add('hidden');
     clearTimeout(_scrollTimer);
-    _scrollTimer = setTimeout(() => fab.classList.remove('hidden'), 800);
-  }, { passive: true });
+    _scrollTimer=setTimeout(()=>fab.classList.remove('hidden'),800);
+  },{passive:true});
 });
 </script>
 </body>
