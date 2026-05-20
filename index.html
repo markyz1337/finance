@@ -121,6 +121,7 @@ select option{background:#0d1530}
 .input-curr-badge.ron{color:rgba(134,180,255,0.5)}
 .input-curr-badge.eur{color:rgba(245,200,66,0.65)}
 
+/* ── DUAL RATE WIDGET ── */
 .net-banner{padding:24px 20px 20px;position:relative;overflow:hidden}
 .net-banner::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 100% at 50% 100%, rgba(245,200,66,0.04) 0%, transparent 70%);pointer-events:none}
 .net-center{text-align:center;position:relative}
@@ -129,24 +130,100 @@ select option{background:#0d1530}
 .net-pos{background:linear-gradient(135deg,#e03a3a 0%,#c0282a 60%,#a01f22 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 18px rgba(200,40,42,0.3));}
 .net-eur-sub{font-size:11px;color:var(--dim);font-family:'Space Mono',monospace;margin-top:6px}
 
-.rate-widget{margin-top:20px;display:flex;align-items:center;justify-content:center;gap:0;position:relative;}
-.rate-widget-inner{display:flex;align-items:center;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.07);border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.06);}
-.rate-seg{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 16px;gap:3px;}
-.rate-seg-lbl{font-family:'Space Mono',monospace;font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.8px;color:var(--dim);}
-.rate-seg-val{font-family:'Space Mono',monospace;font-size:15px;font-weight:700;color:var(--text);letter-spacing:-0.5px;}
-.rate-divider-v{width:1px;background:rgba(255,255,255,0.07);align-self:stretch;}
-.rate-seg.editable{background:rgba(79,142,247,0.07);cursor:text;position:relative;}
-.rate-seg.editable::after{content:'';position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:24px;height:1.5px;border-radius:2px;background:linear-gradient(90deg,var(--blue),var(--blue2));opacity:0.6;}
-.rate-seg.editable .rate-seg-val{background:linear-gradient(135deg,var(--blue2),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.rate-seg.editable input{background:none;border:none;padding:0;margin:0;font-family:'Space Mono',monospace;font-size:15px;font-weight:700;letter-spacing:-0.5px;width:58px;text-align:center;color:var(--blue2);-webkit-text-fill-color:var(--blue2);box-shadow:none;border-radius:0;}
-.rate-seg.editable input:focus{box-shadow:none;background:none;border:none;color:var(--cyan);-webkit-text-fill-color:var(--cyan);}
-.rate-save-indicator{font-size:8px;color:var(--green);font-family:'Space Mono',monospace;margin-top:6px;text-align:center;opacity:0;transition:opacity .3s;letter-spacing:1px;}
+/* Dual rate widget */
+.dual-rate-widget{margin-top:20px;display:flex;flex-direction:column;gap:8px;}
+
+.rate-card{display:flex;align-items:center;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.07);border-radius:14px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.06);}
+.rate-card.sell{border-color:rgba(62,207,142,0.15);}
+.rate-card.buy{border-color:rgba(252,99,99,0.15);}
+
+.rate-label-block{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 12px;gap:3px;min-width:70px;border-right:1px solid rgba(255,255,255,0.07);}
+.rate-type-badge{font-family:'Space Mono',monospace;font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:3px 7px;border-radius:5px;white-space:nowrap;}
+.rate-type-badge.sell{background:rgba(62,207,142,0.12);color:var(--green);border:1px solid rgba(62,207,142,0.2);}
+.rate-type-badge.buy{background:rgba(252,99,99,0.12);color:var(--red);border:1px solid rgba(252,99,99,0.2);}
+.rate-desc{font-family:'Space Mono',monospace;font-size:7px;color:var(--dim);text-align:center;margin-top:3px;}
+
+.rate-eq-block{display:flex;align-items:center;justify-content:center;padding:0 10px;color:var(--dim);font-size:11px;}
+
+.rate-pairs{display:flex;align-items:center;flex:1;gap:0;}
+.rate-pair-seg{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 14px;gap:3px;}
+.rate-pair-lbl{font-family:'Space Mono',monospace;font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--dim);}
+.rate-pair-val{font-family:'Space Mono',monospace;font-size:15px;font-weight:700;color:var(--text);}
+.rate-divider-v{width:1px;background:rgba(255,255,255,0.06);align-self:stretch;}
+
+.rate-input-seg{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 10px;gap:3px;flex:1;position:relative;cursor:text;}
+.rate-input-seg.sell-input::after{content:'';position:absolute;bottom:5px;left:50%;transform:translateX(-50%);width:24px;height:1.5px;border-radius:2px;background:var(--green);opacity:0.5;}
+.rate-input-seg.buy-input::after{content:'';position:absolute;bottom:5px;left:50%;transform:translateX(-50%);width:24px;height:1.5px;border-radius:2px;background:var(--red);opacity:0.5;}
+.rate-input-seg .rate-pair-lbl{color:var(--dim);}
+
+.rate-input-seg input{background:none;border:none;padding:0;margin:0;font-family:'Space Mono',monospace;font-size:15px;font-weight:700;width:58px;text-align:center;box-shadow:none;border-radius:0;}
+.rate-input-seg.sell-input input{color:var(--green);-webkit-text-fill-color:var(--green);}
+.rate-input-seg.sell-input input:focus{color:var(--cyan);-webkit-text-fill-color:var(--cyan);box-shadow:none;background:none;border:none;}
+.rate-input-seg.buy-input input{color:var(--red);-webkit-text-fill-color:var(--red);}
+.rate-input-seg.buy-input input:focus{color:#ff9090;-webkit-text-fill-color:#ff9090;box-shadow:none;background:none;border:none;}
+
+.rate-save-indicator{font-size:8px;color:var(--green);font-family:'Space Mono',monospace;margin-top:4px;text-align:center;opacity:0;transition:opacity .3s;letter-spacing:1px;}
 .rate-save-indicator.show{opacity:1}
 
-.wallet-total{text-align:center;padding:16px 0 6px}
-.total-lbl{font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;font-family:'Space Mono',monospace}
-.total-num{font-size:38px;font-weight:800;letter-spacing:-2px;font-family:'Space Mono',monospace;background:linear-gradient(135deg,#fff 0%,var(--blue2) 60%,var(--cyan) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.total-eur-sub{font-size:11px;color:var(--dim);font-family:'Space Mono',monospace;margin-top:4px}
+/* ── DUAL WALLET TOTALS ── */
+.wallet-dual-totals{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px 0 6px;}
+
+.wallet-total-block{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:16px 12px;border-radius:18px;gap:6px;position:relative;overflow:hidden;
+}
+.wallet-total-block::before{
+  content:'';position:absolute;inset:0;opacity:0.06;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.wallet-total-block.ron-block{
+  background:linear-gradient(145deg, rgba(79,142,247,0.12) 0%, rgba(134,180,255,0.06) 100%);
+  border:1px solid rgba(79,142,247,0.22);
+}
+.wallet-total-block.eur-block{
+  background:linear-gradient(145deg, rgba(245,200,66,0.1) 0%, rgba(245,200,66,0.04) 100%);
+  border:1px solid rgba(245,200,66,0.22);
+}
+
+.wallet-total-scenario{
+  font-family:'Space Mono',monospace;font-size:7.5px;font-weight:700;
+  text-transform:uppercase;letter-spacing:1.5px;padding:3px 9px;border-radius:20px;
+  margin-bottom:2px;
+}
+.ron-block .wallet-total-scenario{
+  background:rgba(79,142,247,0.12);color:var(--blue2);border:1px solid rgba(79,142,247,0.2);
+}
+.eur-block .wallet-total-scenario{
+  background:rgba(245,200,66,0.12);color:var(--gold);border:1px solid rgba(245,200,66,0.2);
+}
+
+.wallet-total-lbl{
+  font-size:8px;color:var(--dim);text-transform:uppercase;
+  letter-spacing:1.5px;font-family:'Space Mono',monospace;text-align:center;line-height:1.4;
+}
+
+.wallet-total-num{
+  font-family:'Space Mono',monospace;font-weight:800;letter-spacing:-1px;
+  line-height:1;text-align:center;
+}
+.ron-block .wallet-total-num{
+  font-size:22px;
+  background:linear-gradient(135deg,#fff 0%,var(--blue2) 60%,var(--cyan) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.eur-block .wallet-total-num{
+  font-size:22px;
+  background:linear-gradient(135deg,#fff 0%,var(--gold) 70%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+
+.wallet-total-hint{
+  font-family:'Space Mono',monospace;font-size:9px;
+  text-align:center;line-height:1.4;margin-top:2px;
+}
+.ron-block .wallet-total-hint{color:rgba(134,180,255,0.45);}
+.eur-block .wallet-total-hint{color:rgba(245,200,66,0.4);}
 
 .wallet-const-row{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:rgba(245,200,66,0.045);border:1px solid rgba(245,200,66,0.12);border-radius:11px;margin-bottom:2px;}
 .wallet-const-label{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--muted);}
@@ -278,30 +355,60 @@ body.app-unlocked .sensitive-action{display:inline-flex !important;}
       <div class="net-val net-pos" id="net-val">0 lei</div>
       <div class="net-eur-sub" id="net-val-eur">≈ 0 €</div>
     </div>
-    <div class="rate-widget">
-      <div class="rate-widget-inner">
-        <div class="rate-seg">
-          <span class="rate-seg-lbl">Valută</span>
-          <span class="rate-seg-val">1 EUR</span>
+
+    <!-- DUAL RATE WIDGET -->
+    <div class="dual-rate-widget">
+
+      <!-- CURS VÂNZARE — pentru portofel -->
+      <div class="rate-card sell">
+        <div class="rate-label-block">
+          <span class="rate-type-badge sell">VÂNZARE</span>
+          <span class="rate-desc">Portofel<br>EUR → LEI</span>
         </div>
-        <div class="rate-divider-v"></div>
-        <div class="rate-seg" style="padding:10px 10px">
-          <span class="rate-seg-lbl" style="opacity:0.4">═</span>
-          <span class="rate-seg-val" style="color:var(--dim);font-size:13px">=</span>
-        </div>
-        <div class="rate-divider-v"></div>
-        <div class="rate-seg editable">
-          <span class="rate-seg-lbl">Curs BNR</span>
-          <input type="number" id="eur-rate" value="4.97" inputmode="decimal" min="0" step="0.01" oninput="onEurRateChange()">
-        </div>
-        <div class="rate-divider-v"></div>
-        <div class="rate-seg">
-          <span class="rate-seg-lbl">Monedă</span>
-          <span class="rate-seg-val">RON</span>
+        <div class="rate-pairs">
+          <div class="rate-pair-seg">
+            <span class="rate-pair-lbl">1 EUR</span>
+            <span class="rate-pair-val" style="color:var(--green);">=</span>
+          </div>
+          <div class="rate-divider-v"></div>
+          <div class="rate-input-seg sell-input">
+            <span class="rate-pair-lbl">Curs vânzare</span>
+            <input type="number" id="eur-rate-sell" value="5.17" inputmode="decimal" min="0" step="0.01" oninput="onEurRateChange()">
+          </div>
+          <div class="rate-divider-v"></div>
+          <div class="rate-pair-seg">
+            <span class="rate-pair-lbl">Monedă</span>
+            <span class="rate-pair-val" style="font-size:13px;color:var(--muted);">RON</span>
+          </div>
         </div>
       </div>
+
+      <!-- CURS CUMPĂRARE — pentru cheltuieli -->
+      <div class="rate-card buy">
+        <div class="rate-label-block">
+          <span class="rate-type-badge buy">CUMPĂRARE</span>
+          <span class="rate-desc">Cheltuieli<br>LEI → EUR</span>
+        </div>
+        <div class="rate-pairs">
+          <div class="rate-pair-seg">
+            <span class="rate-pair-lbl">1 EUR</span>
+            <span class="rate-pair-val" style="color:var(--red);">=</span>
+          </div>
+          <div class="rate-divider-v"></div>
+          <div class="rate-input-seg buy-input">
+            <span class="rate-pair-lbl">Curs cumpărare</span>
+            <input type="number" id="eur-rate-buy" value="5.37" inputmode="decimal" min="0" step="0.01" oninput="onEurRateChange()">
+          </div>
+          <div class="rate-divider-v"></div>
+          <div class="rate-pair-seg">
+            <span class="rate-pair-lbl">Monedă</span>
+            <span class="rate-pair-val" style="font-size:13px;color:var(--muted);">RON</span>
+          </div>
+        </div>
+      </div>
+
     </div>
-    <div class="rate-save-indicator" id="rate-save-indicator">✓ Curs salvat</div>
+    <div class="rate-save-indicator" id="rate-save-indicator">✓ Cursuri salvate</div>
   </div>
 
   <div class="card" id="card-wallet">
@@ -312,9 +419,23 @@ body.app-unlocked .sensitive-action{display:inline-flex !important;}
     <div class="card-body">
       <div class="loader" id="loader-wallet"><span class="spinner"></span>Se încarcă...</div>
       <div id="wallet-list"></div>
-      <div class="wallet-total">
-        <div class="total-num" id="wallet-total">0 lei</div>
-        <div class="total-eur-sub" id="wallet-total-eur">≈ 0 €</div>
+
+      <!-- DUAL TOTALS: Total RON & Total EUR -->
+      <div class="wallet-dual-totals">
+        <!-- Total RON: RON nativ + EUR×cursVânzare -->
+        <div class="wallet-total-block ron-block">
+          <span class="wallet-total-scenario">RON</span>
+          <div class="wallet-total-lbl">Dacă tot capitalul<br>ar fi în lei</div>
+          <div class="wallet-total-num" id="wallet-total-ron">0</div>
+          <div class="wallet-total-hint" id="wallet-total-ron-hint">RON + EUR × <span id="hint-sell-rate">5.17</span></div>
+        </div>
+        <!-- Total EUR: EUR nativ + RON÷cursCumpărare -->
+        <div class="wallet-total-block eur-block">
+          <span class="wallet-total-scenario">EUR</span>
+          <div class="wallet-total-lbl">Dacă tot capitalul<br>ar fi în euro</div>
+          <div class="wallet-total-num" id="wallet-total-eur">0</div>
+          <div class="wallet-total-hint" id="wallet-total-eur-hint">EUR + RON ÷ <span id="hint-buy-rate">5.37</span></div>
+        </div>
       </div>
     </div>
   </div>
@@ -659,7 +780,7 @@ let _netMonthlyRON = 0, _walletTotalRON = 0;
 const modalCurrencyMode = {};
 
 let isUnlocked = true;
-let isLoading = false; // ← FIX: flag pentru a bloca refresh simultan
+let isLoading = false;
 let currentPinInput = "";
 const TARGET_PIN = "4579";
 
@@ -667,39 +788,73 @@ function genId() {
   return Date.now() * 1000 + Math.floor(Math.random() * 1000);
 }
 
-// ── CURRENCY HELPERS ──
-function getEurRate() { return parseFloat(document.getElementById('eur-rate').value) || 4.97; }
-function ronToEur(ron) { return ron / getEurRate(); }
-function eurToRon(eur) { return eur * getEurRate(); }
+// ── DUAL CURRENCY HELPERS ──
+function getEurRateSell() { return parseFloat(document.getElementById('eur-rate-sell').value) || 5.17; }
+function getEurRateBuy()  { return parseFloat(document.getElementById('eur-rate-buy').value)  || 5.37; }
+function getEurRate() { return getEurRateSell(); }
+
+function ronToEurSell(ron) { return ron / getEurRateSell(); }
+function eurToRonSell(eur) { return eur * getEurRateSell(); }
+function ronToEurBuy(ron)  { return ron / getEurRateBuy();  }
+function eurToRonBuy(eur)  { return eur * getEurRateBuy();  }
+
+function eurToRon(eur, context) {
+  return context === 'expense' ? eurToRonBuy(eur) : eurToRonSell(eur);
+}
+function ronToEur(ron, context) {
+  return context === 'expense' ? ronToEurBuy(ron) : ronToEurSell(ron);
+}
 
 function fmt(n) {
   if (isNaN(n) || n === null) return '0';
   return new Intl.NumberFormat('ro-RO', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(Math.round(n));
 }
-function fmtEur(ron) {
-  const e = ronToEur(ron);
+
+function fmtEurSell(ron) {
+  const e = ronToEurSell(ron);
   const rounded = Math.round(e * 10) / 10;
   return `≈ ${new Intl.NumberFormat('ro-RO', { minimumFractionDigits: 0, maximumFractionDigits: 1 }).format(rounded)} €`;
 }
 
-function entryRonVal(entry) {
+function fmtEurBuy(ron) {
+  const e = ronToEurBuy(ron);
+  const rounded = Math.round(e * 10) / 10;
+  return `≈ ${new Intl.NumberFormat('ro-RO', { minimumFractionDigits: 0, maximumFractionDigits: 1 }).format(rounded)} €`;
+}
+
+function fmtEur(ron) { return fmtEurSell(ron); }
+
+// Format EUR value with 1 decimal
+function fmtEurVal(eur) {
+  const rounded = Math.round(eur * 10) / 10;
+  return new Intl.NumberFormat('ro-RO', { minimumFractionDigits: 0, maximumFractionDigits: 1 }).format(rounded);
+}
+
+function entryRonVal(entry, context) {
   if (entry.isConstant) return entry.amount || 0;
   const curr = entry.currency || entry.originalCurrency || 'ron';
   const native = (entry.nativeAmount !== undefined)
     ? entry.nativeAmount
     : (entry.originalAmount !== undefined ? entry.originalAmount : (entry.amount || 0));
-  return curr === 'eur' ? eurToRon(native) : native;
+  if (curr !== 'eur') return native;
+  return context === 'expense' ? eurToRonBuy(native) : eurToRonSell(native);
 }
 
 function catTotalRon(c) {
   const subcats = c.subcats || [];
   if (subcats.length > 0) {
-    return subcats.reduce((acc, s) => acc + entryRonVal(s), 0);
+    return subcats.reduce((acc, s) => acc + entryRonVal(s, 'expense'), 0);
   }
-  return entryRonVal(c);
+  return entryRonVal(c, 'expense');
 }
 
-// ── CURRENCY TOGGLE ──
+// ── CURRENCY TOGGLE (modals) ──
+const prefixContext = {
+  'w': 'wallet', 'ew': 'wallet',
+  'cat': 'expense', 'ec': 'expense',
+  'sub': 'expense', 'es': 'expense'
+};
+
 function setCurrencyMode(prefix, mode) {
   modalCurrencyMode[prefix] = mode;
   const ronBtn = document.getElementById(`${prefix}-curr-ron`);
@@ -717,17 +872,25 @@ function updateConvertedHint(prefix) {
   const val    = parseFloat(document.getElementById(`${prefix}-amount`).value);
   const hintEl = document.getElementById(`${prefix}-converted-hint`);
   if (!hintEl) return;
-  const mode = modalCurrencyMode[prefix] || 'ron';
+  const mode    = modalCurrencyMode[prefix] || 'ron';
+  const context = prefixContext[prefix] || 'wallet';
+  const rateSell = getEurRateSell();
+  const rateBuy  = getEurRateBuy();
+
   if (!val || isNaN(val)) {
     hintEl.textContent = '';
     hintEl.className = 'input-converted-hint';
     return;
   }
   if (mode === 'eur') {
-    hintEl.textContent = `= ${fmt(eurToRon(val))} lei`;
+    const rate = context === 'expense' ? rateBuy : rateSell;
+    hintEl.textContent = `= ${fmt(val * rate)} lei`;
     hintEl.className = 'input-converted-hint has-val eur';
   } else {
-    hintEl.textContent = fmtEur(val);
+    const rate = context === 'expense' ? rateBuy : rateSell;
+    const eur = val / rate;
+    const rounded = Math.round(eur * 10) / 10;
+    hintEl.textContent = `≈ ${new Intl.NumberFormat('ro-RO', { minimumFractionDigits:0, maximumFractionDigits:1 }).format(rounded)} €`;
     hintEl.className = 'input-converted-hint has-val';
   }
 }
@@ -749,6 +912,12 @@ function resetCurrencyMode(prefix) {
 // ══════════════════════════════════════════
 let _eurRateTimer;
 function onEurRateChange() {
+  // Update rate hint spans
+  const sellRate = getEurRateSell();
+  const buyRate  = getEurRateBuy();
+  document.querySelectorAll('#hint-sell-rate').forEach(el => el.textContent = sellRate);
+  document.querySelectorAll('#hint-buy-rate').forEach(el => el.textContent = buyRate);
+
   renderWallet();
   renderExpenses();
   recalcAll();
@@ -762,23 +931,18 @@ function onEurRateChange() {
 }
 
 // ══════════════════════════════════════════
-//  FAB REFRESH — FIX: blochează apeluri simultane + nu salvează dacă state e gol
+//  FAB REFRESH
 // ══════════════════════════════════════════
 async function handleFabRefresh() {
-  // FIX: dacă se încarcă deja, ignoră apăsarea
   if (isLoading) {
     toast('⏳ Se încarcă deja...', 'ok');
     return;
   }
-
   const fab = document.getElementById('fab-refresh');
   fab.classList.add('spinning', 'loading-state');
-
   try {
-    // FIX: salvează doar dacă avem date reale în state — nu scriem gol în DB
     if (state.categories.length > 0) await saveCategoriesData();
     if (state.wallet.length > 0) await saveWalletData();
-    // Apoi reîncarcă din DB
     await loadAll();
     toast('🔄 Date actualizate');
   } catch(e) {
@@ -837,9 +1001,7 @@ function clearPin() {
   document.getElementById('pin-screen').classList.remove('open');
 }
 
-function toggleFormInputs(shouldDisable) {
-  // cursul valutar rămâne mereu editabil
-}
+function toggleFormInputs(shouldDisable) {}
 
 // ══════════════════════════════════════════
 //  TOAST & MODAL
@@ -873,13 +1035,11 @@ function setLoader(id, show) {
 }
 
 // ══════════════════════════════════════════
-//  LOAD ALL — FIX: protecție completă anti-suprascriere cu date goale
+//  LOAD ALL
 // ══════════════════════════════════════════
 async function loadAll() {
-  // FIX: previne apeluri simultane
   if (isLoading) return;
   isLoading = true;
-
   setLoader('loader-wallet', true);
   setLoader('loader-cats', true);
   try {
@@ -902,7 +1062,6 @@ async function loadAll() {
       }
     }
 
-    // FIX: wallet — nu suprascrie cu array gol dacă avem deja date în state
     const walletRows = await sb.get('fd_settings', 'key=eq.wallet_ron_data');
     if (walletRows && walletRows.length && walletRows[0].value) {
       const parsedWallet = JSON.parse(walletRows[0].value);
@@ -911,40 +1070,37 @@ async function loadAll() {
       } else if (state.wallet.length === 0) {
         state.wallet = [];
       }
-      // Dacă parsedWallet e [] dar state.wallet are date → le păstrăm pe cele locale
     }
-    // Dacă walletRows e gol/eroare → păstrăm state.wallet existent
 
-    // FIX: curs EUR — aplică doar dacă e număr valid > 0
     const salRows = await sb.get('fd_settings', 'key=eq.salary_ron_data');
     if (salRows && salRows.length && salRows[0].value) {
       const d = JSON.parse(salRows[0].value);
-      const parsedRate = parseFloat(d.eur_rate);
-      if (parsedRate && parsedRate > 0) {
-        document.getElementById('eur-rate').value = parsedRate;
+      const parsedSell = parseFloat(d.eur_rate_sell || d.eur_rate);
+      if (parsedSell && parsedSell > 0) {
+        document.getElementById('eur-rate-sell').value = parsedSell;
+      }
+      const parsedBuy = parseFloat(d.eur_rate_buy);
+      if (parsedBuy && parsedBuy > 0) {
+        document.getElementById('eur-rate-buy').value = parsedBuy;
       }
     }
 
-    // FIX: categories — protecție critică anti-suprascriere cu array gol
     const catRows = await sb.get('fd_settings', 'key=eq.categories_ron_data');
     if (catRows && catRows.length && catRows[0].value) {
       const parsedCats = JSON.parse(catRows[0].value);
       if (parsedCats.length > 0) {
         state.categories = parsedCats;
       } else if (state.categories.length === 0) {
-        // Acceptăm gol din DB doar dacă și local e gol (prima rulare)
         state.categories = [];
       }
-      // Dacă parsedCats e [] dar state.categories are date → le păstrăm pe cele locale
     }
-    // Dacă catRows e gol/eroare → păstrăm state.categories existent
 
   } catch(e) {
     toast('Eroare la încărcare: ' + e.message, 'err');
   } finally {
     setLoader('loader-wallet', false);
     setLoader('loader-cats', false);
-    isLoading = false; // FIX: eliberează flagul întotdeauna
+    isLoading = false;
   }
   renderWallet();
   renderExpenses();
@@ -955,10 +1111,15 @@ async function loadAll() {
 //  SAVE HELPERS
 // ══════════════════════════════════════════
 async function saveSalaryData() {
-  const payload = { salary: '0', eur_rate: document.getElementById('eur-rate').value || '4.97' };
+  const payload = {
+    salary: '0',
+    eur_rate_sell: document.getElementById('eur-rate-sell').value || '5.17',
+    eur_rate_buy:  document.getElementById('eur-rate-buy').value  || '5.37',
+    eur_rate: document.getElementById('eur-rate-sell').value || '5.17'
+  };
   try {
     await sb.upsert('fd_settings', [{ key: 'salary_ron_data', value: JSON.stringify(payload) }], 'key');
-  } catch(e) { toast('Eroare salvare curs', 'err'); }
+  } catch(e) { toast('Eroare salvare cursuri', 'err'); }
 }
 
 async function saveWalletData() {
@@ -984,9 +1145,9 @@ async function saveMetrics(totalWalletRON, mediaLunaraRON) {
   try {
     const payload = {
       total_active_ron: fmt(totalWalletRON) + ' lei',
-      total_active_eur: fmt(ronToEur(totalWalletRON)) + ' €',
+      total_active_eur: fmt(ronToEurSell(totalWalletRON)) + ' €',
       media_lunara_ron: fmt(mediaLunaraRON) + ' lei',
-      media_lunara_eur: fmt(ronToEur(mediaLunaraRON)) + ' €',
+      media_lunara_eur: fmt(ronToEurBuy(mediaLunaraRON)) + ' €',
       updated_at: new Date().toISOString()
     };
     await sb.upsert('fd_settings', [{ key: 'metrics_snapshot', value: JSON.stringify(payload) }], 'key');
@@ -1022,7 +1183,7 @@ function openEditWallet(id) {
   document.getElementById('ew-label').value = w.label;
   const curr = w.currency || w.originalCurrency || 'ron';
   setCurrencyMode('ew', curr);
-  const displayVal = w.nativeAmount ?? (curr === 'eur' ? ronToEur(w.amount || 0) : (w.amount || 0));
+  const displayVal = w.nativeAmount ?? (curr === 'eur' ? ronToEurSell(w.amount || 0) : (w.amount || 0));
   document.getElementById('ew-amount').value = displayVal;
   updateConvertedHint('ew');
   openModal('mo-edit-wallet');
@@ -1045,13 +1206,51 @@ async function updateWallet() {
 
 function walletRonVal(w) {
   if (w.isConstant) return w.amount || 0;
-  return entryRonVal(w);
+  return entryRonVal(w, 'wallet');
+}
+
+// ── COMPUTE DUAL WALLET TOTALS ──
+// totalRON = sum(RON_native) + sum(EUR_native × rateSell)  → "dacă tot e în lei"
+// totalEUR = sum(EUR_native) + sum(RON_native ÷ rateBuy)   → "dacă tot e în euro"
+function computeWalletDualTotals(walletList, constantItem) {
+  const rateSell = getEurRateSell();
+  const rateBuy  = getEurRateBuy();
+
+  let totalRON = 0; // all as RON
+  let totalEUR = 0; // all as EUR
+
+  // Constant item (always RON)
+  if (constantItem) {
+    const v = constantItem.amount || 0;
+    totalRON += v;
+    totalEUR += v / rateBuy;
+  }
+
+  walletList.forEach(w => {
+    if (w.isConstant) return; // handled above
+    const curr   = w.currency || w.originalCurrency || 'ron';
+    const native = (w.nativeAmount !== undefined) ? w.nativeAmount
+                 : (w.originalAmount !== undefined ? w.originalAmount : (w.amount || 0));
+
+    if (curr === 'eur') {
+      // EUR source:
+      totalRON += native * rateSell; // EUR × vânzare → lei
+      totalEUR += native;            // already EUR
+    } else {
+      // RON source:
+      totalRON += native;             // already RON
+      totalEUR += native / rateBuy;  // RON ÷ cumpărare → euro
+    }
+  });
+
+  return { totalRON, totalEUR };
 }
 
 function renderWallet() {
   const el = document.getElementById('wallet-list');
   let visibleWallet = [...state.wallet];
   let html = '';
+  const rateSell = getEurRateSell();
 
   if (supabaseConstantWalletItem) {
     const v = supabaseConstantWalletItem.amount || 0;
@@ -1063,7 +1262,7 @@ function renderWallet() {
       '</div>' +
       '<div style="text-align:right">' +
         '<span class="wallet-const-val">' + fmt(v) + ' lei</span>' +
-        '<div style="font-size:9px;color:var(--dim);font-family:Space Mono,monospace;margin-top:2px">' + fmtEur(v) + '</div>' +
+        '<div style="font-size:9px;color:var(--dim);font-family:Space Mono,monospace;margin-top:2px">' + fmtEurBuy(v) + '</div>' +
       '</div>' +
     '</div>';
   }
@@ -1078,12 +1277,13 @@ function renderWallet() {
     return;
   }
 
-  const rate = getEurRate();
   html += visibleWallet.map(w => {
     const ronVal = walletRonVal(w);
     const curr = w.currency || w.originalCurrency || 'ron';
     const native = (w.nativeAmount !== undefined) ? w.nativeAmount : (w.originalAmount !== undefined ? w.originalAmount : (w.amount || 0));
-    let secondLine = curr === 'eur' ? fmt(native) + ' EUR × ' + rate : fmtEur(ronVal);
+    let secondLine = curr === 'eur'
+      ? fmt(native) + ' EUR × ' + rateSell
+      : fmtEurBuy(ronVal);
     const currChip = curr === 'eur'
       ? '<span class="curr-chip eur">EUR</span>'
       : '<span class="curr-chip ron">RON</span>';
@@ -1134,7 +1334,7 @@ function openEditCat(id) {
   document.getElementById('ec-type').value = c.type;
   const origCurr = c.currency || c.originalCurrency || 'ron';
   setCurrencyMode('ec', origCurr);
-  const displayVal = (c.nativeAmount !== undefined) ? c.nativeAmount : (origCurr === 'eur' ? ronToEur(c.amount || 0) : (c.amount || 0));
+  const displayVal = (c.nativeAmount !== undefined) ? c.nativeAmount : (origCurr === 'eur' ? ronToEurBuy(c.amount || 0) : (c.amount || 0));
   document.getElementById('ec-amount').value = displayVal;
   updateConvertedHint('ec');
   openModal('mo-edit-cat');
@@ -1196,7 +1396,7 @@ function openEditSubcat(catId, subId) {
   document.getElementById('es-label').value = sub.label;
   const origCurr = sub.currency || sub.originalCurrency || 'ron';
   setCurrencyMode('es', origCurr);
-  const displayVal = (sub.nativeAmount !== undefined) ? sub.nativeAmount : (origCurr === 'eur' ? ronToEur(sub.amount || 0) : (sub.amount || 0));
+  const displayVal = (sub.nativeAmount !== undefined) ? sub.nativeAmount : (origCurr === 'eur' ? ronToEurBuy(sub.amount || 0) : (sub.amount || 0));
   document.getElementById('es-amount').value = displayVal;
   updateConvertedHint('es');
   openModal('mo-edit-subcat');
@@ -1237,7 +1437,7 @@ function renderExpenses() {
   const monthlyEl = document.getElementById('monthly-list');
   const annuals   = state.categories.filter(c => c.type === 'annual');
   const monthlies = state.categories.filter(c => c.type === 'monthly');
-  const rate      = getEurRate();
+  const rateBuy   = getEurRateBuy();
 
   const mapper = (c) => {
     const subcats = c.subcats || [];
@@ -1266,10 +1466,12 @@ function renderExpenses() {
     }
 
     const subRowsHtml = subcats.map(s => {
-      const sRon    = entryRonVal(s);
+      const sRon    = entryRonVal(s, 'expense');
       const sCurr   = s.currency || s.originalCurrency || 'ron';
       const sNative = (s.nativeAmount !== undefined) ? s.nativeAmount : (s.originalAmount !== undefined ? s.originalAmount : (s.amount || 0));
-      const subSecondLine = sCurr === 'eur' ? fmt(sNative) + ' EUR × ' + rate : fmtEur(sRon);
+      const subSecondLine = sCurr === 'eur'
+        ? fmt(sNative) + ' EUR × ' + rateBuy + ' (cump.)'
+        : fmtEurBuy(sRon);
       const subChip = sCurr === 'eur' ? '<span class="curr-chip eur" style="font-size:7px">EUR</span>' : '';
       return '<div class="sub-row">' +
         '<span class="sub-lbl">' + s.label + subChip + '</span>' +
@@ -1284,7 +1486,15 @@ function renderExpenses() {
       '</div>';
     }).join('');
 
-    const catEurLine  = fmtEur(totalRon);
+    const catOrigCurr = c.currency || c.originalCurrency || 'ron';
+    const catNative   = (c.nativeAmount !== undefined) ? c.nativeAmount : (c.originalAmount !== undefined ? c.originalAmount : (c.amount || 0));
+    let catSecondLine = '';
+    if (!hasSubcats && catOrigCurr === 'eur') {
+      catSecondLine = fmt(catNative) + ' EUR × ' + rateBuy + ' (cump.)';
+    } else {
+      catSecondLine = fmtEurBuy(totalRon);
+    }
+
     const toggleClass = 'cat-toggle' + (hasSubcats ? ' visible' : '');
     const zoneClass   = 'cat-clickable-zone' + (hasSubcats ? ' has-subcats' : ' no-subcats');
     const onClickZone = hasSubcats ? `onclick="toggleSubMenu('${c.id}')"` : '';
@@ -1297,7 +1507,7 @@ function renderExpenses() {
         '</div>' +
         '<div class="cat-val-wrap">' +
           '<span class="cat-val">' + fmt(totalRon) + ' lei</span>' +
-          '<span class="cat-val-eur">' + catEurLine + '</span>' +
+          '<span class="cat-val-eur">' + catSecondLine + '</span>' +
         '</div>' +
         '<div class="row-actions sensitive-action">' +
           '<button class="btn btn-ghost btn-icon btn-sm" onclick="openAddSubcat(\'' + c.id + '\')">➕</button>' +
@@ -1319,14 +1529,23 @@ function renderExpenses() {
 let _metricsSaveTimeout;
 
 function recalcAll() {
-  let totalRON = 0;
-  (state.wallet || []).forEach(w => { totalRON += walletRonVal(w); });
-  if (supabaseConstantWalletItem) totalRON += supabaseConstantWalletItem.amount || 0;
+  const rateSell = getEurRateSell();
+  const rateBuy  = getEurRateBuy();
+
+  // ── DUAL WALLET TOTALS ──
+  const { totalRON, totalEUR } = computeWalletDualTotals(state.wallet, supabaseConstantWalletItem);
 
   _walletTotalRON = totalRON;
-  document.getElementById('wallet-total').textContent     = `${fmt(totalRON)} lei`;
-  document.getElementById('wallet-total-eur').textContent = fmtEur(totalRON);
 
+  // Update RON total block
+  document.getElementById('wallet-total-ron').textContent = fmt(totalRON) + ' lei';
+  document.getElementById('hint-sell-rate').textContent   = rateSell;
+
+  // Update EUR total block
+  document.getElementById('wallet-total-eur').textContent = fmtEurVal(totalEUR) + ' €';
+  document.getElementById('hint-buy-rate').textContent    = rateBuy;
+
+  // ── EXPENSES ──
   let annualDirect = 0, monthlyDirect = 0;
   state.categories.forEach(c => {
     const total = catTotalRon(c);
@@ -1338,18 +1557,18 @@ function recalcAll() {
   const annualCompleteTotal = annualDirect + (monthlyDirect * 12);
 
   document.getElementById('annual-total').textContent      = `${fmt(annualDirect)} lei`;
-  document.getElementById('annual-total-eur').textContent  = fmtEur(annualDirect);
+  document.getElementById('annual-total-eur').textContent  = fmtEurBuy(annualDirect);
   document.getElementById('monthly-total').textContent     = `${fmt(monthlyDirect)} lei`;
-  document.getElementById('monthly-total-eur').textContent = fmtEur(monthlyDirect);
+  document.getElementById('monthly-total-eur').textContent = fmtEurBuy(monthlyDirect);
 
   document.getElementById('sum-monthly-avg').textContent     = `${fmt(monthlyAvgTotal)} lei`;
-  document.getElementById('sum-monthly-avg-eur').textContent = fmtEur(monthlyAvgTotal);
+  document.getElementById('sum-monthly-avg-eur').textContent = fmtEurBuy(monthlyAvgTotal);
   document.getElementById('sum-annual').textContent          = `${fmt(annualCompleteTotal)} lei`;
-  document.getElementById('sum-annual-eur').textContent      = fmtEur(annualCompleteTotal);
+  document.getElementById('sum-annual-eur').textContent      = fmtEurBuy(annualCompleteTotal);
 
   _netMonthlyRON = monthlyAvgTotal;
   document.getElementById('net-val').textContent     = `${fmt(monthlyAvgTotal)} lei`;
-  document.getElementById('net-val-eur').textContent = fmtEur(monthlyAvgTotal);
+  document.getElementById('net-val-eur').textContent = fmtEurBuy(monthlyAvgTotal);
 
   clearTimeout(_metricsSaveTimeout);
   _metricsSaveTimeout = setTimeout(() => saveMetrics(totalRON, monthlyAvgTotal), 1200);
