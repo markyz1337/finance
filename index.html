@@ -1262,7 +1262,7 @@ function renderWallet() {
       '</div>' +
       '<div style="text-align:right">' +
         '<span class="wallet-const-val">' + fmt(v) + ' lei</span>' +
-        '<div style="font-size:9px;color:var(--dim);font-family:Space Mono,monospace;margin-top:2px">' + fmtEurBuy(v) + '</div>' +
+        '<div style="font-size:9px;color:var(--dim);font-family:Space Mono,monospace;margin-top:2px">' + new Intl.NumberFormat('ro-RO',{minimumFractionDigits:0,maximumFractionDigits:1}).format(Math.round(v/getEurRateBuy()*10)/10) + ' EUR × ' + getEurRateBuy() + '</div>' +
       '</div>' +
     '</div>';
   }
@@ -1283,7 +1283,7 @@ function renderWallet() {
     const native = (w.nativeAmount !== undefined) ? w.nativeAmount : (w.originalAmount !== undefined ? w.originalAmount : (w.amount || 0));
     let secondLine = curr === 'eur'
       ? fmt(native) + ' EUR × ' + rateSell
-      : fmtEurBuy(ronVal);
+      : new Intl.NumberFormat('ro-RO',{minimumFractionDigits:0,maximumFractionDigits:1}).format(Math.round(ronVal/getEurRateBuy()*10)/10) + ' EUR × ' + getEurRateBuy();
     const currChip = curr === 'eur'
       ? '<span class="curr-chip eur">EUR</span>'
       : '<span class="curr-chip ron">RON</span>';
