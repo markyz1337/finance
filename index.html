@@ -243,6 +243,10 @@ body.app-unlocked .sensitive-action{display:inline-flex !important;}
 .pin-key{background:var(--glass);border:1px solid var(--border);border-radius:50%;width:64px;height:64px;font-size:22px;font-weight:600;color:var(--text);display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;margin:0 auto;transition:background 0.1s;}
 .pin-key:active{background:var(--border);color:#fff;}
 .pin-key.clear{font-size:14px;color:var(--red);background:rgba(252,99,99,0.05);border-color:rgba(252,99,99,0.15);border-radius:16px;width:100%;height:50px;grid-column:span 3;margin-top:10px;}
+
+/* Sort indicator badge */
+.sort-badge{display:inline-flex;align-items:center;gap:4px;font-family:'Space Mono',monospace;font-size:8px;font-weight:700;color:var(--dim);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:6px;padding:2px 7px;letter-spacing:0.5px;}
+.sort-badge svg{opacity:0.5;}
 </style>
 </head>
 <body>
@@ -333,7 +337,13 @@ body.app-unlocked .sensitive-action{display:inline-flex !important;}
   <div class="card" id="card-expenses">
     <div class="card-hdr">
       <div class="card-title"><span class="dot dot-gold"></span>Cheltuieli</div>
-      <button class="btn btn-blue btn-sm sensitive-action" onclick="openModal('mo-cat')">+ Categorie</button>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span class="sort-badge">
+          <svg width="9" height="9" viewBox="0 0 10 10" fill="none"><path d="M1 2.5h8M2.5 5h5M4 7.5h2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ieftin → scump
+        </span>
+        <button class="btn btn-blue btn-sm sensitive-action" onclick="openModal('mo-cat')">+ Categorie</button>
+      </div>
     </div>
     <div class="card-body">
       <div class="loader" id="loader-cats"><span class="spinner"></span>Se încarcă...</div>
@@ -540,6 +550,18 @@ function fmtEurBuy(r){const e=ronToEurBuy(r),rounded=Math.round(e*10)/10;return`
 function fmtEurVal(e){const rounded=Math.round(e*10)/10;return new Intl.NumberFormat('ro-RO',{minimumFractionDigits:0,maximumFractionDigits:1}).format(rounded);}
 function entryRonVal(entry,ctx){if(entry.isConstant)return entry.amount||0;const curr=entry.currency||entry.originalCurrency||'ron';const native=entry.nativeAmount!==undefined?entry.nativeAmount:entry.originalAmount!==undefined?entry.originalAmount:entry.amount||0;if(curr!=='eur')return native;return ctx==='expense'?eurToRonBuy(native):eurToRonSell(native);}
 function catTotalRon(c){const s=c.subcats||[];if(s.length>0)return s.reduce((a,x)=>a+entryRonVal(x,'expense'),0);return entryRonVal(c,'expense');}
+
+// ── SORT: categories ascending by total RON, no-subcats group first, subcats group after (each group also ascending) ──
+function sortCatsAsc(arr){
+  const noSub=[...arr.filter(c=>!c.subcats||c.subcats.length===0)].sort((a,b)=>catTotalRon(a)-catTotalRon(b));
+  const hasSub=[...arr.filter(c=>c.subcats&&c.subcats.length>0)].sort((a,b)=>catTotalRon(a)-catTotalRon(b));
+  return [...noSub,...hasSub];
+}
+
+// ── SORT: subcategories ascending by RON value ──
+function sortSubcatsAsc(subcats){
+  return [...subcats].sort((a,b)=>entryRonVal(a,'expense')-entryRonVal(b,'expense'));
+}
 
 const prefixContext={'w':'wallet','ew':'wallet','cat':'expense','ec':'expense','sub':'expense','es':'expense'};
 
@@ -765,6 +787,32 @@ async function saveMetrics(totalWalletRON,mediaLunaraRON){
   }catch(e){}
 }
 
+// ── SCROLL HELPER: scroll smoothly to a cat-item element after render ──
+function scrollToCatItem(catId, delay=80){
+  setTimeout(()=>{
+    const el=document.getElementById('cat-item-'+catId);
+    if(el)el.scrollIntoView({behavior:'smooth',block:'center'});
+  },delay);
+}
+
+// ── SCROLL HELPER: scroll to a subcategory within a parent's open subcats ──
+function scrollToSubItem(catId, subId, delay=100){
+  setTimeout(()=>{
+    // ensure parent is open
+    const subContainer=document.getElementById('subcats-'+catId);
+    const arrowBadge=document.getElementById('arrow-badge-'+catId);
+    if(subContainer&&!subContainer.classList.contains('open')){
+      subContainer.classList.add('open');
+      if(arrowBadge)arrowBadge.classList.add('open');
+    }
+    // after opening, find the sub-row by data attribute
+    setTimeout(()=>{
+      const subEl=document.querySelector('[data-sub-id="'+subId+'"]');
+      if(subEl)subEl.scrollIntoView({behavior:'smooth',block:'center'});
+    },60);
+  },delay);
+}
+
 async function saveWallet(){
   const label=document.getElementById('w-label').value.trim();if(!label)return;
   const rawVal=parseFloat(document.getElementById('w-amount').value)||0;
@@ -841,7 +889,7 @@ async function saveCat(){
   const newId=genId();
   state.categories.push({id:newId,label,currency:mode,nativeAmount:rawVal,type,subcats:[]});
   scheduleCatSave();renderExpenses();recalcAll();closeModal('mo-cat');toast('✅ Categorie adăugată');
-  setTimeout(()=>{const el=document.getElementById('cat-item-'+newId);if(el)el.scrollIntoView({behavior:'smooth',block:'center'});},80);
+  scrollToCatItem(newId, 80);
 }
 async function deleteCat(id){
   if(!confirm('Sigur vrei să ștergi această categorie?'))return;
@@ -870,6 +918,7 @@ async function updateCat(){
   delete c.amount;delete c.originalCurrency;delete c.originalAmount;
   c.type=document.getElementById('ec-type').value;
   scheduleCatSave();renderExpenses();recalcAll();closeModal('mo-edit-cat');toast('✅ Actualizat');
+  scrollToCatItem(id, 80);
 }
 function openAddSubcat(catId){
   document.getElementById('sub-parent-id').value=catId;
@@ -886,19 +935,7 @@ async function saveSubcat(){
   const newSubId=genId();
   cat.subcats.push({id:newSubId,label,currency:mode,nativeAmount:rawVal});
   scheduleCatSave();renderExpenses();recalcAll();closeModal('mo-subcat');toast('✅ Subcategorie adăugată');
-  setTimeout(()=>{
-    const subContainer=document.getElementById(`subcats-${parentId}`);
-    const arrowBadge=document.getElementById(`arrow-badge-${parentId}`);
-    if(subContainer&&!subContainer.classList.contains('open')){
-      subContainer.classList.add('open');
-      if(arrowBadge)arrowBadge.classList.add('open');
-    }
-    setTimeout(()=>{
-      const allSubs=subContainer?subContainer.querySelectorAll('.sub-row'):[];
-      const lastSub=allSubs[allSubs.length-1];
-      if(lastSub)lastSub.scrollIntoView({behavior:'smooth',block:'center'});
-    },80);
-  },60);
+  scrollToSubItem(parentId, newSubId, 60);
 }
 
 async function deleteSubcat(catId,subId){
@@ -931,6 +968,7 @@ async function updateSubcat(){
   sub.currency=mode;sub.nativeAmount=rawVal;
   delete sub.amount;delete sub.originalCurrency;delete sub.originalAmount;
   scheduleCatSave();renderExpenses();recalcAll();closeModal('mo-edit-subcat');toast('✅ Subcategorie actualizată');
+  scrollToSubItem(catId, subId, 60);
 }
 
 function toggleSubMenu(id){
@@ -942,8 +980,6 @@ function toggleSubMenu(id){
   }
 }
 
-// ─── MODIFICARE: catEurLine & subEurLine afișează suma nativă EUR (nu conversie) ───
-// Dacă nativeEur e furnizat, afișează direct; altfel face fallback la conversie prin cursul de cumpărare
 function catEurLine(ronVal, currencyIsEur, nativeEur) {
   if (!currencyIsEur) return '';
   var eurDisplay = (nativeEur !== undefined && nativeEur !== null)
@@ -951,6 +987,7 @@ function catEurLine(ronVal, currencyIsEur, nativeEur) {
     : fmtEurVal(ronVal / getEurRateBuy());
   return '<span class="cat-val-eur">= ' + eurDisplay + ' €</span>';
 }
+
 function subEurLine(ronVal, currencyIsEur, nativeEur) {
   if (!currencyIsEur) return '';
   var eurDisplay = (nativeEur !== undefined && nativeEur !== null)
@@ -965,9 +1002,10 @@ function renderExpenses(){
   document.querySelectorAll('.subcats.open').forEach(el=>openSubcats.add(el.id.replace('subcats-','')));
   const annualEl=document.getElementById('annual-list');
   const monthlyEl=document.getElementById('monthly-list');
-  const sortCats=arr=>[...arr.filter(c=>!c.subcats||c.subcats.length===0),...arr.filter(c=>c.subcats&&c.subcats.length>0)];
-  const annuals=sortCats(state.categories.filter(c=>c.type==='annual'));
-  const monthlies=sortCats(state.categories.filter(c=>c.type==='monthly'));
+
+  // ── USE SORT: ascending, no-subcats first, then subcats (each group ascending) ──
+  const annuals = sortCatsAsc(state.categories.filter(c=>c.type==='annual'));
+  const monthlies = sortCatsAsc(state.categories.filter(c=>c.type==='monthly'));
 
   const mapper=(c)=>{
     const subcats=c.subcats||[];
@@ -975,19 +1013,9 @@ function renderExpenses(){
     const totalRon=catTotalRon(c);
     const isOpen=openSubcats.has(String(c.id));
 
-    // Determină dacă categoria e EUR și suma nativă
     let catIsEur = false;
     let catNativeEur = undefined;
-    if (hasSubcats) {
-      // Cu subcategorii: arată EUR doar dacă TOATE subcategoriile sunt EUR
-      catIsEur = subcats.every(s => (s.currency||s.originalCurrency||'ron') === 'eur');
-      if (catIsEur) {
-        // Suma nativă = suma nativelor subcategoriilor
-        catNativeEur = subcats.reduce((sum, s) => {
-          return sum + (s.nativeAmount !== undefined ? s.nativeAmount : 0);
-        }, 0);
-      }
-    } else {
+    if (!hasSubcats) {
       catIsEur = (c.currency||c.originalCurrency||'ron') === 'eur';
       if (catIsEur) {
         catNativeEur = c.nativeAmount !== undefined ? c.nativeAmount : undefined;
@@ -1003,14 +1031,16 @@ function renderExpenses(){
       catChip=oc==='eur'?'<span class="curr-chip eur">EUR</span>':'<span class="curr-chip ron">RON</span>';
     }
 
-    const subRowsHtml=subcats.map(s=>{
+    // ── SORT subcats ascending by RON value ──
+    const sortedSubcats = sortSubcatsAsc(subcats);
+
+    const subRowsHtml=sortedSubcats.map(s=>{
       const sRon=entryRonVal(s,'expense');
       const sCurr=s.currency||s.originalCurrency||'ron';
       const subIsEur = sCurr === 'eur';
-      // ─── MODIFICARE: transmite suma nativă EUR a subcategoriei ───
       const subNativeEur = subIsEur ? (s.nativeAmount !== undefined ? s.nativeAmount : undefined) : undefined;
       const subChip=subIsEur?'<span class="curr-chip eur" style="font-size:7px">EUR</span>':'<span class="curr-chip ron" style="font-size:7px">RON</span>';
-      return'<div class="sub-row"><span class="sub-lbl">'+subChip+' '+s.label+'</span>'
+      return'<div class="sub-row" data-sub-id="'+s.id+'"><span class="sub-lbl">'+subChip+' '+s.label+'</span>'
         +'<div class="sub-val-wrap"><span class="sub-val">'+fmt(sRon)+' lei</span>'+subEurLine(sRon, subIsEur, subNativeEur)+'</div>'
         +'<div class="row-actions sensitive-action">'
           +'<button class="btn btn-ghost btn-icon btn-sm" onclick="openEditSubcat(\''+c.id+'\', \''+s.id+'\')">✏️</button>'
@@ -1022,7 +1052,6 @@ function renderExpenses(){
     const onClickZone=hasSubcats?`onclick="toggleSubMenu('${c.id}')"` :'';
     const subcatsClass='subcats'+(isOpen?' open':'');
 
-    // ─── MODIFICARE: transmite catNativeEur la catEurLine ───
     return'<div class="cat-item" id="cat-item-'+c.id+'">'
       +'<div class="cat-row">'
         +'<div class="'+zoneClass+'" '+onClickZone+'>'
