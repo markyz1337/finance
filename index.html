@@ -52,7 +52,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .input-converted-hint.has-val{color:rgba(134,180,255,0.55)}
 .input-converted-hint.eur{color:rgba(245,200,66,0.55)}
 
-/* ── RATE INFO BOX -- afișat în modale sub câmpul de sumă ── */
 .rate-info-box{
   display:flex;align-items:flex-start;gap:7px;
   background:rgba(255,255,255,0.022);
@@ -98,14 +97,25 @@ select option{background:#0d1530}
 .rate-card{display:flex;align-items:center;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.07);border-radius:14px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.06);}
 .rate-card.sell{border-color:rgba(62,207,142,0.15);}
 .rate-card.buy{border-color:rgba(252,99,99,0.15);}
-.rate-label-block{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 12px;gap:3px;min-width:70px;border-right:1px solid rgba(255,255,255,0.07);}
-.rate-type-badge{font-family:'Space Mono',monospace;font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:3px 7px;border-radius:5px;white-space:nowrap;}
+.rate-label-block{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 12px;gap:3px;min-width:82px;width:82px;border-right:1px solid rgba(255,255,255,0.07);}
+.rate-type-badge{
+  font-family:'Space Mono',monospace;
+  font-size:7.5px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  padding:3px 7px;
+  border-radius:5px;
+  white-space:nowrap;
+  width:68px;
+  text-align:center;
+}
 .rate-type-badge.sell{background:rgba(62,207,142,0.12);color:var(--green);border:1px solid rgba(62,207,142,0.2);}
 .rate-type-badge.buy{background:rgba(252,99,99,0.12);color:var(--red);border:1px solid rgba(252,99,99,0.2);}
 .rate-desc{font-family:'Space Mono',monospace;font-size:7px;color:var(--dim);text-align:center;margin-top:3px;}
 .rate-pairs{display:flex;align-items:center;flex:1;gap:0;}
 .rate-pair-seg{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 14px;gap:3px;}
-.rate-pair-lbl{font-family:'Space Mono',monospace;font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--dim);}
+.rate-pair-lbl{font-family:'Space Mono',monospace;font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--dim);text-align:center;line-height:1.4;}
 .rate-pair-val{font-family:'Space Mono',monospace;font-size:15px;font-weight:700;color:var(--text);}
 .rate-divider-v{width:1px;background:rgba(255,255,255,0.06);align-self:stretch;}
 .rate-input-seg{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 10px;gap:3px;flex:1;position:relative;cursor:text;}
@@ -139,13 +149,11 @@ select option{background:#0d1530}
 .row-actions{display:flex;gap:4px;flex-shrink:0}
 .empty-msg{color:var(--dim);font-size:12px;padding:12px 0;font-style:italic;text-align:center}
 
-/* ── CURR CHIP ── */
 .curr-chip{display:inline-flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:8px;font-weight:700;padding:2px 0;border-radius:5px;margin-right:5px;vertical-align:middle;min-width:36px;width:36px;text-align:center;flex-shrink:0;}
 .curr-chip.ron{background:rgba(79,142,247,0.1);color:rgba(134,180,255,0.6);border:1px solid rgba(79,142,247,0.15)}
 .curr-chip.eur{background:rgba(245,200,66,0.1);color:rgba(245,200,66,0.7);border:1px solid rgba(245,200,66,0.2)}
 .curr-chip.after-label{margin-right:0;margin-left:5px;}
 
-/* ── ARROW CHIP -- containerul NU se rotește, doar .arrow-icon interior ── */
 .curr-chip.arrow{
   background:rgba(255,255,255,0.055);
   color:var(--muted);
@@ -154,11 +162,10 @@ select option{background:#0d1530}
   overflow:hidden;
   transition:background .18s, border-color .18s, color .18s;
   -webkit-tap-highlight-color:transparent;
-  height:18px;        /* ← adaugă asta */
-  line-height:18px;   /* ← adaugă asta */
-  padding:0;          /* ← adaugă asta */
+  height:18px;
+  line-height:18px;
+  padding:0;
 }
-
 .curr-chip.arrow.open{
   color:var(--blue2);
   background:rgba(79,142,247,0.1);
@@ -243,7 +250,7 @@ body.app-unlocked .sensitive-action{display:inline-flex !important;}
 <div class="hdr">
   <div class="hdr-inner">
     <div>
-      <h1>Finanțe</h1>
+      <h1>💎 Finance</h1>
       <div class="hdr-sub">Simulator Personal</div>
     </div>
     <div style="display:flex;align-items:center;gap:8px;">
@@ -271,7 +278,7 @@ body.app-unlocked .sensitive-action{display:inline-flex !important;}
           <div class="rate-pair-seg"><span class="rate-pair-lbl">1 EUR</span><span class="rate-pair-val" style="color:var(--green);">=</span></div>
           <div class="rate-divider-v"></div>
           <div class="rate-input-seg sell-input">
-            <span class="rate-pair-lbl">Curs vânzare</span>
+            <span class="rate-pair-lbl">Curs<br>Vânzare</span>
             <input type="number" id="eur-rate-sell" value="5.17" inputmode="decimal" min="0" step="0.01" oninput="onEurRateChange()">
           </div>
           <div class="rate-divider-v"></div>
@@ -287,7 +294,7 @@ body.app-unlocked .sensitive-action{display:inline-flex !important;}
           <div class="rate-pair-seg"><span class="rate-pair-lbl">1 EUR</span><span class="rate-pair-val" style="color:var(--red);">=</span></div>
           <div class="rate-divider-v"></div>
           <div class="rate-input-seg buy-input">
-            <span class="rate-pair-lbl">Curs cumpărare</span>
+            <span class="rate-pair-lbl">Curs<br>Cumpărare</span>
             <input type="number" id="eur-rate-buy" value="5.37" inputmode="decimal" min="0" step="0.01" oninput="onEurRateChange()">
           </div>
           <div class="rate-divider-v"></div>
@@ -535,7 +542,6 @@ function catTotalRon(c){const s=c.subcats||[];if(s.length>0)return s.reduce((a,x
 
 const prefixContext={'w':'wallet','ew':'wallet','cat':'expense','ec':'expense','sub':'expense','es':'expense'};
 
-/* ── Actualizează caseta info-curs în modal ── */
 function updateRateInfoBox(prefix){
   const box=document.getElementById(`${prefix}-rate-info`);
   const txt=document.getElementById(`${prefix}-rate-info-text`);
@@ -546,7 +552,6 @@ function updateRateInfoBox(prefix){
   const rateBuy=getEurRateBuy();
 
   if(ctx==='wallet'){
-    // Portofel → curs VÂNZARE (EUR → RON)
     const rate=rateSell;
     if(mode==='eur'){
       txt.innerHTML=`Convertire EUR → LEI la curs <span class="rate-info-val">vânzare ${rate}</span><span class="rate-info-formula">1 EUR × ${rate} = ${rate} lei</span>`;
@@ -555,7 +560,6 @@ function updateRateInfoBox(prefix){
     }
     box.className=`rate-info-box ${mode==='eur'?'active-eur':'active-ron'}`;
   } else {
-    // Cheltuieli → curs CUMPĂRARE (LEI → EUR)
     const rate=rateBuy;
     if(mode==='eur'){
       txt.innerHTML=`Convertire EUR → LEI la curs <span class="rate-info-val">cumpărare ${rate}</span><span class="rate-info-formula">1 EUR × ${rate} = ${rate} lei</span>`;
@@ -602,7 +606,6 @@ function updateConvertedHint(prefix){
     hintEl.className='input-converted-hint has-val';
   }
 }
-
 
 function resetCurrencyMode(prefix){
   modalCurrencyMode[prefix]='ron';
@@ -761,7 +764,6 @@ async function saveMetrics(totalWalletRON,mediaLunaraRON){
   }catch(e){}
 }
 
-/* ── WALLET ── */
 async function saveWallet(){
   const label=document.getElementById('w-label').value.trim();if(!label)return;
   const rawVal=parseFloat(document.getElementById('w-amount').value)||0;
@@ -830,7 +832,6 @@ function renderWallet(){
   el.innerHTML=html;
 }
 
-/* ── CATEGORII ── */
 async function saveCat(){
   const label=document.getElementById('cat-label').value.trim();if(!label)return;
   const rawVal=parseFloat(document.getElementById('cat-amount').value)||0;
@@ -884,8 +885,6 @@ async function saveSubcat(){
   const newSubId=genId();
   cat.subcats.push({id:newSubId,label,currency:mode,nativeAmount:rawVal});
   scheduleCatSave();renderExpenses();recalcAll();closeModal('mo-subcat');toast('✅ Subcategorie adăugată');
-
-  // ── Auto-expand categoria și scroll la noua subcategorie ──
   setTimeout(()=>{
     const subContainer=document.getElementById(`subcats-${parentId}`);
     const arrowBadge=document.getElementById(`arrow-badge-${parentId}`);
@@ -933,7 +932,6 @@ async function updateSubcat(){
   scheduleCatSave();renderExpenses();recalcAll();closeModal('mo-edit-subcat');toast('✅ Subcategorie actualizată');
 }
 
-/* ── Toggle subcategorii -- doar .arrow-icon se rotește, nu întregul chip ── */
 function toggleSubMenu(id){
   const subEl=document.getElementById(`subcats-${id}`);
   const arrowBadge=document.getElementById(`arrow-badge-${id}`);
@@ -959,7 +957,6 @@ function renderExpenses(){
     const totalRon=catTotalRon(c);
     const isOpen=openSubcats.has(String(c.id));
 
-    // Chip cu săgeată: corpul NU se rotește, doar .arrow-icon interior
     let catChip='';
     if(hasSubcats){
       const openCls=isOpen?' open':'';
@@ -1039,7 +1036,6 @@ window.addEventListener('DOMContentLoaded',()=>{
   document.body.classList.add('app-unlocked');
   const lockBtn=document.getElementById('global-lock-btn');
   if(lockBtn){lockBtn.className='btn btn-lock unlocked';lockBtn.innerHTML='Deblocat';}
-  // Init rate info boxes
   ['w','ew','cat','ec','sub','es'].forEach(p=>updateRateInfoBox(p));
   const fab=document.getElementById('fab-refresh');
   let _scrollTimer;
