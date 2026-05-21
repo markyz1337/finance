@@ -143,7 +143,7 @@ select option{background:#0d1530}
 .wallet-total-hint{font-family:'Space Mono',monospace;font-size:9px;text-align:center;line-height:1.4;margin-top:2px;}
 .ron-block .wallet-total-hint{color:rgba(134,180,255,0.45);}
 .eur-block .wallet-total-hint{color:rgba(245,200,66,0.4);}
-.wallet-const-row{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:rgba(245,200,66,0.045);border:1px solid rgba(245,200,66,0.12);border-radius:11px;margin-bottom:2px;}
+.wallet-const-row{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:rgba(245,200,66,0.045);border:1px solid rgba(245,200,66,0.12);border-radius:11px;margin-bottom:6px;}
 .wallet-const-label{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--muted);}
 .wallet-const-val{font-family:'Space Mono',monospace;font-size:12px;font-weight:700;color:var(--gold);}
 .row-actions{display:flex;gap:4px;flex-shrink:0}
@@ -577,7 +577,7 @@ function updateRateInfoBox(prefix){
     if(mode==='eur'){
       txt.innerHTML=`Convertire EUR → LEI la curs <span class="rate-info-val">vânzare ${rate}</span><span class="rate-info-formula">1 EUR × ${rate} = ${rate} lei</span>`;
     } else {
-      txt.innerHTML=`Echivalent EUR la curs <span class="rate-info-val">vânzare ${rate}</span><span class="rate-info-formula">suma ÷ ${rate} = € afișat</span>`;
+      txt.innerHTML=`Echivalent EUR la curs <span class="rate-info-val">cumpărare ${rateBuy}</span><span class="rate-info-formula">suma ÷ ${rateBuy} = € afișat</span>`;
     }
     box.className=`rate-info-box ${mode==='eur'?'active-eur':'active-ron'}`;
   } else {
@@ -621,7 +621,7 @@ function updateConvertedHint(prefix){
     hintEl.textContent=`${fmtNum(val)} € × ${fmtRate(rate)} = ${fmtNum(result)} lei`;
     hintEl.className='input-converted-hint has-val eur';
   } else {
-    const rate=ctx==='expense'?rateBuy:rateSell;
+    const rate=rateBuy;
     const eur=val/rate;
     hintEl.textContent=`${fmtNum(val)} lei ÷ ${fmtRate(rate)} = ${fmtNum(eur,2)} €`;
     hintEl.className='input-converted-hint has-val';
@@ -861,23 +861,48 @@ function computeWalletDualTotals(walletList,constantItem){
 
 function renderWallet(){
   const el=document.getElementById('wallet-list');let html='';
-  const rateSell=getEurRateSell();
   if(supabaseConstantWalletItem){
     const v=supabaseConstantWalletItem.amount||0;
     html+='<div class="wallet-const-row"><div class="wallet-const-label"><span>🏛</span><span>'+supabaseConstantWalletItem.label+'</span><span class="curr-chip ron">RON</span></div><div style="text-align:right"><span class="wallet-const-val">'+fmt(v)+' lei</span><div style="font-size:9px;color:var(--dim);font-family:Space Mono,monospace;margin-top:2px">'+new Intl.NumberFormat('ro-RO',{minimumFractionDigits:0,maximumFractionDigits:1}).format(Math.round(v/getEurRateBuy()*10)/10)+' EUR × '+getEurRateBuy()+'</div></div></div>';
   }
   if(!state.wallet.length&&!supabaseConstantWalletItem){el.innerHTML='<div class="empty-msg">Nicio sursa adaugata inca.</div>';return;}
-  html+=state.wallet.map(w=>{
-    const ronVal=walletRonVal(w);
-    const curr=w.currency||w.originalCurrency||'ron';
-    const native=w.nativeAmount!==undefined?w.nativeAmount:w.originalAmount!==undefined?w.originalAmount:(w.amount||0);
-    let secondLine=curr==='eur'?fmt(native)+' EUR × '+rateSell:new Intl.NumberFormat('ro-RO',{minimumFractionDigits:0,maximumFractionDigits:1}).format(Math.round(ronVal/getEurRateBuy()*10)/10)+' EUR × '+getEurRateBuy();
-    const currChip=curr==='eur'?'<span class="curr-chip eur after-label">EUR</span>':'<span class="curr-chip ron after-label">RON</span>';
-    const editHtml='<button class="btn btn-ghost btn-icon btn-sm sensitive-action" onclick="openEditWallet(\''+w.id+'\')">✏️</button><button class="btn btn-danger btn-icon btn-sm sensitive-action" onclick="deleteWallet(\''+w.id+'\')">🗑</button>';
-    return'<div class="wallet-const-row"><div class="wallet-const-label" style="flex:1;min-width:0;overflow:hidden">'+w.label+currChip+'</div><div style="text-align:right;margin-right:8px;flex-shrink:0"><span class="wallet-const-val">'+fmt(ronVal)+' lei</span><div style="font-size:9px;color:var(--dim);font-family:Space Mono,monospace;margin-top:2px">'+secondLine+'</div></div><div style="display:flex;gap:4px;flex-shrink:0">'+editHtml+'</div></div>';
+  html += state.wallet.map(w => {
+    const ronVal = walletRonVal(w);
+    const curr = w.currency || w.originalCurrency || 'ron';
+    const native = w.nativeAmount !== undefined ? w.nativeAmount : (w.amount || 0);
+    const currChip = curr === 'eur'
+      ? '<span class="curr-chip eur after-label">EUR</span>'
+      : '<span class="curr-chip ron after-label">RON</span>';
+const editHtml = isUnlocked
+  ? '<button class="btn btn-ghost btn-icon btn-sm" onclick="openEditWallet(\'' + w.id + '\')">✏️</button><button class="btn btn-danger btn-icon btn-sm" onclick="deleteWallet(\'' + w.id + '\')">🗑</button>'
+  : '';
+
+    let mainLine, subLine;
+    if (curr === 'eur') {
+      // EUR nativ → arată EUR principal, lei secundar
+      const eurVal = native;
+      const ronConverted = Math.round(native * getEurRateSell());
+      mainLine = '<span class="wallet-const-val">' + fmt(eurVal) + ' EUR</span>';
+      subLine = fmt(ronConverted) + ' lei / ' + getEurRateSell();
+    } else {
+      // RON nativ → arată lei principal, EUR secundar (ca Obligațiuni)
+      const eurVal = Math.round(ronVal / getEurRateBuy() * 10) / 10;
+      mainLine = '<span class="wallet-const-val">' + fmt(ronVal) + ' lei</span>';
+      subLine = new Intl.NumberFormat('ro-RO',{minimumFractionDigits:0,maximumFractionDigits:1}).format(eurVal) + ' EUR × ' + getEurRateBuy();
+    }
+
+    return '<div class="wallet-const-row">' +
+        '<div class="wallet-const-label" style="flex:1;min-width:0;overflow:hidden">' + w.label + currChip + '</div>' +
+'<div style="text-align:right;' + (editHtml ? 'margin-right:8px;' : '') + 'flex-shrink:0">' +
+    mainLine +
+    '<div style="font-size:9px;color:var(--dim);font-family:Space Mono,monospace;margin-top:2px">' + subLine + '</div>' +
+'</div>' +
+(editHtml ? '<div style="display:flex;gap:4px;flex-shrink:0">' + editHtml + '</div>' : '') +
+    '</div>';
   }).join('');
   el.innerHTML=html;
 }
+
 
 async function saveCat(){
   const label=document.getElementById('cat-label').value.trim();if(!label)return;
