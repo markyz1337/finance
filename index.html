@@ -254,7 +254,7 @@ body.app-unlocked .sensitive-action{display:inline-flex !important;}
 <div class="hdr">
   <div class="hdr-inner">
     <div>
-      <h1>💎 Finance</h1>
+      <h1>România</h1>
       <div class="hdr-sub">Simulator Personal</div>
     </div>
     <div style="display:flex;align-items:center;gap:8px;">
@@ -551,16 +551,14 @@ function fmtEurVal(e){const rounded=Math.round(e*10)/10;return new Intl.NumberFo
 function entryRonVal(entry,ctx){if(entry.isConstant)return entry.amount||0;const curr=entry.currency||entry.originalCurrency||'ron';const native=entry.nativeAmount!==undefined?entry.nativeAmount:entry.originalAmount!==undefined?entry.originalAmount:entry.amount||0;if(curr!=='eur')return native;return ctx==='expense'?eurToRonBuy(native):eurToRonSell(native);}
 function catTotalRon(c){const s=c.subcats||[];if(s.length>0)return s.reduce((a,x)=>a+entryRonVal(x,'expense'),0);return entryRonVal(c,'expense');}
 
-// ── SORT: categories ascending by total RON, no-subcats group first, subcats group after (each group also ascending) ──
+// ── SORT: categories descending by total RON, all mixed (no group separation) ──
 function sortCatsAsc(arr){
-  const noSub=[...arr.filter(c=>!c.subcats||c.subcats.length===0)].sort((a,b)=>catTotalRon(a)-catTotalRon(b));
-  const hasSub=[...arr.filter(c=>c.subcats&&c.subcats.length>0)].sort((a,b)=>catTotalRon(a)-catTotalRon(b));
-  return [...noSub,...hasSub];
+  return [...arr].sort((b,a)=>catTotalRon(b)-catTotalRon(a));
 }
 
-// ── SORT: subcategories ascending by RON value ──
+// ── SORT: subcategories descending by RON value ──
 function sortSubcatsAsc(subcats){
-  return [...subcats].sort((a,b)=>entryRonVal(a,'expense')-entryRonVal(b,'expense'));
+  return [...subcats].sort((b,a)=>entryRonVal(b,'expense')-entryRonVal(a,'expense'));
 }
 
 const prefixContext={'w':'wallet','ew':'wallet','cat':'expense','ec':'expense','sub':'expense','es':'expense'};
@@ -1003,7 +1001,7 @@ function renderExpenses(){
   const annualEl=document.getElementById('annual-list');
   const monthlyEl=document.getElementById('monthly-list');
 
-  // ── USE SORT: ascending, no-subcats first, then subcats (each group ascending) ──
+  // ── USE SORT: descending, all mixed ──
   const annuals = sortCatsAsc(state.categories.filter(c=>c.type==='annual'));
   const monthlies = sortCatsAsc(state.categories.filter(c=>c.type==='monthly'));
 
@@ -1031,7 +1029,7 @@ function renderExpenses(){
       catChip=oc==='eur'?'<span class="curr-chip eur">EUR</span>':'<span class="curr-chip ron">RON</span>';
     }
 
-    // ── SORT subcats ascending by RON value ──
+    // ── SORT subcats descending by RON value ──
     const sortedSubcats = sortSubcatsAsc(subcats);
 
     const subRowsHtml=sortedSubcats.map(s=>{
