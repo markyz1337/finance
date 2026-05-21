@@ -535,6 +535,7 @@ function eurToRonSell(e){return e*getEurRateSell();}
 function ronToEurBuy(r){return r/getEurRateBuy();}
 function eurToRonBuy(e){return e*getEurRateBuy();}
 function fmt(n){if(isNaN(n)||n===null)return'0';return new Intl.NumberFormat('ro-RO',{minimumFractionDigits:0,maximumFractionDigits:0}).format(Math.round(n));}
+function fmtEurSell(r){const e=ronToEurSell(r),rounded=Math.round(e*10)/10;return`≈ ${new Intl.NumberFormat('ro-RO',{minimumFractionDigits:0,maximumFractionDigits:1}).format(rounded)} €`;}
 function fmtEurBuy(r){const e=ronToEurBuy(r),rounded=Math.round(e*10)/10;return`≈ ${new Intl.NumberFormat('ro-RO',{minimumFractionDigits:0,maximumFractionDigits:1}).format(rounded)} €`;}
 function fmtEurVal(e){const rounded=Math.round(e*10)/10;return new Intl.NumberFormat('ro-RO',{minimumFractionDigits:0,maximumFractionDigits:1}).format(rounded);}
 function entryRonVal(entry,ctx){if(entry.isConstant)return entry.amount||0;const curr=entry.currency||entry.originalCurrency||'ron';const native=entry.nativeAmount!==undefined?entry.nativeAmount:entry.originalAmount!==undefined?entry.originalAmount:entry.amount||0;if(curr!=='eur')return native;return ctx==='expense'?eurToRonBuy(native):eurToRonSell(native);}
@@ -759,7 +760,7 @@ async function saveCategoriesData(){
 }
 async function saveMetrics(totalWalletRON,mediaLunaraRON){
   try{
-    const payload={total_active_ron:fmt(totalWalletRON)+' lei',total_active_eur:fmt(ronToEurSell(totalWalletRON))+' €',media_lunara_ron:fmt(mediaLunaraRON)+' lei',media_lunara_eur:fmt(ronToEurBuy(mediaLunaraRON))+' €',updated_at:new Date().toISOString()};
+    const payload={total_active_ron:fmt(totalWalletRON)+' lei',total_active_eur:fmt(ronToEurSell(totalWalletRON))+' €',media_lunara_ron:fmt(mediaLunaraRON)+' lei',media_lunara_eur:fmt(ronToEurSell(mediaLunaraRON))+' €',updated_at:new Date().toISOString()};
     await sb.upsert('fd_settings',[{key:'metrics_snapshot',value:JSON.stringify(payload)}],'key');
   }catch(e){}
 }
@@ -941,6 +942,23 @@ function toggleSubMenu(id){
   }
 }
 
+// ─── MODIFICARE: catEurLine & subEurLine afișează suma nativă EUR (nu conversie) ───
+// Dacă nativeEur e furnizat, afișează direct; altfel face fallback la conversie prin cursul de cumpărare
+function catEurLine(ronVal, currencyIsEur, nativeEur) {
+  if (!currencyIsEur) return '';
+  var eurDisplay = (nativeEur !== undefined && nativeEur !== null)
+    ? fmtEurVal(nativeEur)
+    : fmtEurVal(ronVal / getEurRateBuy());
+  return '<span class="cat-val-eur">= ' + eurDisplay + ' €</span>';
+}
+function subEurLine(ronVal, currencyIsEur, nativeEur) {
+  if (!currencyIsEur) return '';
+  var eurDisplay = (nativeEur !== undefined && nativeEur !== null)
+    ? fmtEurVal(nativeEur)
+    : fmtEurVal(ronVal / getEurRateBuy());
+  return '<span class="sub-val-eur">= ' + eurDisplay + ' €</span>';
+}
+
 function renderExpenses(){
   const scrollY=window.scrollY;
   const openSubcats=new Set();
@@ -957,6 +975,25 @@ function renderExpenses(){
     const totalRon=catTotalRon(c);
     const isOpen=openSubcats.has(String(c.id));
 
+    // Determină dacă categoria e EUR și suma nativă
+    let catIsEur = false;
+    let catNativeEur = undefined;
+    if (hasSubcats) {
+      // Cu subcategorii: arată EUR doar dacă TOATE subcategoriile sunt EUR
+      catIsEur = subcats.every(s => (s.currency||s.originalCurrency||'ron') === 'eur');
+      if (catIsEur) {
+        // Suma nativă = suma nativelor subcategoriilor
+        catNativeEur = subcats.reduce((sum, s) => {
+          return sum + (s.nativeAmount !== undefined ? s.nativeAmount : 0);
+        }, 0);
+      }
+    } else {
+      catIsEur = (c.currency||c.originalCurrency||'ron') === 'eur';
+      if (catIsEur) {
+        catNativeEur = c.nativeAmount !== undefined ? c.nativeAmount : undefined;
+      }
+    }
+
     let catChip='';
     if(hasSubcats){
       const openCls=isOpen?' open':'';
@@ -969,9 +1006,12 @@ function renderExpenses(){
     const subRowsHtml=subcats.map(s=>{
       const sRon=entryRonVal(s,'expense');
       const sCurr=s.currency||s.originalCurrency||'ron';
-      const subChip=sCurr==='eur'?'<span class="curr-chip eur" style="font-size:7px">EUR</span>':'<span class="curr-chip ron" style="font-size:7px">RON</span>';
+      const subIsEur = sCurr === 'eur';
+      // ─── MODIFICARE: transmite suma nativă EUR a subcategoriei ───
+      const subNativeEur = subIsEur ? (s.nativeAmount !== undefined ? s.nativeAmount : undefined) : undefined;
+      const subChip=subIsEur?'<span class="curr-chip eur" style="font-size:7px">EUR</span>':'<span class="curr-chip ron" style="font-size:7px">RON</span>';
       return'<div class="sub-row"><span class="sub-lbl">'+subChip+' '+s.label+'</span>'
-        +'<div class="sub-val-wrap"><span class="sub-val">'+fmt(sRon)+' lei</span><span class="sub-val-eur">'+fmtEurBuy(sRon)+'</span></div>'
+        +'<div class="sub-val-wrap"><span class="sub-val">'+fmt(sRon)+' lei</span>'+subEurLine(sRon, subIsEur, subNativeEur)+'</div>'
         +'<div class="row-actions sensitive-action">'
           +'<button class="btn btn-ghost btn-icon btn-sm" onclick="openEditSubcat(\''+c.id+'\', \''+s.id+'\')">✏️</button>'
           +'<button class="btn btn-danger btn-icon btn-sm" onclick="deleteSubcat(\''+c.id+'\', \''+s.id+'\')">🗑</button>'
@@ -982,12 +1022,13 @@ function renderExpenses(){
     const onClickZone=hasSubcats?`onclick="toggleSubMenu('${c.id}')"` :'';
     const subcatsClass='subcats'+(isOpen?' open':'');
 
+    // ─── MODIFICARE: transmite catNativeEur la catEurLine ───
     return'<div class="cat-item" id="cat-item-'+c.id+'">'
       +'<div class="cat-row">'
         +'<div class="'+zoneClass+'" '+onClickZone+'>'
           +'<span class="cat-lbl">'+catChip+' '+c.label+'</span>'
         +'</div>'
-        +'<div class="cat-val-wrap"><span class="cat-val">'+fmt(totalRon)+' lei</span><span class="cat-val-eur">'+fmtEurBuy(totalRon)+'</span></div>'
+        +'<div class="cat-val-wrap"><span class="cat-val">'+fmt(totalRon)+' lei</span>'+catEurLine(totalRon, catIsEur, catNativeEur)+'</div>'
         +'<div class="row-actions sensitive-action">'
           +'<button class="btn btn-ghost btn-icon btn-sm" onclick="openAddSubcat(\''+c.id+'\')">➕</button>'
           +'<button class="btn btn-ghost btn-icon btn-sm" onclick="openEditCat(\''+c.id+'\')">✏️</button>'
@@ -1016,17 +1057,20 @@ function recalcAll(){
   state.categories.forEach(c=>{const total=catTotalRon(c);if(c.type==='annual')annualDirect+=total;else monthlyDirect+=total;});
   const monthlyAvgTotal=monthlyDirect+(annualDirect/12);
   const annualCompleteTotal=annualDirect+(monthlyDirect*12);
+
   document.getElementById('annual-total').textContent=`${fmt(annualDirect)} lei`;
-  document.getElementById('annual-total-eur').textContent=fmtEurBuy(annualDirect);
+  document.getElementById('annual-total-eur').textContent=fmtEurSell(annualDirect);
   document.getElementById('monthly-total').textContent=`${fmt(monthlyDirect)} lei`;
-  document.getElementById('monthly-total-eur').textContent=fmtEurBuy(monthlyDirect);
+  document.getElementById('monthly-total-eur').textContent=fmtEurSell(monthlyDirect);
   document.getElementById('sum-monthly-avg').textContent=`${fmt(monthlyAvgTotal)} lei`;
-  document.getElementById('sum-monthly-avg-eur').textContent=fmtEurBuy(monthlyAvgTotal);
+  document.getElementById('sum-monthly-avg-eur').textContent=fmtEurSell(monthlyAvgTotal);
   document.getElementById('sum-annual').textContent=`${fmt(annualCompleteTotal)} lei`;
-  document.getElementById('sum-annual-eur').textContent=fmtEurBuy(annualCompleteTotal);
+  document.getElementById('sum-annual-eur').textContent=fmtEurSell(annualCompleteTotal);
+
   _netMonthlyRON=monthlyAvgTotal;
   document.getElementById('net-val').textContent=`${fmt(monthlyAvgTotal)} lei`;
-  document.getElementById('net-val-eur').textContent=fmtEurBuy(monthlyAvgTotal);
+  document.getElementById('net-val-eur').textContent=fmtEurSell(monthlyAvgTotal);
+
   clearTimeout(_metricsSaveTimeout);
   _metricsSaveTimeout=setTimeout(()=>saveMetrics(totalRON,monthlyAvgTotal),1200);
 }
