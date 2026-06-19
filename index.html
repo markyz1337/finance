@@ -529,7 +529,7 @@ body.app-unlocked .sensitive-action{display:inline-flex !important;}
     <div class="modal-title">📦 Descarcă Backup (CSV)</div>
     <div class="modal-fields">
       <button class="btn btn-blue" style="width:100%;padding:14px;border-radius:16px;" onclick="exportTableCSV('fd_settings')">⬇️ fd_settings.csv</button>
-      <button class="btn btn-blue" style="width:100%;padding:14px;border-radius:16px;" onclick="exportTableCSV('bf_preferences')">⬇️ bf_preferences.csv</button>
+
     </div>
     <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal('mo-export')" style="width:100%;">Închide</button></div>
   </div>
@@ -1168,13 +1168,10 @@ async function exportTableCSV(table){
     let rows;
     if(table==='fd_settings'){
       rows=await sb.get('fd_settings','select=*');
-    }else if(table==='bf_preferences'){
-      const r=await fetch(PREFERENCES_API_URL);
-      if(!r.ok)throw new Error(await r.text());
-      rows=await r.json();
     }else{
       throw new Error('Tabel necunoscut');
     }
+
     if(!rows||!rows.length){toast('⚠️ Tabelul '+table+' este gol','err');return;}
     const date=new Date().toISOString().slice(0,10);
     downloadCSV(`${table}_${date}.csv`,rowsToCSV(rows));
