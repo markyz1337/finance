@@ -254,7 +254,7 @@ body.app-unlocked .sensitive-action{display:inline-flex !important;}
 <div class="hdr">
   <div class="hdr-inner">
     <div>
-      <h1>România</h1>
+      <h1 onclick="openModal('mo-export')" style="cursor:pointer;">România</h1>
       <div class="hdr-sub">Simulator Personal</div>
     </div>
     <div style="display:flex;align-items:center;gap:8px;">
@@ -522,7 +522,21 @@ body.app-unlocked .sensitive-action{display:inline-flex !important;}
   </div>
 </div>
 
+<!-- Export Backup -->
+<div class="overlay" id="mo-export">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">📦 Descarcă Backup (CSV)</div>
+    <div class="modal-fields">
+      <button class="btn btn-blue" style="width:100%;padding:14px;border-radius:16px;" onclick="exportTableCSV('fd_settings')">⬇️ fd_settings.csv</button>
+      <button class="btn btn-blue" style="width:100%;padding:14px;border-radius:16px;" onclick="exportTableCSV('bf_preferences')">⬇️ bf_preferences.csv</button>
+    </div>
+    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal('mo-export')" style="width:100%;">Închide</button></div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
+
 
 <script>
 const SUPABASE_URL='https://fndjrfieitieqzafhyzz.supabase.co';
@@ -534,7 +548,8 @@ let state={wallet:[],categories:[]};
 let supabaseConstantWalletItem=null;
 let _netMonthlyRON=0,_walletTotalRON=0;
 const modalCurrencyMode={};
-let isUnlocked=true,isLoading=false,currentPinInput='';
+let isUnlocked=false,isLoading=false,currentPinInput='';
+
 const TARGET_PIN='4579';
 function genId(){return Date.now()*1000+Math.floor(Math.random()*1000);}
 
@@ -1127,12 +1142,50 @@ function recalcAll(){
   _metricsSaveTimeout=setTimeout(()=>saveMetrics(totalRON,monthlyAvgTotal),1200);
 }
 
+function rowsToCSV(rows){
+  if(!rows||!rows.length)return'';
+  const cols=Object.keys(rows[0]);
+  const esc=v=>{
+    if(v===null||v===undefined)return'';
+    const s=typeof v==='object'?JSON.stringify(v):String(v);
+    if(/[",\n]/.test(s))return'"'+s.replace(/"/g,'""')+'"';
+    return s;
+  };
+  const lines=[cols.join(',')];
+  rows.forEach(r=>lines.push(cols.map(c=>esc(r[c])).join(',')));
+  return lines.join('\n');
+}
+function downloadCSV(filename,csvContent){
+  const blob=new Blob(['\uFEFF'+csvContent],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download=filename;
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+async function exportTableCSV(table){
+  try{
+    let rows;
+    if(table==='fd_settings'){
+      rows=await sb.get('fd_settings','select=*');
+    }else if(table==='bf_preferences'){
+      const r=await fetch(PREFERENCES_API_URL);
+      if(!r.ok)throw new Error(await r.text());
+      rows=await r.json();
+    }else{
+      throw new Error('Tabel necunoscut');
+    }
+    if(!rows||!rows.length){toast('⚠️ Tabelul '+table+' este gol','err');return;}
+    const date=new Date().toISOString().slice(0,10);
+    downloadCSV(`${table}_${date}.csv`,rowsToCSV(rows));
+    toast('✅ '+table+'.csv descărcat');
+  }catch(e){toast('Eroare export: '+e.message,'err');}
+}
+
 window.addEventListener('DOMContentLoaded',()=>{
   loadAll();
-  document.body.classList.add('app-unlocked');
-  const lockBtn=document.getElementById('global-lock-btn');
-  if(lockBtn){lockBtn.className='btn btn-lock unlocked';lockBtn.innerHTML='Deblocat';}
   ['w','ew','cat','ec','sub','es'].forEach(p=>updateRateInfoBox(p));
+
   const fab=document.getElementById('fab-refresh');
   let _scrollTimer;
   window.addEventListener('scroll',()=>{
