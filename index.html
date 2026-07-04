@@ -1126,7 +1126,7 @@ const SB_HEADERS = {
   'Prefer':        'return=representation'
 };
 
-const EXTERNAL_GOAL_API_URL = 'https://fndjrfieitieqzafhyzz.supabase.co/rest/v1/fd_settings?select=*&apikey=sb_publishable_bHDKjiKAVHqW199ICw7i2g_O3olYMAr';
+
 
 async function sbGet(table, filter = '') {
   const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${filter}`, { headers: { ...SB_HEADERS } });
@@ -1183,37 +1183,18 @@ async function loadFromSupabase() {
     if (prefs.length) {
       protectionPct = parseFloat(prefs[0].protection_pct) || 0;
     }
-    try {
-      const extResponse = await fetch(EXTERNAL_GOAL_API_URL);
-      if (extResponse.ok) {
-        const extData = await extResponse.json();
-        const snapshotObj = extData.find(item => item.key === 'metrics_snapshot');
-        if (snapshotObj && snapshotObj.value) {
-          const parsedVal = JSON.parse(snapshotObj.value);
-          if (parsedVal) {
-            if (parsedVal.media_lunara_ron) {
-              const cleanGoal = parseFloat(parsedVal.media_lunara_ron.replace(/[^\d]/g, ''));
-              if (!isNaN(cleanGoal) && cleanGoal > 0) baseExpense = cleanGoal;
-            }
-            if (parsedVal.total_active_ron) {
-              const cleanFunds = parseFloat(parsedVal.total_active_ron.replace(/[^\d]/g, ''));
-              if (!isNaN(cleanFunds) && cleanFunds >= 0) survivalTotal = cleanFunds;
-            }
-          }
-        }
-      }
-    } catch (extError) { console.error('Eroare API extern:', extError); }
     const rows = await sbGet('bf_bonds', `user_key=eq.${USER_KEY}&order=created_at.asc`);
     bonds = rows.map(r => ({
       id: r.id, name: r.name, start: r.start_date, mat: r.mat_date,
       amt: parseFloat(r.amount), rate: parseFloat(r.rate), freq: String(r.freq)
     }));
-    await saveTotalInvestitRON();
+    saveTotalInvestitRON();
   } catch (e) { console.error('Load error:', e); toast('⚠️ Eroare la încărcarea datelor'); }
   document.getElementById('protection-pct').value = protectionPct;
   if (survivalTotal > 0) document.getElementById('survival-total-funds').value = survivalTotal;
   renderDash(); renderBonds(); calculateSurvival();
 }
+
 
 async function savePrefsToSupabase() {
   try {
@@ -1226,18 +1207,12 @@ async function savePrefsToSupabase() {
   } catch(e) { console.error('Eroare la salvarea preferințelor:', e); }
 }
 
-async function saveTotalInvestitRON() {
+function saveTotalInvestitRON() {
   const relevant = bonds.filter(b => !isMatured(b));
   const total = relevant.reduce((s, b) => s + b.amt, 0);
   syncBondsTotalToFinance(total);
-  try {
-    const r = await fetch(`${SUPABASE_URL}/rest/v1/bf_preferences?user_key=eq.${USER_KEY}`, {
-      method: 'PATCH', headers: { ...SB_HEADERS },
-      body: JSON.stringify({ total_investit_ron: Math.round(total), updated_at: new Date().toISOString() })
-    });
-    if (!r.ok) throw new Error(await r.text());
-  } catch (e) { console.error('Eroare salvare total investit:', e); }
 }
+
 
 function syncBondsTotalToFinance(total) {
   if (!finSupabaseConstantWalletItem) {
@@ -1302,27 +1277,16 @@ async function refreshRemoteDataOnly() {
     if (prefs.length) { protectionPct = parseFloat(prefs[0].protection_pct) || protectionPct; }
   } catch(e) { console.error('Prefs refresh error:', e); }
   try {
-    const extResponse = await fetch(EXTERNAL_GOAL_API_URL);
-    if (extResponse.ok) {
-      const extData = await extResponse.json();
-      const snapshotObj = extData.find(item => item.key === 'metrics_snapshot');
-      if (snapshotObj && snapshotObj.value) {
-        const parsedVal = JSON.parse(snapshotObj.value);
-        if (parsedVal) {
-          if (parsedVal.media_lunara_ron) { const c = parseFloat(parsedVal.media_lunara_ron.replace(/[^\d]/g,'')); if(!isNaN(c)&&c>0) baseExpense=c; }
-          if (parsedVal.total_active_ron) { const c = parseFloat(parsedVal.total_active_ron.replace(/[^\d]/g,'')); if(!isNaN(c)&&c>=0){survivalTotal=c;document.getElementById('survival-total-funds').value=survivalTotal;} }
-        }
-      }
-    }
-  } catch (extError) { console.error('Eroare reîncărcare date externe:', extError); }
-  try {
     const rows = await sbGet('bf_bonds', `user_key=eq.${USER_KEY}&order=created_at.asc`);
     bonds = rows.map(r => ({ id: r.id, name: r.name, start: r.start_date, mat: r.mat_date, amt: parseFloat(r.amount), rate: parseFloat(r.rate), freq: String(r.freq) }));
   } catch (e) { console.error('Bonds refresh error:', e); throw e; }
+  saveTotalInvestitRON();
   document.getElementById('protection-pct').value = protectionPct;
   renderDash(); renderBonds(); calculateSurvival();
   if (document.getElementById('panel-payments').classList.contains('on')) renderPayments();
+  await finLoadAll();
 }
+
 
 // ══════════════════════════════════════════════
 //  BONDFLOW — FORM ENTER KEY
@@ -1791,7 +1755,6 @@ async function exportTableCSV(table){
 // ══════════════════════════════════════════════
 const FIN_SUPABASE_URL='https://fndjrfieitieqzafhyzz.supabase.co';
 const FIN_SUPABASE_ANON_KEY='sb_publishable_bHDKjiKAVHqW199ICw7i2g_O3olYMAr';
-const FIN_PREFERENCES_API_URL='https://fndjrfieitieqzafhyzz.supabase.co/rest/v1/bf_preferences?select=*&apikey=sb_publishable_bHDKjiKAVHqW199ICw7i2g_O3olYMAr';
 
 const finSb={
   headers:{'Content-Type':'application/json','apikey':FIN_SUPABASE_ANON_KEY,'Authorization':`Bearer ${FIN_SUPABASE_ANON_KEY}`,'Prefer':'return=representation'},
@@ -1935,8 +1898,6 @@ function finSetLoader(id,show){const el=document.getElementById(id);if(el)el.cla
 async function finLoadAll(){
   if(finIsLoading)return;finIsLoading=true;finSetLoader('fin-loader-wallet',true);finSetLoader('fin-loader-cats',true);
   try{
-    const prefResponse=await fetch(FIN_PREFERENCES_API_URL);
-    if(prefResponse.ok){const prefRows=await prefResponse.json();if(prefRows&&prefRows.length>0){const raw=prefRows[0].total_investit_ron;if(raw!==undefined&&raw!==null){const digitsOnly=String(raw).replace(/[^\d.]/g,'');const val=parseFloat(digitsOnly)||0;finSupabaseConstantWalletItem={id:'supabase-constant',label:'Obligațiuni',amount:val,currency:'ron',isConstant:true};}}}
     const wRows=await finSb.get('fd_settings','key=eq.wallet_ron_data');
     if(wRows&&wRows.length&&wRows[0].value){const p=JSON.parse(wRows[0].value);if(p.length>0)finState.wallet=p;else if(finState.wallet.length===0)finState.wallet=[];}
     const sRows=await finSb.get('fd_settings','key=eq.salary_ron_data');
@@ -1961,12 +1922,7 @@ async function finSaveCategoriesData(){
   try{await finSb.upsert('fd_settings',[{key:'categories_ron_data',value:JSON.stringify(finState.categories)}],'key');}catch(e){finToast('Eroare salvare cheltuieli','err');}
 }
 
-async function finSaveMetrics(totalWalletRON,mediaLunaraRON){
-  try{
-    const payload={total_active_ron:finFmt(totalWalletRON)+' lei',total_active_eur:finFmt(finRonToEurSell(totalWalletRON))+' €',media_lunara_ron:finFmt(mediaLunaraRON)+' lei',media_lunara_eur:finFmt(finRonToEurSell(mediaLunaraRON))+' €',updated_at:new Date().toISOString()};
-    await finSb.upsert('fd_settings',[{key:'metrics_snapshot',value:JSON.stringify(payload)}],'key');
-  }catch(e){}
-}
+
 
 function finScrollToCatItem(catId,delay=80){setTimeout(()=>{const el=document.getElementById('fin-cat-item-'+catId);if(el)el.scrollIntoView({behavior:'smooth',block:'center'});},delay);}
 function finScrollToSubItem(catId,subId,delay=100){setTimeout(()=>{const subContainer=document.getElementById('fin-subcats-'+catId);const arrowBadge=document.getElementById('fin-arrow-badge-'+catId);if(subContainer&&!subContainer.classList.contains('open')){subContainer.classList.add('open');if(arrowBadge)arrowBadge.classList.add('open');}setTimeout(()=>{const subEl=document.querySelector('[data-fin-sub-id="'+subId+'"]');if(subEl)subEl.scrollIntoView({behavior:'smooth',block:'center'});},60);},delay);}
@@ -2129,7 +2085,7 @@ function finRenderExpenses(){
   window.scrollTo({top:scrollY,behavior:'instant'});
 }
 
-let _finMetricsSaveTimeout;
+
 function finRecalcAll(){
   const rateSell=finGetEurRateSell(),rateBuy=finGetEurRateBuy();
   const{totalRON,totalEUR}=finComputeWalletDualTotals(finState.wallet,finSupabaseConstantWalletItem);
@@ -2160,8 +2116,6 @@ function finRecalcAll(){
   if(fundsInput)fundsInput.value=totalRON;
   renderDash();
 
-  clearTimeout(_finMetricsSaveTimeout);
-  _finMetricsSaveTimeout=setTimeout(()=>finSaveMetrics(totalRON,monthlyAvgTotal),1200);
 }
 
 
