@@ -1152,6 +1152,39 @@ async function sbDelete(table, filter) {
 }
 
 // ══════════════════════════════════════════════
+//  HEARTBEAT — ține conexiunea Supabase caldă
+// ══════════════════════════════════════════════
+let _sbHeartbeatTimer = null;
+
+async function sbHeartbeat() {
+  try {
+    await fetch(`${SUPABASE_URL}/rest/v1/bf_preferences?select=user_key&limit=1`, {
+      method: 'HEAD',
+      headers: SB_HEADERS
+    });
+  } catch (e) { /* silențios — nu blocăm UI-ul pentru un ping eșuat */ }
+}
+
+function startSbHeartbeat() {
+  stopSbHeartbeat();
+  sbHeartbeat(); // ping imediat
+  _sbHeartbeatTimer = setInterval(sbHeartbeat, 8000);
+}
+
+function stopSbHeartbeat() {
+  if (_sbHeartbeatTimer) { clearInterval(_sbHeartbeatTimer); _sbHeartbeatTimer = null; }
+}
+
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') {
+    startSbHeartbeat(); // revii pe tab → ping instant + repornește ciclul
+  } else {
+    stopSbHeartbeat(); // fila e ascunsă → oprim, ca să nu consumăm date degeaba
+  }
+});
+
+
+// ══════════════════════════════════════════════
 //  BONDFLOW — DATA
 // ══════════════════════════════════════════════
 let bonds         = [];
@@ -2132,7 +2165,9 @@ window.addEventListener('DOMContentLoaded', () => {
   loadFromSupabase();
   finLoadAll();
   ['w','ew','cat','ec','sub','es'].forEach(p => finUpdateRateInfoBox(p));
+  startSbHeartbeat();
 });
+
 </script>
 </body>
 </html>
