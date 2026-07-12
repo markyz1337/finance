@@ -1133,14 +1133,14 @@ async function sbGet(table, filter = '') {
   if (!r.ok) throw new Error(await r.text());
   return r.json();
 }
-async function sbUpsert(table, body) {
-  const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+async function sbUpsert(table, body, conflictCol = 'id') {
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}?on_conflict=${conflictCol}`, {
     method: 'POST',
     headers: { ...SB_HEADERS, 'Prefer': 'resolution=merge-duplicates,return=representation' },
     body: JSON.stringify(body)
   });
   if (!r.ok) throw new Error(await r.text());
-  return r.json();
+  return r.json()
 }
 async function sbDelete(table, filter) {
   const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${filter}`, {
@@ -1720,7 +1720,7 @@ async function saveBond(){
   if(isNaN(amt)){document.getElementById('f-amt').focus();toast('⚠️ Completează suma investită');return;}
   if(new Date(mat)<=new Date(start)){document.getElementById('f-mat').focus();toast('Maturitatea trebuie să fie după data de start');return;}
   const bond={id:eid||Date.now().toString(),name,start,mat,amt,rate,freq};
-  if(eid){const idx=bonds.findIndex(b=>b.id===eid);if(idx!==-1)bonds[idx]=bond;}else{bonds.push(bond);}
+if(eid){const idx=bonds.findIndex(b=>String(b.id)===String(eid));if(idx!==-1)bonds[idx]=bond;}else{bonds.push(bond);}
   cancelForm();renderBonds();renderDash();calculateSurvival();
   await saveBondToSupabase(bond);await saveTotalInvestitRON();
 }
