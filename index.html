@@ -1233,12 +1233,14 @@ async function savePrefsToSupabase() {
   try {
     const f = parseFloat(document.getElementById('survival-total-funds').value);
     const survivalTotalVal = (!isNaN(f) && f >= 0) ? f : 0;
-    await fetch(`${SUPABASE_URL}/rest/v1/bf_preferences?user_key=eq.${USER_KEY}`, {
-      method: 'PATCH', headers: { ...SB_HEADERS },
-      body: JSON.stringify({ currency: 'RON', survival_total: survivalTotalVal, protection_pct: protectionPct, updated_at: new Date().toISOString() })
+    await fetch(`${SUPABASE_URL}/rest/v1/bf_preferences?on_conflict=user_key`, {
+      method: 'POST',
+      headers: { ...SB_HEADERS, 'Prefer': 'resolution=merge-duplicates,return=representation' },
+      body: JSON.stringify({ user_key: USER_KEY, currency: 'RON', survival_total: survivalTotalVal, protection_pct: protectionPct, updated_at: new Date().toISOString() })
     });
   } catch(e) { console.error('Eroare la salvarea preferințelor:', e); }
 }
+
 
 function saveTotalInvestitRON() {
   const relevant = bonds.filter(b => !isMatured(b));
